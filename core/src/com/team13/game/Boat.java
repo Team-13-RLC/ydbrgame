@@ -1,15 +1,19 @@
 package com.team13.game;
 
 public class Boat {
+    //boat position
     private float posX;
     private float posY;
+    //horizontal and vertical speed
     private float h_speed;
     private float v_speed;
     private float acceleration;
     private final int speed_limit;
 
     Boat(){
-        // These values can be grouped into an array
+        /* These values can be grouped into an array,
+        initial values
+        */ 
         posX = 0;
         posY = 0;
 
@@ -22,7 +26,9 @@ public class Boat {
 
     }
 
-
+    /* the boat cannot accelarate more than speed limit,
+    using direction to determine acceleration and deceleration
+    */
     public void accelerate(int direction){
         if (v_speed < speed_limit) {
             this.v_speed += (this.acceleration * direction);
@@ -60,7 +66,7 @@ public class Boat {
         this.posY = posY;
     }
 
-
+    // Setting horizontal and vertical speed
     public void setH_speed(float h_speed) {
         this.h_speed = h_speed;
     }
@@ -70,7 +76,7 @@ public class Boat {
     }
 
 
-    // Direction used with acceleration
+    // using 1 or -1 to determine the boat is accelarating or decelarating
     static class Direction{
         public static final int FORWARDS = 1;
         public static final int BACKWARDS = -1;
