@@ -10,13 +10,11 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public class mainGame extends ApplicationAdapter {
 	SpriteBatch batch;
 	Texture img;
-	UserBoat b;
 
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
 		img = new Texture("badlogic.jpg");
-		b = new UserBoat();
 	}
 
 	@Override
@@ -26,8 +24,6 @@ public class mainGame extends ApplicationAdapter {
 		batch.begin();
 		batch.draw(img, 0, 0);
 		batch.end();
-
-		b.control();
 
 	}
 
