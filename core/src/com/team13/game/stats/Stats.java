@@ -1,4 +1,4 @@
-package com.team13.game;
+package com.team13.game.stats;
 
 public class Stats {
 
@@ -13,7 +13,7 @@ public class Stats {
     // Default constructor defined implicitly
 
     // Constructor which takes arguments assigns the values of those arguments to the private variables
-    Stats(float speed, float acceleration, float maxSpeed, float maneuverability, float robustness, float fatigue) {
+    public Stats(float speed, float acceleration, float maxSpeed, float maneuverability, float robustness, float fatigue) {
        this.speed = speed;
        this.acceleration = acceleration;
        this.maxSpeed = maxSpeed;
