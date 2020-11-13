@@ -3,6 +3,9 @@ package com.team13.game;
 import com.team13.game.stats.Position;
 import com.team13.game.stats.Stats;
 
+/**
+ * Class representing any boat in the game
+ */
 public class Boat {
     Position boatPosition;
     Stats boatStats;
