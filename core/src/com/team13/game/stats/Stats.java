@@ -10,9 +10,16 @@ public class Stats {
     private float robustness;
     private float fatigue;
 
-    // Default constructor defined implicitly
-
-    // Constructor which takes arguments assigns the values of those arguments to the private variables
+    /**
+     * Constructor takes arguments and assigns their values to the private fields
+     *
+     * @param speed Boat's speed
+     * @param acceleration How fast does the speed change
+     * @param maxSpeed Maximum value for speed
+     * @param maneuverability How fast a boat can move horizontally
+     * @param robustness How many times can a boat collide with an obstacle before dying
+     * @param fatigue Top speed decreases?? Im not actually sure what this does
+     */
     public Stats(float speed, float acceleration, float maxSpeed, float maneuverability, float robustness, float fatigue) {
        this.speed = speed;
        this.acceleration = acceleration;

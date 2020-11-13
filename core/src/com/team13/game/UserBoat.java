@@ -3,8 +3,14 @@ package com.team13.game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 
+/**
+ * Class representing the boat controlled by the player.
+ */
 public class UserBoat extends Boat {
 
+    /**
+     * Function to check for user input and move the boat accordingly
+     */
     public void control(){
         //when D is pressed, moving position to right
         if (Gdx.input.isKeyPressed(Keymap.UP)){
@@ -30,6 +36,9 @@ public class UserBoat extends Boat {
 
     }
 
+    /**
+     * Will decelerate the boat if no input is received.
+     */
     public void update(){
         /* when boat is moving but no keys are pressed,
         the boat is slowly decelerating until it almost becomes stationary
@@ -39,7 +48,9 @@ public class UserBoat extends Boat {
         }
     }
 
-    // Using this class, controls can be redefined more easily
+    /**
+     * Controls can be redefined more easily using this class,
+     */
     public static class Keymap{
         public static final int UP = Input.Keys.W;
         public static final int DOWN = Input.Keys.S;
