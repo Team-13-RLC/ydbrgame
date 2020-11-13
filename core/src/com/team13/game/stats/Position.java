@@ -1,11 +1,11 @@
-package com.team13.game;
+package com.team13.game.stats;
 
 public class Position
 {
     private float posX;
     private float posY;
 
-    Position(float posX, float posY)
+    public Position(float posX, float posY)
     {
         this.posX = posX;
         this.posY = posY;

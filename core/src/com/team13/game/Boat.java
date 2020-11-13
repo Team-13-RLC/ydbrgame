@@ -1,5 +1,8 @@
 package com.team13.game;
 
+import com.team13.game.stats.Position;
+import com.team13.game.stats.Stats;
+
 public class Boat {
     //boat position
     Position boatPosition;
