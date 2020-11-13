@@ -2,14 +2,15 @@ package com.team13.game;
 
 public class Position
 {
-
     private float posX;
     private float posY;
 
-    Position()
+    Position(float posX, float posY)
     {
-
+        this.posX = posX;
+        this.posY = posY;
     }
+
 
     // getters
 
@@ -23,16 +24,16 @@ public class Position
         return posY;
     }
 
+
     // setters
 
-    public void setPosX(float x)
+    public void setPosX(float posX)
     {
-        posX = x;
+        this.posX = posX;
     }
 
-    public void setPosY(float y)
+    public void setPosY(float posY)
     {
-        posY = y;
+        this.posY = posY;
     }
-
 }
