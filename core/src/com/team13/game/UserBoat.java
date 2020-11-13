@@ -38,4 +38,12 @@ public class UserBoat extends Boat {
             boatStats.setSpeed(boatStats.getSpeed() - boatStats.getAcceleration());
         }
     }
+
+    // Using this class, controls can be redefined more easily
+    public static class Keymap{
+        public static final int UP = Input.Keys.W;
+        public static final int DOWN = Input.Keys.S;
+        public static final int LEFT = Input.Keys.A;
+        public static final int RIGHT = Input.Keys.D;
+    }
 }
