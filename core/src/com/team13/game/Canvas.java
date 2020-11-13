@@ -2,14 +2,21 @@ package com.team13.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 
 public class Canvas {
     private static Canvas instance = new Canvas();
 
+    public OrthographicCamera camera;
     private Canvas(){}
 
 
     public void create(){
+        camera = new OrthographicCamera(1280,720 );
+        camera.position.set(1270 / 2f, 720 / 2f, 0f);
+        camera.update();
+
+
 
 
     }
@@ -25,4 +32,5 @@ public class Canvas {
     public static Canvas getInstance() {
         return instance;
     }
+
 }
