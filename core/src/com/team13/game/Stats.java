@@ -1,34 +1,42 @@
 package com.team13.game;
 
 public class Stats {
-    // Speed and positional values will be in a separate classes.
-    // Speed limits: h = horizontal; v = vertical.
-    private float maxHSpeed;
-    private float maxVSpeed;
+
+    // maneuverability = horizontal speed
+    private float speed;
     private float acceleration;
+    private float maxSpeed;
     private float maneuverability;
     private float robustness;
     private float fatigue;
 
-    Stats() {
+    // Default constructor defined implicitly
 
+    // Constructor which takes arguments assigns the values of those arguments to the private variables
+    Stats(float speed, float acceleration, float maxSpeed, float maneuverability, float robustness, float fatigue) {
+       this.speed = speed;
+       this.acceleration = acceleration;
+       this.maxSpeed = maxSpeed;
+       this.maneuverability = maneuverability;
+       this.robustness = robustness;
+       this.fatigue = fatigue;
     }
+
 
     // Getters
 
-    public float getMaxHSpeed()
-    {
-        return maxHSpeed;
-    }
-
-    public float getMaxVSpeed()
-    {
-        return maxVSpeed;
+    public float getSpeed() {
+        return speed;
     }
 
     public float getAcceleration()
     {
         return acceleration;
+    }
+
+    public float getMaxSpeed()
+    {
+        return maxSpeed;
     }
 
     public float getManeuverability()
@@ -46,35 +54,35 @@ public class Stats {
         return fatigue;
     }
 
+
     // Setters
 
-    public void setMaxHSpeed(float h)
-    {
-        maxHSpeed = h;
-    }
-
-    public void setMaxVSpeed(float v)
-    {
-        maxVSpeed = v;
+    public void setSpeed(float speed) {
+        this.speed = speed;
     }
 
     public void setAcceleration(float a)
     {
-        acceleration = a;
+        this.acceleration = a;
+    }
+
+    public void setMaxSpeed(float v)
+    {
+        this.maxSpeed = v;
     }
 
     public void setManeuverability(float m)
     {
-        maneuverability = m;
+        this.maneuverability = m;
     }
 
     public void setRobustness(float r)
     {
-        robustness = r;
+        this.robustness = r;
     }
 
     public void  setFatigue(float f)
     {
-        fatigue = f;
+        this.fatigue = f;
     }
 }
