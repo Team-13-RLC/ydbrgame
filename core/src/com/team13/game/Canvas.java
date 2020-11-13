@@ -12,8 +12,8 @@ public class Canvas {
 
 
     public void create(){
-        camera = new OrthographicCamera(1280,720 );
-        camera.position.set(1270 / 2f, 720 / 2f, 0f);
+        camera = new OrthographicCamera(mainGame.Resolution.WIDTH, mainGame.Resolution.HEIGHT );
+        camera.position.set(mainGame.Resolution.WIDTH/2f, mainGame.Resolution.HEIGHT/2f, 0f);
         camera.update();
 
 
