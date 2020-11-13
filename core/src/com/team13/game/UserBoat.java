@@ -5,39 +5,37 @@ import com.badlogic.gdx.Input;
 
 public class UserBoat extends Boat {
 
-    UserBoat(){
-    }
     public void control(){
         //when D is pressed, moving position to right
-        if (Gdx.input.isKeyPressed(Input.Keys.D)){
-            this.setPosX(this.getPosX() + this.getH_speed());
+        if (Gdx.input.isKeyPressed(Keymap.UP)){
+            boatPosition.setPosX(boatPosition.getPosX() + boatStats.getManeuverability());
             
         //when A is pressed, moving position to left
-        } else if (Gdx.input.isKeyPressed(Input.Keys.A)){
-            this.setPosX(this.getPosX() - this.getH_speed());
+        } else if (Gdx.input.isKeyPressed(Keymap.DOWN)){
+            boatPosition.setPosX(boatPosition.getPosX() - boatStats.getManeuverability());
             
-        //when W is pressed, the boat is accelarating
-        } else if (Gdx.input.isKeyPressed(Input.Keys.W)){
+        //when W is pressed, the boat is accelerating
+        } else if (Gdx.input.isKeyPressed(Keymap.LEFT)){
             accelerate(Direction.FORWARDS);
-            this.setPosY(getPosY() + this.getV_speed());
+            boatPosition.setPosY(boatPosition.getPosY() + boatStats.getSpeed());
             
-        //when S is pressed, the boat is decelarating
-        } else if (Gdx.input.isKeyPressed(Input.Keys.S)){
+        //when S is pressed, the boat is decelerating
+        } else if (Gdx.input.isKeyPressed(Keymap.RIGHT)){
             accelerate(Direction.BACKWARDS);
-            this.setPosY(getPosY() - this.getV_speed());
-            
+            this.boatPosition.setPosY(boatPosition.getPosY() - boatStats.getSpeed());
+
         } else {
-            this.update();
+            update();
         }
 
     }
 
     public void update(){
         /* when boat is moving but no keys are pressed,
-        the boat is slowly decelarating until it almost becomes stationary
+        the boat is slowly decelerating until it almost becomes stationary
         */
-        if (this.getV_speed() > 0){
-            this.setV_speed(this.getV_speed() - this.getAcceleration());
+        if (boatStats.getSpeed() > 0){
+            boatStats.setSpeed(boatStats.getSpeed() - boatStats.getAcceleration());
         }
     }
 }
