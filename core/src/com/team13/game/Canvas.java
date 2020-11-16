@@ -20,6 +20,7 @@ public class Canvas {
         camera = new OrthographicCamera(mainGame.Resolution.WIDTH, mainGame.Resolution.HEIGHT );
         camera.position.set(mainGame.Resolution.WIDTH/2f, mainGame.Resolution.HEIGHT/2f, 0f);
         camera.update();
+        makeLanes();
     }
     // Gets called every frame to update the canvas
     public void update(){
@@ -30,7 +31,7 @@ public class Canvas {
 
 
 
-    public void makeLanes(){
+    private void makeLanes(){
         lanes = new Lane[numLanes];
         for (int i = 0; i < numLanes; i++){
             lanes[i] = new Lane(i* (mainGame.Resolution.WIDTH/numLanes), (i+1)* (mainGame.Resolution.WIDTH/numLanes));

@@ -28,10 +28,10 @@ public class Lane {
     }
 
         public void draw(Camera camera){
-            shapeRenderer.setProjectionMatrix(camera.combined);
-
+            // Between .begin and .eng shapes can be drawn.
             shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-            shapeRenderer.setColor(1, 0, 0, 1);
+            // Color is set to black
+            shapeRenderer.setColor(0, 0, 0, 1);
             // Left border drawn (god this is awful)
             shapeRenderer.rect( lBorder, 0, width, mainGame.Resolution.HEIGHT);
             // Right border drawn
