@@ -4,19 +4,27 @@ import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 public class Lane {
-    // Consider changing these to short
+    // TODO: Consider changing these to short
     private int lBorder;
     private int rBorder;
-    // How wide the border of a lane is
-    private static final byte width = 5;
+    private static final byte BORDERWIDTH = 5;
+    // Thing that renders shapes
     private ShapeRenderer shapeRenderer;
 
 
-
-    // Private constructor so borders never get initialised to 0
+    /**
+     * Default constructor is private to prevent lanes with borders 0, 0
+     */
     private Lane(){}
 
 
+    /**
+     * Constructor takes 2 values for border positions and assigns them to border positions of the instance.
+     * Also initialises the shape renderer used to render the borders
+     *
+     * @param lBorder left border x coordinate
+     * @param rBorder right border x coordinate
+     */
     public Lane(int lBorder, int rBorder) {
         this.lBorder = lBorder;
         this.rBorder = rBorder;
@@ -24,16 +32,20 @@ public class Lane {
     }
 
 
-
-        public void draw(Camera camera){
+    /**
+     * Draw each lane.
+     * Ues the shape renderer to render rectangles, one for each border.
+     * Each border goes from 0 to screen height on the y axis.
+     */
+    public void draw(){
             // Between .begin and .eng shapes can be drawn.
             shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
             // Color is set to black
             shapeRenderer.setColor(0, 0, 0, 1);
             // Left border drawn (god this is awful)
-            shapeRenderer.rect( lBorder, 0, width, mainGame.Resolution.HEIGHT);
+            shapeRenderer.rect( lBorder, 0, BORDERWIDTH, mainGame.Resolution.HEIGHT);
             // Right border drawn
-            shapeRenderer.rect( rBorder - width, 0, width, mainGame.Resolution.HEIGHT);
+            shapeRenderer.rect( rBorder - BORDERWIDTH, 0, BORDERWIDTH, mainGame.Resolution.HEIGHT);
             shapeRenderer.end();
 
     }
