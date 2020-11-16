@@ -10,20 +10,20 @@ public class Lane {
     // How wide the border of a lane is
     private static final byte width = 5;
     private ShapeRenderer shapeRenderer;
-    static private boolean projectionMatrixSet;
 
 
 
     // Private constructor so borders never get initialised to 0
-    private Lane() {
-    }
+    private Lane(){}
 
 
     public Lane(int lBorder, int rBorder) {
-        shapeRenderer = new ShapeRenderer();
         this.lBorder = lBorder;
         this.rBorder = rBorder;
+        shapeRenderer = new ShapeRenderer();
     }
+
+
 
         public void draw(Camera camera){
             // Between .begin and .eng shapes can be drawn.
@@ -38,5 +38,11 @@ public class Lane {
 
     }
 
+    public int getlBorder() {
+        return lBorder;
+    }
 
+    public int getrBorder() {
+        return rBorder;
+    }
 }
