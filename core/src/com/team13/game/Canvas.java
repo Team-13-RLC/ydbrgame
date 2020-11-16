@@ -3,7 +3,6 @@ package com.team13.game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class Canvas {
     public OrthographicCamera camera;
@@ -11,7 +10,7 @@ public class Canvas {
     private Canvas(){}
 
 
-    private static final byte numLanes = 6;
+    private static final byte numLanes = 8;
     private Lane[] lanes;
 
 
@@ -24,7 +23,7 @@ public class Canvas {
     }
     // Gets called every frame to update the canvas
     public void update(){
-        Gdx.gl.glClearColor(0.4F, 0.4F, 1, 1);
+        Gdx.gl.glClearColor(0.2F, 0.3F, 0.9F, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         drawLanes();
     }
