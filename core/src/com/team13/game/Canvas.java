@@ -3,9 +3,10 @@ package com.team13.game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.math.Matrix4;
 
 public class Canvas {
-    public OrthographicCamera camera;
+    private OrthographicCamera camera;
     private static Canvas instance = new Canvas();
     private Canvas(){}
 
@@ -33,6 +34,7 @@ public class Canvas {
     private void makeLanes(){
         lanes = new Lane[numLanes];
         for (int i = 0; i < numLanes; i++){
+            //TODO: make one of the lanes randomly UserLane
             lanes[i] = new Lane(i* (mainGame.Resolution.WIDTH/numLanes), (i+1)* (mainGame.Resolution.WIDTH/numLanes));
         }
     }
@@ -47,6 +49,11 @@ public class Canvas {
     // Getters
     public static Canvas getInstance() {
         return instance;
+    }
+
+    // Returns the projection matrix for the current camera
+    public Matrix4 getProjection() {
+        return camera.combined;
     }
 
     public Lane[] getLanes() {

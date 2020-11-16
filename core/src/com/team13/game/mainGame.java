@@ -21,8 +21,7 @@ public class mainGame extends ApplicationAdapter {
 	@Override
 	public void render () {
 		canvas.update();
-		// this can be improved by making a method in canvas and returning camera.combined
-		batch.setProjectionMatrix(canvas.camera.combined);
+		batch.setProjectionMatrix(canvas.getProjection());
 		batch.begin();
 		batch.draw(img, 0, 0);
 		batch.end();
