@@ -24,6 +24,7 @@ public class Canvas {
     private Lane[] lanes;
     private Boat[] boats;
 
+    BackgroundRender background;
     /**
      * Private constructor to prevent it from being called from outside of the class
      */
@@ -40,6 +41,7 @@ public class Canvas {
         camera.position.set(mainGame.Resolution.WIDTH/2f, mainGame.Resolution.HEIGHT/2f, 0f);
         // NOTE: very important, camera will not do anything until his is called.
         camera.update();
+        background = new BackgroundRender(getProjection());
         makeLanes();
         makeBoats();
     }
@@ -53,6 +55,7 @@ public class Canvas {
 
         // Some OpenGL thing, not really sure.
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        background.update((int)camera.position.y);
         drawLanes();
         drawBoats();
         updateCamera();
