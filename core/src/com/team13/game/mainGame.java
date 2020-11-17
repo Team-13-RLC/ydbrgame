@@ -12,7 +12,6 @@ public class mainGame extends ApplicationAdapter {
 	SpriteBatch batch;
 	Texture img;
 	Canvas canvas;
-	UserBoat b;
 
 	@Override
 	public void create () {
@@ -20,15 +19,11 @@ public class mainGame extends ApplicationAdapter {
 		img = new Texture("badlogic.jpg");
 		canvas = Canvas.getInstance();
 		canvas.create();
-		b = new UserBoat();
-		b.setBoatPosition(new Position(100, 0));
 	}
 
 	@Override
 	public void render () {
 		canvas.update();
-		b.draw(canvas.getProjection());
-		b.control();
 //		batch.setProjectionMatrix(canvas.getProjection());
 //		batch.begin();
 //		batch.draw(img, 0, 0);
