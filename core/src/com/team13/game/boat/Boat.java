@@ -52,7 +52,10 @@ public class Boat {
         if (boatStats.getSpeed() > 0){
             boatStats.setSpeed(boatStats.getSpeed() - boatStats.getDeceleration());
             boatPosition.setPosY(boatPosition.getPosY() + boatStats.getSpeed());
+        } else {
+            boatStats.setSpeed(0);
         }
+
     }
 
 //  Getters
@@ -76,6 +79,7 @@ public class Boat {
     public void setBoatStats(Stats boatStats) {
         this.boatStats = boatStats;
     }
+
 
     // using 1 or -1 to determine the boat is accelerating or decelerating
     static class Direction{
