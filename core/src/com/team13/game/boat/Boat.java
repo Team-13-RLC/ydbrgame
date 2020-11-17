@@ -10,12 +10,12 @@ import com.team13.game.stats.Stats;
 
 public class Boat {
     //boat position
-    Position boatPosition;
+    protected Position boatPosition;
     //horizontal and vertical speed
-    Stats boatStats;
-    Texture boatTexture;
-    SpriteBatch batch;
-    Sprite boatSprite;
+    protected Stats boatStats;
+    protected Texture boatTexture;
+    protected SpriteBatch batch;
+    protected Sprite boatSprite;
 
     Boat(){
         /*
