@@ -55,6 +55,7 @@ public class Canvas {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         drawLanes();
         drawBoats();
+        updateCamera();
     }
 
 
@@ -90,9 +91,8 @@ public class Canvas {
                 // TODO: add some sort of a StatsGenerator class to generate stats for everything
                 // This Stats variable is for testing, to be removed
                 Stats userStats = new Stats(0.4F, 0.2F, 10, 3, 10, 0 );
-                // TODO: define somewhere how far off the bottom of the screen the UserBoat should be (currently set to 10)
                 boats[boat] = new UserBoat(new Position(lanes[boat].getMiddle(), 10), userStats);
-                boats[boat].setBoatPosition(new Position(boats[boat].getBoatPosition().getPosX() + boats[boat].getSprite().getRegionWidth()/(4 / boats[boat].getScale()) , 10));
+                boats[boat].setBoatPosition(new Position(boats[boat].getBoatPosition().getPosX() + boats[boat].getSprite().getRegionWidth()/(4 / boats[boat].getScale()) , 0));
                 System.out.println(boats[boat].getSprite().getRegionWidth());
                 System.out.println(boats[boat].getBoatPosition().getPosX());
 
@@ -113,7 +113,6 @@ public class Canvas {
         }
     }
 
-
     /**
      * Draws every Lane in the lanes array.
      */
@@ -121,6 +120,19 @@ public class Canvas {
         for (int i = 0; i < numLanes; i++){
             lanes[i].draw();
         }
+    }
+
+    private void updateCamera(){
+        for (Boat b :
+                boats) {
+            if (b instanceof UserBoat) {
+                camera.position.y = b.getBoatPosition().getPosY() + mainGame.Resolution.HEIGHT/2;
+                camera.update();
+                break;
+            }
+
+        }
+
     }
 
 
