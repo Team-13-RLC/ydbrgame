@@ -30,8 +30,11 @@ public class UserBoat extends Boat {
             
         //when S is pressed, the boat is decelerating
         } else if (Gdx.input.isKeyPressed(Keymap.DOWN)){
-            accelerate(Direction.BACKWARDS);
-            this.boatPosition.setPosY(boatPosition.getPosY() - boatStats.getSpeed());
+            if (boatStats.getSpeed() > 0) {
+                accelerate(Direction.BACKWARDS);
+                // Position is is still increased, but since boat speed is decreasing
+                this.boatPosition.setPosY(boatPosition.getPosY() + boatStats.getSpeed());
+            }
 
         } else {
             update();
@@ -39,14 +42,6 @@ public class UserBoat extends Boat {
 
     }
 
-    public void update(){
-        /* when boat is moving but no keys are pressed,
-        the boat is slowly decelerating until it almost becomes stationary
-        */
-        if (boatStats.getSpeed() > 0){
-            boatStats.setSpeed(boatStats.getSpeed() - boatStats.getAcceleration());
-        }
-    }
 
     // Using this class, controls can be redefined more easily
     public static class Keymap{

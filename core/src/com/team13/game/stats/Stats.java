@@ -5,6 +5,7 @@ public class Stats {
     // maneuverability = horizontal speed
     private float speed;
     private float acceleration;
+    private float deceleration;
     private float maxSpeed;
     private float maneuverability;
     private float robustness;
@@ -13,9 +14,10 @@ public class Stats {
     // Default constructor defined implicitly
 
     // Constructor which takes arguments assigns the values of those arguments to the private variables
-    public Stats(float speed, float acceleration, float maxSpeed, float maneuverability, float robustness, float fatigue) {
+    public Stats(float speed, float acceleration, float deceleration, float maxSpeed, float maneuverability, float robustness, float fatigue) {
        this.speed = speed;
        this.acceleration = acceleration;
+       this.deceleration = deceleration;
        this.maxSpeed = maxSpeed;
        this.maneuverability = maneuverability;
        this.robustness = robustness;
@@ -34,6 +36,10 @@ public class Stats {
         return acceleration;
     }
 
+    public float getDeceleration()
+    {
+        return deceleration;
+    }
     public float getMaxSpeed()
     {
         return maxSpeed;
@@ -64,6 +70,11 @@ public class Stats {
     public void setAcceleration(float a)
     {
         this.acceleration = a;
+    }
+
+    public void setDeceleration(float a)
+    {
+        this.deceleration = a;
     }
 
     public void setMaxSpeed(float v)

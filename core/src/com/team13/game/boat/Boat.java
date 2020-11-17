@@ -22,7 +22,7 @@ public class Boat {
         Initial values
         */ 
         boatPosition = new Position(0, 0);
-        boatStats = new Stats(0, 1.1F,100, 5, 10, 0 );
+        boatStats = new Stats(0, 0.4F, 0.2F, 10, 5, 10, 0 );
         batch = new SpriteBatch();
     }
 
@@ -34,6 +34,7 @@ public class Boat {
         if (boatStats.getSpeed() < boatStats.getMaxSpeed()) {
             boatStats.setSpeed(boatStats.getSpeed() + boatStats.getAcceleration() * direction);
         }
+
     }
 
     public void draw(Matrix4 projectionMatrix){
@@ -44,6 +45,15 @@ public class Boat {
         batch.end();
     }
 
+    public void update(){
+        /* when boat is moving but no keys are pressed,
+        the boat is slowly decelerating until it almost becomes stationary
+        */
+        if (boatStats.getSpeed() > 0){
+            boatStats.setSpeed(boatStats.getSpeed() - boatStats.getDeceleration());
+            boatPosition.setPosY(boatPosition.getPosY() + boatStats.getSpeed());
+        }
+    }
 
 //  Getters
 
@@ -74,4 +84,3 @@ public class Boat {
 
     }
 }
-
