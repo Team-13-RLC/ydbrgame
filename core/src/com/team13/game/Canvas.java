@@ -5,6 +5,8 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Matrix4;
 
+import java.util.Random;
+
 /**
  * Singleton class to manage the camera, background and (possibly) sprite drawing.
  */
@@ -59,8 +61,18 @@ public class Canvas {
      */
     private void makeLanes(){
         lanes = new Lane[numLanes];
+        boolean userLaneSet = false;
+        Random userLaneChooser = new Random();
         for (int i = 0; i < numLanes; i++){
-            //TODO: make one of the lanes randomly UserLane
+            // check if a UserLane was already created
+            if (!userLaneSet){
+                // choose a number between 0 and 1
+                if (userLaneChooser.nextInt(2) == 1){
+                    lanes[i] = new UserLane(i* (mainGame.Resolution.WIDTH/numLanes), (i+1)* (mainGame.Resolution.WIDTH/numLanes));
+                    userLaneSet = true;
+                    continue;
+                }
+            }
             lanes[i] = new Lane(i* (mainGame.Resolution.WIDTH/numLanes), (i+1)* (mainGame.Resolution.WIDTH/numLanes));
         }
     }

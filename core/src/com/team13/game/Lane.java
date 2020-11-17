@@ -5,11 +5,11 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 public class Lane {
     // TODO: Consider changing these to short
-    private int lBorder;
-    private int rBorder;
-    private static final byte BORDERWIDTH = 5;
+    protected int lBorder;
+    protected int rBorder;
+    protected static final byte BORDERWIDTH = 5;
     // Thing that renders shapes
-    private ShapeRenderer shapeRenderer;
+    protected ShapeRenderer shapeRenderer;
 
 
     /**
