@@ -1,5 +1,9 @@
 package com.team13.game.boat;
 
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Matrix4;
 import com.team13.game.stats.Position;
 import com.team13.game.stats.Stats;
 
@@ -8,13 +12,16 @@ public class Boat {
     protected Position boatPosition;
     //horizontal and vertical speed
     protected Stats boatStats;
+    protected Texture boatTexture;
+    protected SpriteBatch batch;
+    protected Sprite boatSprite;
+    protected float spriteScale;
 
-    Boat(){
+    public Boat(){
         /*
         Initial values
         */ 
-        boatPosition = new Position(0, 0);
-        boatStats = new Stats(0, 1.1F,100, 5, 10, 0 );
+        batch = new SpriteBatch();
     }
 
     /* the boat cannot accelerate more than speed limit,
@@ -25,8 +32,32 @@ public class Boat {
         if (boatStats.getSpeed() < boatStats.getMaxSpeed()) {
             boatStats.setSpeed(boatStats.getSpeed() + boatStats.getAcceleration() * direction);
         }
+
     }
 
+    public void draw(Matrix4 projectionMatrix){
+        batch.setProjectionMatrix(projectionMatrix);
+        batch.begin();
+        boatSprite.draw(batch);
+        boatSprite.setPosition(boatPosition.getPosX(), boatPosition.getPosY());
+        batch.end();
+    }
+
+    public void control(){}
+
+
+    public void update(){
+        /* when boat is moving but no keys are pressed,
+        the boat is slowly decelerating until it almost becomes stationary
+        */
+        if (boatStats.getSpeed() > 0){
+            boatStats.setSpeed(boatStats.getSpeed() - boatStats.getDeceleration());
+            boatPosition.setPosY(boatPosition.getPosY() + boatStats.getSpeed());
+        } else {
+            boatStats.setSpeed(0);
+        }
+
+    }
 
 //  Getters
 
@@ -34,9 +65,17 @@ public class Boat {
         return boatPosition;
     }
 
-
     public Stats getBoatStats() {
         return boatStats;
+    }
+
+    public Sprite getSprite(){
+        return boatSprite;
+    }
+
+    public float getScale() {
+        return spriteScale;
+
     }
 
 
@@ -50,6 +89,7 @@ public class Boat {
         this.boatStats = boatStats;
     }
 
+
     // using 1 or -1 to determine the boat is accelerating or decelerating
     static class Direction{
         public static final int FORWARDS = 1;
@@ -57,4 +97,3 @@ public class Boat {
 
     }
 }
-

@@ -5,24 +5,20 @@ public class Stats {
     // maneuverability = horizontal speed
     private float speed;
     private float acceleration;
+    private float deceleration;
     private float maxSpeed;
     private float maneuverability;
     private float robustness;
     private float fatigue;
 
-    /**
-     * Constructor takes arguments and assigns their values to the private fields
-     *
-     * @param speed Boat's speed
-     * @param acceleration How fast does the speed change
-     * @param maxSpeed Maximum value for speed
-     * @param maneuverability How fast a boat can move horizontally
-     * @param robustness How many times can a boat collide with an obstacle before dying
-     * @param fatigue Top speed decreases?? Im not actually sure what this does
-     */
-    public Stats(float speed, float acceleration, float maxSpeed, float maneuverability, float robustness, float fatigue) {
-       this.speed = speed;
+    // Default constructor not required
+
+    // Constructor which takes arguments assigns the values of those arguments to the private variables
+    public Stats( float acceleration, float deceleration, float maxSpeed, float maneuverability, float robustness, float fatigue) {
+        // Initial speed si always 0
+       this.speed = 0;
        this.acceleration = acceleration;
+       this.deceleration = deceleration;
        this.maxSpeed = maxSpeed;
        this.maneuverability = maneuverability;
        this.robustness = robustness;
@@ -41,6 +37,10 @@ public class Stats {
         return acceleration;
     }
 
+    public float getDeceleration()
+    {
+        return deceleration;
+    }
     public float getMaxSpeed()
     {
         return maxSpeed;
@@ -71,6 +71,11 @@ public class Stats {
     public void setAcceleration(float a)
     {
         this.acceleration = a;
+    }
+
+    public void setDeceleration(float a)
+    {
+        this.deceleration = a;
     }
 
     public void setMaxSpeed(float v)
