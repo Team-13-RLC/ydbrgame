@@ -2,25 +2,29 @@ package com.team13.game.boat;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.Texture;
 
 public class UserBoat extends Boat {
+    public UserBoat() {
+        boatTexture = new Texture("textures/boatTexture.png");
+    }
 
     public void control(){
         //when D is pressed, moving position to right
-        if (Gdx.input.isKeyPressed(Keymap.UP)){
+        if (Gdx.input.isKeyPressed(Keymap.LEFT)){
             boatPosition.setPosX(boatPosition.getPosX() + boatStats.getManeuverability());
             
         //when A is pressed, moving position to left
-        } else if (Gdx.input.isKeyPressed(Keymap.DOWN)){
+        } else if (Gdx.input.isKeyPressed(Keymap.RIGHT)){
             boatPosition.setPosX(boatPosition.getPosX() - boatStats.getManeuverability());
             
         //when W is pressed, the boat is accelerating
-        } else if (Gdx.input.isKeyPressed(Keymap.LEFT)){
+        } else if (Gdx.input.isKeyPressed(Keymap.UP)){
             accelerate(Direction.FORWARDS);
             boatPosition.setPosY(boatPosition.getPosY() + boatStats.getSpeed());
             
         //when S is pressed, the boat is decelerating
-        } else if (Gdx.input.isKeyPressed(Keymap.RIGHT)){
+        } else if (Gdx.input.isKeyPressed(Keymap.DOWN)){
             accelerate(Direction.BACKWARDS);
             this.boatPosition.setPosY(boatPosition.getPosY() - boatStats.getSpeed());
 

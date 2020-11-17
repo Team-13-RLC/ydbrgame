@@ -1,5 +1,9 @@
 package com.team13.game.boat;
 
+import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Matrix4;
 import com.team13.game.stats.Position;
 import com.team13.game.stats.Stats;
 
@@ -8,6 +12,8 @@ public class Boat {
     Position boatPosition;
     //horizontal and vertical speed
     Stats boatStats;
+    SpriteBatch batch;
+    Texture boatTexture;
 
     Boat(){
         /*
@@ -15,6 +21,8 @@ public class Boat {
         */ 
         boatPosition = new Position(0, 0);
         boatStats = new Stats(0, 1.1F,100, 5, 10, 0 );
+        batch = new SpriteBatch();
+
     }
 
     /* the boat cannot accelerate more than speed limit,
@@ -25,6 +33,13 @@ public class Boat {
         if (boatStats.getSpeed() < boatStats.getMaxSpeed()) {
             boatStats.setSpeed(boatStats.getSpeed() + boatStats.getAcceleration() * direction);
         }
+    }
+
+    public void draw(Matrix4 projectionMatrix){
+        batch.setProjectionMatrix(projectionMatrix);
+        batch.begin();
+        batch.draw(boatTexture, boatPosition.getPosX(), boatPosition.getPosY());
+        batch.end();
     }
 
 
