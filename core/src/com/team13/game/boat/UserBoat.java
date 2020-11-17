@@ -3,10 +3,15 @@ package com.team13.game.boat;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 
 public class UserBoat extends Boat {
     public UserBoat() {
-        boatTexture = new Texture("textures/boatTexture.png");
+        boatTexture = new Texture(Gdx.files.internal("textures/boatTexture.png"));
+        boatTexture.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
+        boatSprite = new Sprite(boatTexture);
+        boatSprite.setPosition(boatPosition.getPosX(), boatPosition.getPosY());
+        boatSprite.setScale(0.5F);
     }
 
     public void control(){
