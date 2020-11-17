@@ -1,4 +1,4 @@
-package com.team13.game;
+package com.team13.game.boat;
 
 import com.team13.game.stats.Position;
 import com.team13.game.stats.Stats;

@@ -1,4 +1,4 @@
-package com.team13.game;
+package com.team13.game.boat;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
