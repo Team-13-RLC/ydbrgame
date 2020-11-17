@@ -5,9 +5,9 @@ import com.team13.game.stats.Stats;
 
 public class Boat {
     //boat position
-    Position boatPosition;
+    protected Position boatPosition;
     //horizontal and vertical speed
-    Stats boatStats;
+    protected Stats boatStats;
 
     Boat(){
         /*
