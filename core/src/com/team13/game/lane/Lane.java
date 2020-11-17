@@ -1,7 +1,8 @@
-package com.team13.game;
+package com.team13.game.lane;
 
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.team13.game.mainGame;
 
 public class Lane {
     // TODO: Consider changing these to short

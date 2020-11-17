@@ -1,6 +1,4 @@
-package com.team13.game;
-
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+package com.team13.game.lane;
 
 public class UserLane extends Lane {
     /**

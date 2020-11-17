@@ -6,6 +6,8 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Matrix4;
 import com.team13.game.boat.Boat;
 import com.team13.game.boat.UserBoat;
+import com.team13.game.lane.Lane;
+import com.team13.game.lane.UserLane;
 import com.team13.game.stats.Position;
 import com.team13.game.stats.Stats;
 
