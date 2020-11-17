@@ -1,6 +1,5 @@
 package com.team13.game.boat;
 
-import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -16,13 +15,12 @@ public class Boat {
     protected Texture boatTexture;
     protected SpriteBatch batch;
     protected Sprite boatSprite;
+    protected float spriteScale;
 
-    Boat(){
+    public Boat(){
         /*
         Initial values
         */ 
-        boatPosition = new Position(0, 0);
-        boatStats = new Stats(0, 0.4F, 0.2F, 10, 5, 10, 0 );
         batch = new SpriteBatch();
     }
 
@@ -45,6 +43,9 @@ public class Boat {
         batch.end();
     }
 
+    public void control(){}
+
+
     public void update(){
         /* when boat is moving but no keys are pressed,
         the boat is slowly decelerating until it almost becomes stationary
@@ -64,9 +65,17 @@ public class Boat {
         return boatPosition;
     }
 
-
     public Stats getBoatStats() {
         return boatStats;
+    }
+
+    public Sprite getSprite(){
+        return boatSprite;
+    }
+
+    public float getScale() {
+        return spriteScale;
+
     }
 
 

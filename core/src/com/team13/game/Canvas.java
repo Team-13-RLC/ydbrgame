@@ -4,6 +4,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Matrix4;
+import com.team13.game.boat.Boat;
+import com.team13.game.boat.UserBoat;
+import com.team13.game.stats.Position;
+import com.team13.game.stats.Stats;
 
 import java.util.Random;
 
@@ -18,16 +22,13 @@ public class Canvas {
     private static final byte numLanes = 8;
     // Array to store the lanes
     private Lane[] lanes;
+    private Boat[] boats;
 
     /**
      * Private constructor to prevent it from being called from outside of the class
      */
     private Canvas(){}
 
-
-
-
-    //
 
     /**
      * Called once to initialise everything to do with the canvas (also at the moment the lanes).
@@ -40,6 +41,7 @@ public class Canvas {
         // NOTE: very important, camera will not do anything until his is called.
         camera.update();
         makeLanes();
+        makeBoats();
     }
     // Gets called every frame to update the canvas
     /**
@@ -52,6 +54,7 @@ public class Canvas {
         // Some OpenGL thing, not really sure.
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         drawLanes();
+        drawBoats();
     }
 
 
@@ -63,19 +66,53 @@ public class Canvas {
         lanes = new Lane[numLanes];
         boolean userLaneSet = false;
         Random userLaneChooser = new Random();
-        for (int i = 0; i < numLanes; i++){
+        for (int lane = 0; lane < numLanes; lane++){
             // check if a UserLane was already created
             if (!userLaneSet){
                 // choose a number between 0 and 1
                 if (userLaneChooser.nextInt(2) == 1){
-                    lanes[i] = new UserLane(i* (mainGame.Resolution.WIDTH/numLanes), (i+1)* (mainGame.Resolution.WIDTH/numLanes));
+                    lanes[lane] = new UserLane(lane* (mainGame.Resolution.WIDTH/numLanes), (lane+1)* (mainGame.Resolution.WIDTH/numLanes));
                     userLaneSet = true;
                     continue;
                 }
             }
-            lanes[i] = new Lane(i* (mainGame.Resolution.WIDTH/numLanes), (i+1)* (mainGame.Resolution.WIDTH/numLanes));
+            lanes[lane] = new Lane(lane* (mainGame.Resolution.WIDTH/numLanes), (lane+1)* (mainGame.Resolution.WIDTH/numLanes));
         }
     }
+
+
+    private void makeBoats(){
+        // Number of boats should roughly equal the number of lanes
+        boats = new Boat[numLanes];
+
+        for (int boat =0; boat < numLanes; boat++){
+            if (lanes[boat] instanceof UserLane){
+                // TODO: add some sort of a StatsGenerator class to generate stats for everything
+                // This Stats variable is for testing, to be removed
+                Stats userStats = new Stats(0.4F, 0.2F, 10, 3, 10, 0 );
+                // TODO: define somewhere how far off the bottom of the screen the UserBoat should be (currently set to 10)
+                boats[boat] = new UserBoat(new Position(lanes[boat].getMiddle(), 10), userStats);
+                boats[boat].setBoatPosition(new Position(boats[boat].getBoatPosition().getPosX() + boats[boat].getSprite().getRegionWidth()/(4 / boats[boat].getScale()) , 10));
+                System.out.println(boats[boat].getSprite().getRegionWidth());
+                System.out.println(boats[boat].getBoatPosition().getPosX());
+
+                continue;
+            }
+
+            // TODO: generate AIBoat when that gets made
+        }
+
+    }
+
+    private void drawBoats(){
+        for (int i = 0; i < numLanes; i++){
+            if (boats[i] != null) {
+                boats[i].draw(getProjection());
+                boats[i].control();
+            }
+        }
+    }
+
 
     /**
      * Draws every Lane in the lanes array.

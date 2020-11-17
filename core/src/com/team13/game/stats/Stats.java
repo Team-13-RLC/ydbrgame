@@ -11,11 +11,12 @@ public class Stats {
     private float robustness;
     private float fatigue;
 
-    // Default constructor defined implicitly
+    // Default constructor not required
 
     // Constructor which takes arguments assigns the values of those arguments to the private variables
-    public Stats(float speed, float acceleration, float deceleration, float maxSpeed, float maneuverability, float robustness, float fatigue) {
-       this.speed = speed;
+    public Stats( float acceleration, float deceleration, float maxSpeed, float maneuverability, float robustness, float fatigue) {
+        // Initial speed si always 0
+       this.speed = 0;
        this.acceleration = acceleration;
        this.deceleration = deceleration;
        this.maxSpeed = maxSpeed;
