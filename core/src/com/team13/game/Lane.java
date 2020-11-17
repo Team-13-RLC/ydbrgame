@@ -50,11 +50,17 @@ public class Lane {
 
     }
 
+    // Getters
     public int getlBorder() {
         return lBorder;
     }
 
     public int getrBorder() {
         return rBorder;
+    }
+
+    public int getMiddle(){
+        // Implicit cast to int
+        return (lBorder + rBorder)/2;
     }
 }
