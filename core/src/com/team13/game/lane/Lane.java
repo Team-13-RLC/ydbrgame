@@ -4,17 +4,37 @@ import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.team13.game.mainGame;
 
+/**
+ * Used to define and draw lanes for each boat to stay in.
+ */
 public class Lane {
-    // TODO: Consider changing these to short
+
+    // Fields
+    /**
+     * Left lane border.
+     */
     protected int lBorder;
+
+    /**
+     * Right lane border.
+     */
     protected int rBorder;
+
+    /**
+     * Border width.
+     */
     protected static final byte BORDERWIDTH = 5;
-    // Thing that renders shapes
+
+    /**
+     * Thing that renders shapes.
+     */
     protected ShapeRenderer shapeRenderer;
 
 
+    // Constructors
     /**
-     * Default constructor is private to prevent lanes with borders 0, 0
+     * Default constructor is private to prevent lanes with borders 0, 0.
+     * This behaviour may be default if the class is left without a constructor, but this way it is explicit.
      */
     private Lane(){}
 
@@ -33,10 +53,12 @@ public class Lane {
     }
 
 
+    // Methods
     /**
      * Draw each lane.
-     * Ues the shape renderer to render rectangles, one for each border.
+     * Uses the shape renderer to render rectangles, one for each border.
      * Each border goes from 0 to screen height on the y axis.
+     * No need to pass projection matrix, as the lanes are drawn in screen space coordinates.
      */
     public void draw(){
             // Between .begin and .eng shapes can be drawn.
@@ -51,6 +73,7 @@ public class Lane {
 
     }
 
+
     // Getters
     public int getlBorder() {
         return lBorder;
@@ -60,6 +83,7 @@ public class Lane {
         return rBorder;
     }
 
+    // Returns the midpoint of the lane
     public int getMiddle(){
         // Implicit cast to int
         return (lBorder + rBorder)/2;
