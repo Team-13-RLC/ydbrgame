@@ -1,24 +1,66 @@
 package com.team13.game.stats;
 
+import java.util.UUID;
+
 public class Stats {
 
-    // maneuverability = horizontal speed
-    private float speed;
+    // Methods
+    /**
+     * Speed of the boat. Always initialized to 0.
+     */
+    private float speed = 0;
+
+    /**
+     * How much the speed changes when the user presses UP or DOWN
+     *
+     * @see com.team13.game.boat.UserBoat.Keymap
+     */
     private float acceleration;
-    private float deceleration;
+
+    /**
+     * How much the speed changes when the user does not press anything.
+     * Could have been called drag for clarity. Is constant.
+     */
+    private final float deceleration = 0.2F;
+
+    /**
+     * Upper bound beyond which the boat will not accelerate.
+     */
     private float maxSpeed;
+
+    /**
+     * Boat's horizontal speed.
+     */
     private float maneuverability;
+
+    /**
+     * How many times the boat needs to hit an obstacle before brwaking.
+     */
     private float robustness;
+
+    /**
+     * How much the stats change between legs
+     */
     private float fatigue;
 
-    // Default constructor not required
 
-    // Constructor which takes arguments assigns the values of those arguments to the private variables
-    public Stats( float acceleration, float deceleration, float maxSpeed, float maneuverability, float robustness, float fatigue) {
-        // Initial speed si always 0
-       this.speed = 0;
+    // Constructors
+    /**
+     * Private constructor to prevent all stats from being 0.
+     */
+    private Stats(){}
+
+    /**
+     * Initialises all variables from parameters.
+     *
+     * @param acceleration Initial Acceleration
+     * @param maxSpeed Initial maximum speed
+     * @param maneuverability Initial horizontal velocity
+     * @param robustness Initial robustness.
+     * @param fatigue Initial fatigue
+     */
+    public Stats( float acceleration, float maxSpeed, float maneuverability, float robustness, float fatigue) {
        this.acceleration = acceleration;
-       this.deceleration = deceleration;
        this.maxSpeed = maxSpeed;
        this.maneuverability = maneuverability;
        this.robustness = robustness;
@@ -27,74 +69,57 @@ public class Stats {
 
 
     // Getters
-
     public float getSpeed() {
         return speed;
     }
 
-    public float getAcceleration()
-    {
+    public float getAcceleration() {
         return acceleration;
     }
 
-    public float getDeceleration()
-    {
+    public float getDeceleration() {
         return deceleration;
     }
-    public float getMaxSpeed()
-    {
+
+    public float getMaxSpeed() {
         return maxSpeed;
     }
 
-    public float getManeuverability()
-    {
+    public float getManeuverability() {
         return maneuverability;
     }
 
-    public float getRobustness()
-    {
+    public float getRobustness() {
         return robustness;
     }
 
-    public float getFatigue()
-    {
+    public float getFatigue() {
         return fatigue;
     }
 
 
     // Setters
-
     public void setSpeed(float speed) {
         this.speed = speed;
     }
 
-    public void setAcceleration(float a)
-    {
+    public void setAcceleration(float a) {
         this.acceleration = a;
     }
 
-    public void setDeceleration(float a)
-    {
-        this.deceleration = a;
-    }
-
-    public void setMaxSpeed(float v)
-    {
+    public void setMaxSpeed(float v) {
         this.maxSpeed = v;
     }
 
-    public void setManeuverability(float m)
-    {
+    public void setManeuverability(float m) {
         this.maneuverability = m;
     }
 
-    public void setRobustness(float r)
-    {
+    public void setRobustness(float r) {
         this.robustness = r;
     }
 
-    public void  setFatigue(float f)
-    {
+    public void  setFatigue(float f) {
         this.fatigue = f;
     }
 }
