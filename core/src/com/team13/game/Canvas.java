@@ -17,25 +17,53 @@ import java.util.Random;
  * Singleton class to manage the camera, background and (possibly) sprite drawing.
  */
 public class Canvas {
-    // the camera used for the game (there's only one)
+
+    // Fields
+    /**
+     * The single camera used for the game
+     */
     private OrthographicCamera camera;
-    // This is required as there can only be one instance of this class
-    private static Canvas instance = new Canvas();
+
+    /**
+     * The single instance of this class.
+     * Created when the program starts.
+     */
+    private static final Canvas instance = new Canvas();
+
+    /**
+     * Number of lanes in the game.
+     */
     private static final byte numLanes = 8;
-    // Array to store the lanes
+
+    /**
+     * An array to store all the lanes
+     */
     private Lane[] lanes;
+
+    /**
+     * An array to store all the boats
+     */
     private Boat[] boats;
 
+    /**
+     * Class that will render the background.
+     */
     BackgroundRender background;
+
+
+    // Constructors
     /**
      * Private constructor to prevent it from being called from outside of the class
      */
     private Canvas(){}
 
 
+    // Methods
     /**
-     * Called once to initialise everything to do with the canvas (also at the moment the lanes).
-     * Similar to mainGame.create().
+     * Called once to initialise everything to do with the canvas, the lanes and boats.
+     * Initializes the camera and sets its position. Initializes the background. Makes the boats. Makes the lanes.
+     *
+     * @see mainGame#create()
      */
     public void create(){
         camera = new OrthographicCamera(mainGame.Resolution.WIDTH, mainGame.Resolution.HEIGHT );
@@ -43,16 +71,19 @@ public class Canvas {
         camera.position.set(mainGame.Resolution.WIDTH/2f, mainGame.Resolution.HEIGHT/2f, 0f);
         // NOTE: very important, camera will not do anything until his is called.
         camera.update();
-        background = new BackgroundRender(getProjection());
+        background = new BackgroundRender();
         makeLanes();
         makeBoats();
     }
-    // Gets called every frame to update the canvas
+
     /**
-     * Called every frame to update everything to do with the canvas. Similar to mainGame.render().
+     * Called every frame to update everything to do with the canvas.
+     * Clears the screen with a color (for some reason). Updates (scrolls) the background. Draws boats and lanes.
+     * Updates camera position.
+     *
+     * @see mainGame#render().
      */
     public void update(){
-        // Clear the screen with a certain color
         Gdx.gl.glClearColor(0.2F, 0.3F, 0.9F, 1);
 
         // Some OpenGL thing, not really sure.
@@ -66,7 +97,7 @@ public class Canvas {
 
     /**
      * Initialises the lanes.
-     * Allocates memory in the lanes array. Initializes all the Lane instances into the array with correct dimensions
+     * Allocates memory in the lanes array. Initializes all the Lane instances into the array with correct dimensions.
      */
     private void makeLanes(){
         lanes = new Lane[numLanes];
@@ -77,16 +108,21 @@ public class Canvas {
             if (!userLaneSet){
                 // choose a number between 0 and 1
                 if (userLaneChooser.nextInt(2) == 1){
+                    // Create user lane
                     lanes[lane] = new UserLane(lane* (mainGame.Resolution.WIDTH/numLanes), (lane+1)* (mainGame.Resolution.WIDTH/numLanes));
                     userLaneSet = true;
                     continue;
                 }
             }
+            // Otherwise just make a normal lane
             lanes[lane] = new Lane(lane* (mainGame.Resolution.WIDTH/numLanes), (lane+1)* (mainGame.Resolution.WIDTH/numLanes));
         }
     }
 
-
+    /**
+     * Initialises the boats.
+     * Allocates memory in the boats array. Initializes all the Bane instances into the array.
+     */
     private void makeBoats(){
         // Number of boats should roughly equal the number of lanes
         boats = new Boat[numLanes];
@@ -95,7 +131,7 @@ public class Canvas {
             if (lanes[boat] instanceof UserLane){
                 // TODO: add some sort of a StatsGenerator class to generate stats for everything
                 // This Stats variable is for testing, to be removed
-                Stats userStats = new Stats(0.4F, 0.2F, 10, 3, 10, 0 );
+                Stats userStats = new Stats(0.4F, 10, 3, 10, 0 );
                 boats[boat] = new UserBoat(new Position(lanes[boat].getMiddle(), 10), userStats);
                 boats[boat].setBoatPosition(new Position(boats[boat].getBoatPosition().getPosX() + boats[boat].getSprite().getRegionWidth()/(4 / boats[boat].getScale()) , 0));
                 System.out.println(boats[boat].getSprite().getRegionWidth());
@@ -109,9 +145,12 @@ public class Canvas {
 
     }
 
+    /**
+     * Gets boats to be drawn, also allows them to be controlled/control themselves.
+     */
     private void drawBoats(){
         for (int i = 0; i < numLanes; i++){
-            if (boats[i] != null) {
+            if (boats[i] != null) { // Will nor be required in the future once there's more then one boat
                 boats[i].draw(getProjection());
                 boats[i].control();
             }
@@ -127,12 +166,15 @@ public class Canvas {
         }
     }
 
+    /**
+     * Updates camera position so that it follows the userboat.
+     */
     private void updateCamera(){
-        for (Boat b :
-                boats) {
+        for (Boat b : boats) {
             if (b instanceof UserBoat) {
                 camera.position.y = b.getBoatPosition().getPosY() + mainGame.Resolution.HEIGHT/2;
                 camera.update();
+                // Important so that we don't keep going through this array after the boat in question was found.
                 break;
             }
 
