@@ -136,6 +136,7 @@ public class Boat {
     }
 
 
+    // Static classes
     /**
      * Gives names to directions.
      * Using 1 for forwards and -1 for backwards
