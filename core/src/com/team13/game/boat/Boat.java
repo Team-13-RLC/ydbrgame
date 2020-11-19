@@ -51,6 +51,11 @@ public class Boat {
      */
     protected float spriteWidth;
 
+    /**
+     * How tall the sprite is
+     */
+    protected float spriteHeight;
+
 
     // Constructors
     /**
@@ -89,6 +94,7 @@ public class Boat {
         boatSprite.setPosition(boatPosition.getPosX(), boatPosition.getPosY());
         boatSprite.draw(batch);
         batch.end();
+//        System.out.println("Boat position: " + getBoatPosition().getPosX() + ", " + getBoatPosition().getPosY());
     }
 
     /**
@@ -145,6 +151,10 @@ public class Boat {
 
     public void setBoatStats(Stats boatStats) {
         this.boatStats = boatStats;
+    }
+
+    public float getSpriteHeight() {
+        return spriteHeight;
     }
 
 
