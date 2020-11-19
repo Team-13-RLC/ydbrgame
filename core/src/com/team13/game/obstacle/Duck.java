@@ -5,18 +5,19 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.team13.game.stats.Position;
 
-public class Rock extends staticObstacle
+public class Duck extends complexDynamicObstacle
 {
-    public Rock(Position position)
+    /**
+     * Inherits dynamicObstacle class.
+     * Creates a duck and initialises all that needs to be initialised.
+     * Assigns the correct texture for the duck(s). Ensures for correct filtering.
+     * Gives the texture to the duck sprite and sets initial position of the duck using the superclass' constructor.
+     * Sets the scale for the sprite.
+     * @param position
+     * @See Obstacle
+     */
+    public Duck(Position position)
     {
-
-        /**
-         * Inherits staticObstacle class.
-         * Creates a rock and initialises all that needs to be initialised.
-         * Assigns the correct texture for the rock(s). Ensures for correct filtering.
-         * Gives the texture to the rock sprite and sets initial position of the rock using the superclass' constructor.
-         * Sets the scale for the sprite.
-         */
         super(position);
         spriteScale = 0.2F;
         obstacleTexture = new Texture(Gdx.files.internal("textures/rockTexture.png"));
