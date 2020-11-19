@@ -1,27 +1,65 @@
 package com.team13.game.stats;
 
+import java.util.UUID;
+
 public class Stats {
 
-    // maneuverability = horizontal speed
-    private float speed;
-    private float acceleration;
-    private float maxSpeed;
-    private float maneuverability;
-    private float robustness;
-    private float fatigue;
+    // Methods
+    /**
+     * Speed of the boat. Always initialized to 0.
+     */
+    private float speed = 0;
 
     /**
-     * Constructor takes arguments and assigns their values to the private fields
+     * How much the speed changes when the user presses UP or DOWN
      *
-     * @param speed Boat's speed
-     * @param acceleration How fast does the speed change
-     * @param maxSpeed Maximum value for speed
-     * @param maneuverability How fast a boat can move horizontally
-     * @param robustness How many times can a boat collide with an obstacle before dying
-     * @param fatigue Top speed decreases?? Im not actually sure what this does
+     * @see com.team13.game.boat.UserBoat.Keymap
      */
-    public Stats(float speed, float acceleration, float maxSpeed, float maneuverability, float robustness, float fatigue) {
-       this.speed = speed;
+    private float acceleration;
+
+    /**
+     * How much the speed changes when the user does not press anything.
+     * Could have been called drag for clarity. Is constant.
+     */
+    private final float deceleration = 0.2F;
+
+    /**
+     * Upper bound beyond which the boat will not accelerate.
+     */
+    private float maxSpeed;
+
+    /**
+     * Boat's horizontal speed.
+     */
+    private float maneuverability;
+
+    /**
+     * How many times the boat needs to hit an obstacle before brwaking.
+     */
+    private float robustness;
+
+    /**
+     * How much the stats change between legs
+     */
+    private float fatigue;
+
+
+    // Constructors
+    /**
+     * Private constructor to prevent all stats from being 0.
+     */
+    private Stats(){}
+
+    /**
+     * Initialises all variables from parameters.
+     *
+     * @param acceleration Initial Acceleration
+     * @param maxSpeed Initial maximum speed
+     * @param maneuverability Initial horizontal velocity
+     * @param robustness Initial robustness.
+     * @param fatigue Initial fatigue
+     */
+    public Stats( float acceleration, float maxSpeed, float maneuverability, float robustness, float fatigue) {
        this.acceleration = acceleration;
        this.maxSpeed = maxSpeed;
        this.maneuverability = maneuverability;
@@ -31,65 +69,57 @@ public class Stats {
 
 
     // Getters
-
     public float getSpeed() {
         return speed;
     }
 
-    public float getAcceleration()
-    {
+    public float getAcceleration() {
         return acceleration;
     }
 
-    public float getMaxSpeed()
-    {
+    public float getDeceleration() {
+        return deceleration;
+    }
+
+    public float getMaxSpeed() {
         return maxSpeed;
     }
 
-    public float getManeuverability()
-    {
+    public float getManeuverability() {
         return maneuverability;
     }
 
-    public float getRobustness()
-    {
+    public float getRobustness() {
         return robustness;
     }
 
-    public float getFatigue()
-    {
+    public float getFatigue() {
         return fatigue;
     }
 
 
     // Setters
-
     public void setSpeed(float speed) {
         this.speed = speed;
     }
 
-    public void setAcceleration(float a)
-    {
+    public void setAcceleration(float a) {
         this.acceleration = a;
     }
 
-    public void setMaxSpeed(float v)
-    {
+    public void setMaxSpeed(float v) {
         this.maxSpeed = v;
     }
 
-    public void setManeuverability(float m)
-    {
+    public void setManeuverability(float m) {
         this.maneuverability = m;
     }
 
-    public void setRobustness(float r)
-    {
+    public void setRobustness(float r) {
         this.robustness = r;
     }
 
-    public void  setFatigue(float f)
-    {
+    public void  setFatigue(float f) {
         this.fatigue = f;
     }
 }

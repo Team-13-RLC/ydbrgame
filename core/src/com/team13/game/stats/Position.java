@@ -5,11 +5,28 @@ package com.team13.game.stats;
  */
 public class Position
 {
+
+    // Fields
+    /**
+     * Horizontal position
+     */
     private float posX;
-    private float posY;
 
     /**
-     * Constructor takes arguments and assigns their values to the private fields
+     * Vertical position
+     */
+    private float posY;
+
+
+    // Constructors
+
+    /**
+     * Private constructor to prevent positionfrom initializing to 0,0
+     */
+    private Position(){}
+
+    /**
+     * Constructor takes arguments and assigns their values to the private fields.
      * @param posX Horizontal position of an object
      * @param posY Vertical position of an object
      */
