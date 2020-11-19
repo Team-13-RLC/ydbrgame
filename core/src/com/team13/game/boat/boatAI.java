@@ -37,9 +37,9 @@ public class boatAI extends Boat{
         skill_level = skill;
         ailane = new Lane(lane_left,lane_right);
         Random ran = new Random();
-        Integer min = skill_level;
+        int min = skill_level;
         //50 used as placeholder until testing can be done
-        Integer max = min + 50;
+        int max = min + 50;
         detection_distance = ran.nextInt((max+1)-min) + min;
     }
 
@@ -78,40 +78,47 @@ public class boatAI extends Boat{
     private boolean obstacle_detected(Obstacle obstacle, boatAI boat){
 
 
-            if(obstacle.y < boat.getBoatPosition().getPosY()){
-                return false;
-            }
-            //come back if x is a range of values
-            if(obstacle.y <= detection_distance && obstacle.x == boat.getBoatPosition().getPosX()){
-                return true;
-            }else{
-                return false;
-            }
+        if(obstacle.getObstaclePosition.getPosY < boat.getBoatPosition().getPosY()){
+            return false;
+        }
+        //come back if x is a range of values
+        return obstacle.getObstaclePosition.getPosY <= detection_distance && ((obstacle.getObstaclePosition.getPosX - obstacle.getObstacleWidth()/2  < boat.getBoatPosition().getPosX() + spriteWidth/2 && obstacle.getObstaclePosition.getPosX - obstacle.getObstacleWidth()/2 > boat.getBoatPosition().getPosX() - spriteWidth/2)||(obstacle.getObstaclePosition.getPosX + obstacle.getObstacleWidth()/2  > boat.getBoatPosition().getPosX() - spriteWidth/2 && obstacle.getObstaclePosition.getPosX + obstacle.getObstacleWidth() < boat.getBoatPosition().getPosX() + spriteWidth/2));
 
     }
 
-    public void Movement(boatAI boat, ArrayList<Obstacle> obstacles){
+    public void Control(boatAI boat, ArrayList<Obstacle> obstacles){
 
         boat.accelerate(1);
         Iterator obstacle_iterator = obstacles.iterator();
-
+        boolean detected = false;
         while(obstacle_iterator.hasNext())
             if(obstacle_detected(obstacle_iterator.next(),boat)){
                 String dir = Direction(obstacle,boat);
-                if(dir == "L"){
-
-                    boat.boatPosition.setPosX(boat.getBoatPosition().getPosX() - boat.getBoatStats().getManeuverability());
-
-                }else if(dir == "R"){
-
-                    boat.boatPosition.setPosX(boat.getBoatPosition().getPosX() - boat.getBoatStats().getManeuverability());
-
-                }
+                detected = true;
+                turn(dir);
             }
+        if (!detected){
+            if (boat.getBoatPosition().getPosX() > ailane.getrBorder()) {
+                turn("L");
+            } else if (boat.getBoatPosition().getPosX() < ailane.getlBorder()) {
+                turn("R");
+            }
+        }
 
 
 
+    }
 
+    private void turn(String dir){
+        if (dir.equals("L")) {
+
+            boatPosition.setPosX(getBoatPosition().getPosX() - getBoatStats().getManeuverability());
+
+        } else if (dir.equals("R")) {
+
+            boatPosition.setPosX(getBoatPosition().getPosX() + getBoatStats().getManeuverability());
+
+        }
     }
 
 }
