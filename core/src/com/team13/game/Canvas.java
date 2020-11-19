@@ -110,6 +110,15 @@ public class Canvas {
         updateCamera();
     }
 
+    public void dispose(){
+        background.dispose();
+        for (Lane l : lanes) {
+            l.dispose();
+        }
+        for (Boat b : boats) {
+            b.dispose();
+        }
+    }
 
     /**
      * Initialises the lanes.

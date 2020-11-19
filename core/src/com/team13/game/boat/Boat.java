@@ -125,6 +125,12 @@ public class Boat {
     }
 
 
+    public void dispose(){
+        batch.dispose();
+        boatTexture.dispose();
+    }
+
+
 //  Getters
     public Position getBoatPosition() {
         return boatPosition;

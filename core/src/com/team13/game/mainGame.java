@@ -29,6 +29,7 @@ public class mainGame extends ApplicationAdapter {
 	public void dispose () {
 		batch.dispose();
 		img.dispose();
+		canvas.dispose();
 	}
 
 

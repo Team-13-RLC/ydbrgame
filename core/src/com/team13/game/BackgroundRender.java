@@ -14,12 +14,12 @@ public class BackgroundRender {
     /**
      * Water texture used for the background
      */
-    Texture bgTexture;
+    private Texture bgTexture;
 
     /**
      * Sprite batch used to draw everything
      */
-    SpriteBatch batch;
+    private SpriteBatch batch;
 
     // Constructors
     /**
@@ -43,7 +43,11 @@ public class BackgroundRender {
         batch.begin();
         batch.draw(bgTexture, 0, 0,0, -(cameraYPosition), mainGame.Resolution.WIDTH, mainGame.Resolution.HEIGHT);
         batch.end();
+    }
 
 
+    public void dispose(){
+        bgTexture.dispose();
+        batch.dispose();
     }
 }

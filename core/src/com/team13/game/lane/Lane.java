@@ -73,6 +73,10 @@ public class Lane {
 
     }
 
+    public void dispose(){
+        shapeRenderer.dispose();
+    }
+
 
     // Getters
     public int getlBorder() {
