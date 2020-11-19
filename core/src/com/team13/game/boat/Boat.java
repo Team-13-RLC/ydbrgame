@@ -92,7 +92,7 @@ public class Boat {
     public void control() {}
 
     /**
-     * Updates boat position when no eys are pressed.
+     * Updates boat position when no keys are pressed.
      * Boat speed is decreasing (due to drag), position keeps increasing until the speed is below 0.
      * Speed is clamped at 0 when it goes below 0 (or reaches 0)
      */
