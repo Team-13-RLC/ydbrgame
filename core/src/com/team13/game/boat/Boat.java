@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Matrix4;
+import com.team13.game.lane.Lane;
 import com.team13.game.stats.Position;
 import com.team13.game.stats.Stats;
 
@@ -45,13 +46,23 @@ public class Boat {
      */
     protected float spriteScale;
 
+    /**
+     * How wide the sprite is
+     */
+    protected float spriteWidth;
+
+    /**
+     * How tall the sprite is
+     */
+    protected float spriteHeight;
+
 
     // Constructors
     /**
      * Constructor for the boat.
      * Allocates the sprite batch.
      */
-    public Boat(){
+    public Boat() {
         batch = new SpriteBatch();
     }
 
@@ -83,6 +94,7 @@ public class Boat {
         boatSprite.setPosition(boatPosition.getPosX(), boatPosition.getPosY());
         boatSprite.draw(batch);
         batch.end();
+//        System.out.println("Boat position: " + getBoatPosition().getPosX() + ", " + getBoatPosition().getPosY());
     }
 
     /**
@@ -102,6 +114,12 @@ public class Boat {
             boatPosition.setPosY(boatPosition.getPosY() + boatStats.getSpeed());
         } else {
             boatStats.setSpeed(0);
+        }
+    }
+
+    public void checkCollisions(Lane lane){
+        if (lane.getlBorder() > boatPosition.getPosX() || lane.getrBorder() < boatPosition.getPosX() + spriteWidth){
+            // TODO: Make penalty
         }
 
     }
@@ -133,6 +151,10 @@ public class Boat {
 
     public void setBoatStats(Stats boatStats) {
         this.boatStats = boatStats;
+    }
+
+    public float getSpriteHeight() {
+        return spriteHeight;
     }
 
 

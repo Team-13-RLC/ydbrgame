@@ -48,7 +48,19 @@ public class Canvas {
     /**
      * Class that will render the background.
      */
-    BackgroundRender background;
+    private BackgroundRender background;
+
+    /**
+     * The ine which the boats need to cross to win
+     */
+    private FinishLine finishLine;
+
+    /**
+     * How long the race is
+     */
+    private final float raceLength = 1500;
+
+
 
 
     // Constructors
@@ -68,10 +80,13 @@ public class Canvas {
     public void create(){
         camera = new OrthographicCamera(mainGame.Resolution.WIDTH, mainGame.Resolution.HEIGHT );
         // sets position of the camera such that it covers the whole screen
-        camera.position.set(mainGame.Resolution.WIDTH/2f, mainGame.Resolution.HEIGHT/2f, 0f);
+        // Ok, I haven't managed to figure out why it does this. It's off by 100. This is not the way to fix this, but we're running out of time.
+        camera.position.set(mainGame.Resolution.WIDTH/2f +100, mainGame.Resolution.HEIGHT/2f, 0f);
         // NOTE: very important, camera will not do anything until his is called.
         camera.update();
         background = new BackgroundRender();
+        finishLine = new FinishLine(raceLength);
+
         makeLanes();
         makeBoats();
     }
@@ -90,7 +105,8 @@ public class Canvas {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         background.update((int)camera.position.y);
         drawLanes();
-        drawBoats();
+        checkForEnd();
+        updateBoats();
         updateCamera();
     }
 
@@ -131,11 +147,9 @@ public class Canvas {
             if (lanes[boat] instanceof UserLane){
                 // TODO: add some sort of a StatsGenerator class to generate stats for everything
                 // This Stats variable is for testing, to be removed
-                Stats userStats = new Stats(0.4F, 10, 3, 10, 0 );
-                boats[boat] = new UserBoat(new Position(lanes[boat].getMiddle(), 10), userStats);
-                boats[boat].setBoatPosition(new Position(boats[boat].getBoatPosition().getPosX() + boats[boat].getSprite().getRegionWidth()/(4 / boats[boat].getScale()) , 0));
-                System.out.println(boats[boat].getSprite().getRegionWidth());
-                System.out.println(boats[boat].getBoatPosition().getPosX());
+                Stats userStats = new Stats(0.04F, 5, 3, 10, 0 );
+                boats[boat] = new UserBoat(new Position(lanes[boat].getMiddle(), 0), userStats);
+                boats[boat].setBoatPosition(new Position(lanes[boat].getMiddle() - boats[boat].getSprite().getBoundingRectangle().width/2f, 0));
 
                 continue;
             }
@@ -148,11 +162,16 @@ public class Canvas {
     /**
      * Gets boats to be drawn, also allows them to be controlled/control themselves.
      */
-    private void drawBoats(){
+    private void updateBoats(){
         for (int i = 0; i < numLanes; i++){
-            if (boats[i] != null) { // Will nor be required in the future once there's more then one boat
+            if (boats[i] instanceof UserBoat) {
                 boats[i].draw(getProjection());
-                boats[i].control();
+                boats[i].checkCollisions(lanes[i]);
+                if (boats[i].getBoatPosition().getPosY() < (raceLength - boats[i].getSpriteHeight())){
+                    boats[i].control();
+                } else{
+                    boats[i].update();
+                }
             }
         }
     }
@@ -167,12 +186,21 @@ public class Canvas {
     }
 
     /**
+     * Checks if the finish line is close, then renders it.
+     */
+    private void checkForEnd(){
+        if (camera.position.y > raceLength - mainGame.Resolution.HEIGHT) {
+            finishLine.draw(getProjection());
+            }
+    }
+
+    /**
      * Updates camera position so that it follows the userboat.
      */
     private void updateCamera(){
         for (Boat b : boats) {
             if (b instanceof UserBoat) {
-                camera.position.y = b.getBoatPosition().getPosY() + mainGame.Resolution.HEIGHT/2;
+                camera.position.y = b.getBoatPosition().getPosY() + mainGame.Resolution.HEIGHT/2f;
                 camera.update();
                 // Important so that we don't keep going through this array after the boat in question was found.
                 break;

@@ -41,7 +41,7 @@ public class BackgroundRender {
      */
     public void update(int cameraYPosition){
         batch.begin();
-        batch.draw(bgTexture, 0, 0,0, -(cameraYPosition)/6, mainGame.Resolution.WIDTH, mainGame.Resolution.HEIGHT);
+        batch.draw(bgTexture, 0, 0,0, -(cameraYPosition), mainGame.Resolution.WIDTH, mainGame.Resolution.HEIGHT);
         batch.end();
 
 
