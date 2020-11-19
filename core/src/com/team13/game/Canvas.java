@@ -132,7 +132,7 @@ public class Canvas {
             if (lanes[boat] instanceof UserLane){
                 // TODO: add some sort of a StatsGenerator class to generate stats for everything
                 // This Stats variable is for testing, to be removed
-                Stats userStats = new Stats(0.4F, 10, 3, 10, 0 );
+                Stats userStats = new Stats(0.04F, 5, 3, 10, 0 );
                 boats[boat] = new UserBoat(new Position(lanes[boat].getMiddle(), 0), userStats);
                 boats[boat].setBoatPosition(new Position(lanes[boat].getMiddle() - boats[boat].getSprite().getBoundingRectangle().width/2f, 0));
 
