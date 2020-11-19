@@ -34,7 +34,7 @@ public class UserBoat extends Boat {
         boatSprite = new Sprite(boatTexture);
         boatSprite.setPosition(boatPosition.getPosX(), boatPosition.getPosY());
         boatSprite.setScale(spriteScale);
-
+        spriteWidth = boatSprite.getBoundingRectangle().width;
     }
 
 

@@ -22,7 +22,7 @@ public class mainGame extends ApplicationAdapter {
 	public void render () {
 		canvas.update();
 		// Uncomment to see fps
-		//System.out.println(com.badlogic.gdx.Gdx.graphics.getFramesPerSecond());
+//		System.out.println(com.badlogic.gdx.Gdx.graphics.getFramesPerSecond());
 	}
 
 	@Override

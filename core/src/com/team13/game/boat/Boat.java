@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Matrix4;
+import com.team13.game.lane.Lane;
 import com.team13.game.stats.Position;
 import com.team13.game.stats.Stats;
 
@@ -45,13 +46,18 @@ public class Boat {
      */
     protected float spriteScale;
 
+    /**
+     * How wide the sprite is
+     */
+    protected float spriteWidth;
+
 
     // Constructors
     /**
      * Constructor for the boat.
      * Allocates the sprite batch.
      */
-    public Boat(){
+    public Boat() {
         batch = new SpriteBatch();
     }
 
@@ -92,7 +98,7 @@ public class Boat {
     public void control() {}
 
     /**
-     * Updates boat position when no eys are pressed.
+     * Updates boat position when no keys are pressed.
      * Boat speed is decreasing (due to drag), position keeps increasing until the speed is below 0.
      * Speed is clamped at 0 when it goes below 0 (or reaches 0)
      */
@@ -102,6 +108,12 @@ public class Boat {
             boatPosition.setPosY(boatPosition.getPosY() + boatStats.getSpeed());
         } else {
             boatStats.setSpeed(0);
+        }
+    }
+
+    public void checkCollisions(Lane lane){
+        if (lane.getlBorder() > boatPosition.getPosX() || lane.getrBorder() < boatPosition.getPosX() + spriteWidth){
+            // TODO: Make penalty
         }
 
     }
