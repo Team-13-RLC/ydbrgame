@@ -1,22 +1,41 @@
-package com.team13.game;
-
-import org.graalvm.compiler.replacements.nodes.ArrayEqualsNode;
+package com.team13.game.boat;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Random;
+import com.team13.game.lane.Lane;
 
-
-
+//Fields
 public class boatAI extends Boat{
-//Detection, Movement,
-//Skill level acting as minimum for detection range
+    /**
+     * Holds the "skill level" of the boat which is used to determine
+     * detection distance.
+     **/
     private Integer skill_level = 0;
+    /**
+     * Holds the detection distance for obstacles once that is calculated
+     * using the skill level in the constructor statement.
+     */
     private Integer detection_distance = 0;
+    /**
+     * Holds the left and right borders of the lane that the ai is in
+     * also contains methods that allow the getting of the co-ords of said
+     * borders.
+     */
+    private Lane ailane;
 
-    public boatAI(Integer skill){
+//Constructors
+
+    /**
+     * Constructor for the boat_ai.
+     * Allocates the lane the ai uses and sets the detection distance for obstacles.
+     * @param skill the minimum bound for obstacle detection.
+     * @param lane_right right lane boundry.
+     * @param lane_left left lane boundry.
+     */
+    public boatAI(Integer skill, int lane_right, int lane_left){
         skill_level = skill;
-
+        ailane = new Lane(lane_left,lane_right);
         Random ran = new Random();
         Integer min = skill_level;
         //50 used as placeholder until testing can be done
@@ -24,10 +43,12 @@ public class boatAI extends Boat{
         detection_distance = ran.nextInt((max+1)-min) + min;
     }
 
+//Methods
+
     public String Direction(Obstacle obstacle, boatAI boat) {
         String output = "";
         if(obstacle.stationary()){
-            if(obstacle.getobstaclepostion.getPosX() < (boat.lane.right() + boat.lane.left())/2){
+            if(obstacle.getobstaclepostion.getPosX() <= boat.ailane.getMiddle()){
                 output = "R";
             }else{
                 output = "L";
