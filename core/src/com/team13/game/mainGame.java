@@ -6,14 +6,10 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 
 public class mainGame extends ApplicationAdapter {
-	SpriteBatch batch;
-	Texture img;
 	Canvas canvas;
 
 	@Override
 	public void create () {
-		batch = new SpriteBatch();
-		img = new Texture("badlogic.jpg");
 		canvas = Canvas.getInstance();
 		canvas.create();
 	}
@@ -22,13 +18,11 @@ public class mainGame extends ApplicationAdapter {
 	public void render () {
 		canvas.update();
 		// Uncomment to see fps
-//		System.out.println(com.badlogic.gdx.Gdx.graphics.getFramesPerSecond());
+  		// System.out.println(com.badlogic.gdx.Gdx.graphics.getFramesPerSecond());
 	}
 
 	@Override
 	public void dispose () {
-		batch.dispose();
-		img.dispose();
 		canvas.dispose();
 	}
 
