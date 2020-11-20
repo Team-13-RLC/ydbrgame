@@ -46,6 +46,11 @@ public class Canvas {
     private Boat[] boats;
 
     /**
+     * The main loop of the game. handles timing and stuff.
+     */
+    private MainLoop loop;
+
+    /**
      * Class that will render the background.
      */
     private BackgroundRender background;
@@ -86,6 +91,7 @@ public class Canvas {
         camera.update();
         background = new BackgroundRender();
         finishLine = new FinishLine(raceLength);
+        loop = new MainLoop();
 
         makeLanes();
         makeBoats();
@@ -108,6 +114,7 @@ public class Canvas {
         checkForEnd();
         updateBoats();
         updateCamera();
+        loop.drawText(getProjection());
     }
 
     public void dispose(){
@@ -214,9 +221,7 @@ public class Canvas {
                 // Important so that we don't keep going through this array after the boat in question was found.
                 break;
             }
-
         }
-
     }
 
 

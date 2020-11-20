@@ -9,7 +9,7 @@ public class MainLoop {
     BitmapFont font;
     SpriteBatch batch;
 
-    MainLoop(){
+    MainLoop() {
         font = new BitmapFont();
         font.getRegion().getTexture().setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
         font.getData().setScale(10);
@@ -19,7 +19,7 @@ public class MainLoop {
     public void drawText(Matrix4 projection) {
         batch.setProjectionMatrix(projection);
         batch.begin();
-        font.draw(batch, "Hello World!", mainGame.Resolution.WIDTH/2f, mainGame.Resolution.HEIGHT/2f);
+        font.draw(batch, "Hello World!", mainGame.Resolution.WIDTH / 2f, mainGame.Resolution.HEIGHT / 2f);
         batch.end();
     }
 }
