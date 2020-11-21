@@ -46,25 +46,22 @@ public class boatAI extends Boat{
 //Methods
 
     public String Direction(Obstacle obstacle, boatAI boat) {
+
         String output = "";
-        if(obstacle.stationary()){
+        if(obstacle instanceof staticObstacle){
             if(obstacle.getobstaclepostion.getPosX() <= boat.ailane.getMiddle()){
                 output = "R";
             }else{
                 output = "L";
             }
-            return output;
-        }else if(obstacle.dynamic()){
-            if(obstacle.direction() < 0){
+        }else{
+            if(obstacle.getVelocityX<0){
                 output = "R";
             }else{
                 output = "L";
             }
-            return output;
-        }else{
-            return output;
         }
-
+        return output;
 
     }
 
@@ -86,8 +83,8 @@ public class boatAI extends Boat{
 
     }
 
-    public void Control(boatAI boat, ArrayList<Obstacle> obstacles){
-
+    public void Control(boatAI boat){
+        ArrayList<Obstacle> obstacles = Spawn.getObstacleList();
         boat.accelerate(1);
         Iterator obstacle_iterator = obstacles.iterator();
         boolean detected = false;
