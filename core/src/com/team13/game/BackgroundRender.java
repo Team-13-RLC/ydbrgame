@@ -1,6 +1,7 @@
 package com.team13.game;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Matrix4;
@@ -37,11 +38,11 @@ public class BackgroundRender {
 
     /**
      * Updates the background texture scroll position.
-     * @param cameraYPosition Current y position of teh camera.
      */
-    public void update(int cameraYPosition){
+    public void update(final Camera camera){
+        batch.setProjectionMatrix(camera.combined);
         batch.begin();
-        batch.draw(bgTexture, 0, 0,0, -(cameraYPosition), mainGame.Resolution.WIDTH, mainGame.Resolution.HEIGHT);
+        batch.draw(bgTexture, camera.position.x - camera.viewportWidth/2, camera.position.y - camera.viewportHeight/2,0, (int)-(camera.position.y), (int)camera.viewportWidth , (int)camera.viewportHeight);
         batch.end();
     }
 

@@ -1,29 +1,34 @@
 package com.team13.game;
 
 import com.badlogic.gdx.ApplicationAdapter;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 
 public class mainGame extends ApplicationAdapter {
-	Canvas canvas;
+    MainLoop loop;
 
 	@Override
 	public void create () {
-		canvas = Canvas.getInstance();
-		canvas.create();
+		loop = MainLoop.getInstance();
+		loop.create();
 	}
 
 	@Override
 	public void render () {
-		canvas.update();
+	    loop.run();
+
 		// Uncomment to see fps
   		// System.out.println(com.badlogic.gdx.Gdx.graphics.getFramesPerSecond());
 	}
 
 	@Override
 	public void dispose () {
-		canvas.dispose();
+	}
+
+
+	@Override
+	public void resize(int width, int height){
+		loop.resize(width, height);
+
 	}
 
 

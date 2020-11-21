@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Matrix4;
+import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.team13.game.boat.Boat;
 import com.team13.game.boat.UserBoat;
 import com.team13.game.lane.Lane;
@@ -14,7 +15,7 @@ import com.team13.game.stats.Stats;
 import java.util.Random;
 
 /**
- * Singleton class to manage the camera, background and (possibly) sprite drawing.
+ * Class to manage the camera, background and (possibly) sprite drawing.
  */
 public class Canvas {
 
@@ -22,13 +23,9 @@ public class Canvas {
     /**
      * The single camera used for the game
      */
-    private OrthographicCamera camera;
+    private final OrthographicCamera camera;
+    private final FillViewport viewport;
 
-    /**
-     * The single instance of this class.
-     * Created when the program starts.
-     */
-    private static final Canvas instance = new Canvas();
 
     /**
      * Number of lanes in the game.
@@ -68,7 +65,10 @@ public class Canvas {
     /**
      * Private constructor to prevent it from being called from outside of the class
      */
-    private Canvas(){}
+    public Canvas(){
+        camera = new OrthographicCamera();
+        viewport = new FillViewport(mainGame.Resolution.WIDTH, mainGame.Resolution.HEIGHT, camera );
+    }
 
 
     // Methods
@@ -79,12 +79,12 @@ public class Canvas {
      * @see mainGame#create()
      */
     public void create(){
-        camera = new OrthographicCamera(mainGame.Resolution.WIDTH, mainGame.Resolution.HEIGHT );
+        camera.setToOrtho(false, camera.viewportWidth, camera.viewportHeight);
+        camera.position.set(camera.viewportWidth/2 +100, camera.viewportHeight/2, 0f);
+        viewport.apply();
+        viewport.update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         // sets position of the camera such that it covers the whole screen
         // Ok, I haven't managed to figure out why it does this. It's off by 100. This is not the way to fix this, but we're running out of time.
-        camera.position.set(mainGame.Resolution.WIDTH/2f +100, mainGame.Resolution.HEIGHT/2f, 0f);
-        // NOTE: very important, camera will not do anything until his is called.
-        camera.update();
         background = new BackgroundRender();
         finishLine = new FinishLine(raceLength);
         makeLanes();
@@ -103,7 +103,7 @@ public class Canvas {
 
         // Some OpenGL thing, not really sure.
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        background.update((int)camera.position.y);
+        background.update(camera);
         drawLanes();
         checkForEnd();
         updateBoats();
@@ -116,7 +116,10 @@ public class Canvas {
             l.dispose();
         }
         for (Boat b : boats) {
-            b.dispose();
+            // Temporary check because no AI boats
+            if (b != null) {
+                b.dispose();
+            }
         }
     }
 
@@ -134,14 +137,15 @@ public class Canvas {
                 // choose a number between 0 and 1
                 if (userLaneChooser.nextInt(2) == 1){
                     // Create user lane
-                    lanes[lane] = new UserLane(lane* (mainGame.Resolution.WIDTH/numLanes), (lane+1)* (mainGame.Resolution.WIDTH/numLanes));
+                    lanes[lane] = new UserLane(lane* ((int)camera.viewportWidth/numLanes), (lane+1)* ((int)camera.viewportWidth/numLanes));
                     userLaneSet = true;
                     continue;
                 }
             }
             // Otherwise just make a normal lane
-            lanes[lane] = new Lane(lane* (mainGame.Resolution.WIDTH/numLanes), (lane+1)* (mainGame.Resolution.WIDTH/numLanes));
+            lanes[lane] = new Lane(lane* ((int)camera.viewportWidth/numLanes), (lane+1)* ((int)camera.viewportWidth/numLanes));
         }
+
     }
 
     /**
@@ -174,10 +178,11 @@ public class Canvas {
     private void updateBoats(){
         for (int i = 0; i < numLanes; i++){
             if (boats[i] instanceof UserBoat) {
-                boats[i].draw(getProjection());
+                boats[i].draw(camera.combined);
                 boats[i].checkCollisions(lanes[i]);
                 if (boats[i].getBoatPosition().getPosY() < (raceLength - boats[i].getSpriteHeight())){
                     boats[i].control();
+                    System.out.println("x: " + boats[i].getBoatPosition().getPosX() + ", y: " + boats[i].getBoatPosition().getPosY());
                 } else{
                     boats[i].update();
                 }
@@ -190,17 +195,24 @@ public class Canvas {
      */
     private void drawLanes(){
         for (int i = 0; i < numLanes; i++){
-            lanes[i].draw();
+            lanes[i].draw(camera);
         }
     }
 
     /**
      * Checks if the finish line is close, then renders it.
      */
-    private void checkForEnd(){
-        if (camera.position.y > raceLength - mainGame.Resolution.HEIGHT) {
+    public boolean checkForEnd(){
+
+        if (camera.position.y > raceLength - camera.viewportHeight) {
             finishLine.draw(getProjection());
+            for (Boat b : boats) {
+                if (b instanceof UserBoat && b.getBoatPosition().getPosY() > raceLength && b.getBoatStats().getSpeed() == 0) {
+                    return true;
+                }
             }
+        }
+        return false;
     }
 
     /**
@@ -209,19 +221,23 @@ public class Canvas {
     private void updateCamera(){
         for (Boat b : boats) {
             if (b instanceof UserBoat) {
-                camera.position.y = b.getBoatPosition().getPosY() + mainGame.Resolution.HEIGHT/2f;
-                camera.update();
-                // Important so that we don't keep going through this array after the boat in question was found.
+                camera.setToOrtho(false, camera.viewportWidth, camera.viewportHeight);
+                camera.position.y = b.getBoatPosition().getPosY() + camera.viewportHeight/2;
+                camera.position.x = camera.viewportWidth/2 +100;
+                viewport.update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
                 break;
             }
         }
     }
 
 
-    // Getters
-    public static Canvas getInstance() {
-        return instance;
+    public void resize(int width, int height){
+        viewport.update(width, height);
+        camera.position.set(camera.viewportWidth/2 + 100 , camera.viewportHeight/2, 0f);
+
     }
+
+    // Getters
 
     /**
      * Gets the camera projection. Used to transform screen space coordinates to world space coordinates.

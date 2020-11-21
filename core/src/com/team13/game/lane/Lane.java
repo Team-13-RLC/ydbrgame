@@ -60,15 +60,17 @@ public class Lane {
      * Each border goes from 0 to screen height on the y axis.
      * No need to pass projection matrix, as the lanes are drawn in screen space coordinates.
      */
-    public void draw(){
+    public void draw(final Camera camera){
+        shapeRenderer.setProjectionMatrix(camera.combined);
             // Between .begin and .eng shapes can be drawn.
             shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
             // Color is set to black
             shapeRenderer.setColor(0, 0, 0, 1);
-            // Left border drawn (god this is awful)
-            shapeRenderer.rect( lBorder, 0, BORDERWIDTH, mainGame.Resolution.HEIGHT);
+            // Left border drawn
+            shapeRenderer.rect( lBorder + 100, camera.position.y - camera.viewportHeight/2, BORDERWIDTH, camera.viewportHeight);
             // Right border drawn
-            shapeRenderer.rect( rBorder - BORDERWIDTH, 0, BORDERWIDTH, mainGame.Resolution.HEIGHT);
+            shapeRenderer.rect( rBorder - BORDERWIDTH + 100, camera.position.y - camera.viewportHeight/2, BORDERWIDTH, camera.viewportHeight);
+
             shapeRenderer.end();
 
     }
