@@ -48,22 +48,13 @@ public class Obstacle
     protected float obstacleHeight;
 
     /**
-     * Creates an object and all the initialises all that needs to be initialised.
-     * Assigns the required texture to an obstacle. Ensures for correct filtering.
-     * Gives the correct texture to the sprite. Also sets the first position for the sprite.
-     * Sets the scaling for the sprites.
+     * Sets the first position for the obstacle.
      * @param position
      * @see Position
      */
     public Obstacle(Position position)
     {
-        spriteScale = 0.2F;
         obstaclePosition = position;
-        obstacleTexture = new Texture(Gdx.files.internal("textures/obstacleTexture.png"));
-        obstacleTexture.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
-        obstacleSprite = new Sprite(obstacleTexture);
-        obstacleSprite.setPosition(obstaclePosition.getPosX(), obstaclePosition.getPosY());
-        obstacleSprite.setScale(spriteScale);
     }
 
     public void draw(Matrix4 projectionMatrix)
