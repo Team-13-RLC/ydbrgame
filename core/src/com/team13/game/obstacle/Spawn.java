@@ -51,9 +51,9 @@ public class Spawn {
                 spawn_x < this.getLastSpawnedx() + 50 &&
                 spawn_x != -1) {
             spawn_x = r.nextInt(mainGame.Resolution.WIDTH + 1);
-            this.setLastSpawned(spawn_x);
-        }
 
+        }
+        this.setLastSpawned(spawn_x);
         Position output_position = new Position(0,0);
         output = new Obstacle(output_position);
         output_position = new Position(spawn_x,canvas_height - output.getObstacleHeight());
