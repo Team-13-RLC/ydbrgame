@@ -10,13 +10,13 @@ import com.team13.game.stats.Stats;
 
 /**
  * Parent class of all boats.
- * Note: This should've probably been an abstract class
+ * Responsible for rendering and managing boat speed and acceleration.
  */
 public class Boat {
 
     // Fields
     /**
-     * Holds 2 values for boat x and y positions
+     * Holds values for boat x and y positions.
      */
     protected Position boatPosition;
 
@@ -119,12 +119,15 @@ public class Boat {
 
     public void checkCollisions(Lane lane){
         if (lane.getlBorder() > boatPosition.getPosX() || lane.getrBorder() < boatPosition.getPosX() + spriteWidth){
-            // TODO: Make penalty
+            System.out.println("We've collided");
         }
 
     }
 
 
+    /**
+     * Calls dispose on the SpriteBatch and the texture
+     */
     public void dispose(){
         batch.dispose();
         boatTexture.dispose();

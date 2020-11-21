@@ -1,37 +1,69 @@
 package com.team13.game;
 
 
+/**
+ * Singleton class which creates the game loop.
+ */
 public class MainLoop {
-    private Canvas[] canvases;
+
+    // Fields
+    /**
+     * The single instance of MainLoop
+     */
     private static final MainLoop instance = new MainLoop();
+
+    /**
+     * Array holding all the canvases.
+     * One per leg of teh race.
+     */
+    private final Canvas[] canvases;
+
+    /**
+     * Since the loop is happening outside of the class, this is needed to know the current leg of teh race.
+     */
     private byte loopCounter;
+
+    /**
+     * Number of legs there will be.
+     */
     private final byte numLoops = 3;
+
+    /**
+     * Keeps track of whether the canvas has been created for the current leg.
+     */
     private boolean canvasCreated;
 
+
+    //Constructors
+    /**
+     * Private constructor, only accessible from inside of teh class.
+     * Creates all canvases in the canvases array.
+     */
     private MainLoop() {
         canvases = new Canvas[numLoops];
         for (int canvas = 0; canvas < numLoops; canvas++) {
             canvases[canvas] = new Canvas();
         }
-    }
-
-    public void create(){
         loopCounter = 0;
         canvasCreated = false;
     }
 
 
-
+    //Methods
+    /**
+     * Main function to activate the loop.
+     * If a canvas is not created, it will get created.
+     * If the end of a leg has not been reached, the canvas will get updated.
+     * If the end of the game has been reached, dispose() will be called.
+     */
     public void run(){
         if (loopCounter < numLoops){
             // Crate the canvas
             if (!canvasCreated) {
-                canvases[loopCounter].create();
                 canvasCreated = true;
             }
 
-            // Have a while loop for canvas to run in
-
+            // update the canvas
             if (!canvases[loopCounter].checkForEnd()) {
                 canvases[loopCounter].update();
             } else {
@@ -41,18 +73,24 @@ public class MainLoop {
                 canvasCreated = false;
             }
         }
-
     }
 
-
+    /**
+     * Function given to the ApplicationAdapter#resize() function in mainGame
+     *
+     * @param width window width
+     * @param height window height
+     * @see com.badlogic.gdx.ApplicationAdapter#resize(int width, int height)
+     * @see mainGame#resize(int width, int height)
+     */
     public void resize(int width, int height) {
-        for (Canvas c :
-                canvases) {
+        for (Canvas c : canvases) {
             c.resize(width, height);
         }
     }
-    // Getters
 
+
+    // Getters
     public static MainLoop getInstance() {
         return instance;
     }

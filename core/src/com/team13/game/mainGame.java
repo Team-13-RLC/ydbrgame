@@ -8,8 +8,8 @@ public class mainGame extends ApplicationAdapter {
 
 	@Override
 	public void create () {
+		// Only one instance of MainLoopcan exist. It can be retrieved with MainLoop.getInstance()
 		loop = MainLoop.getInstance();
-		loop.create();
 	}
 
 	@Override

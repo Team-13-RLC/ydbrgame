@@ -15,7 +15,7 @@ import com.team13.game.stats.Stats;
 import java.util.Random;
 
 /**
- * Class to manage the camera, background and (possibly) sprite drawing.
+ * Class to manage the camera, background and sprite drawing.
  */
 public class Canvas {
 
@@ -24,6 +24,10 @@ public class Canvas {
      * The single camera used for the game
      */
     private final OrthographicCamera camera;
+
+    /**
+     * ViewPort used for the game
+     */
     private final FillViewport viewport;
 
 
@@ -42,14 +46,13 @@ public class Canvas {
      */
     private Boat[] boats;
 
-
     /**
      * Class that will render the background.
      */
     private BackgroundRender background;
 
     /**
-     * The ine which the boats need to cross to win
+     * The line which the boats need to cross to win
      */
     private FinishLine finishLine;
 
@@ -62,34 +65,25 @@ public class Canvas {
 
 
     // Constructors
+
     /**
-     * Private constructor to prevent it from being called from outside of the class
+     * Initializes the camera, the viewport, the background and the finish line.
+     * Also creates all boats and all lanes.
      */
     public Canvas(){
         camera = new OrthographicCamera();
         viewport = new FillViewport(mainGame.Resolution.WIDTH, mainGame.Resolution.HEIGHT, camera );
-    }
-
-
-    // Methods
-    /**
-     * Called once to initialise everything to do with the canvas, the lanes and boats.
-     * Initializes the camera and sets its position. Initializes the background. Makes the boats. Makes the lanes.
-     *
-     * @see mainGame#create()
-     */
-    public void create(){
-        camera.setToOrtho(false, camera.viewportWidth, camera.viewportHeight);
         camera.position.set(camera.viewportWidth/2 +100, camera.viewportHeight/2, 0f);
         viewport.apply();
         viewport.update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        // sets position of the camera such that it covers the whole screen
-        // Ok, I haven't managed to figure out why it does this. It's off by 100. This is not the way to fix this, but we're running out of time.
         background = new BackgroundRender();
         finishLine = new FinishLine(raceLength);
         makeLanes();
         makeBoats();
     }
+
+
+    // Methods
 
     /**
      * Called every frame to update everything to do with the canvas.
@@ -110,6 +104,10 @@ public class Canvas {
         updateCamera();
     }
 
+
+    /**
+     * Cals dispose on the background, all boats and all lanes.
+     */
     public void dispose(){
         background.dispose();
         for (Lane l : lanes) {
@@ -156,7 +154,7 @@ public class Canvas {
         // Number of boats should roughly equal the number of lanes
         boats = new Boat[numLanes];
 
-        for (int boat =0; boat < numLanes; boat++){
+        for (int boat = 0; boat < numLanes; boat++){
             if (lanes[boat] instanceof UserLane){
                 // TODO: add some sort of a StatsGenerator class to generate stats for everything
                 // This Stats variable is for testing, to be removed
@@ -182,7 +180,6 @@ public class Canvas {
                 boats[i].checkCollisions(lanes[i]);
                 if (boats[i].getBoatPosition().getPosY() < (raceLength - boats[i].getSpriteHeight())){
                     boats[i].control();
-                    System.out.println("x: " + boats[i].getBoatPosition().getPosX() + ", y: " + boats[i].getBoatPosition().getPosY());
                 } else{
                     boats[i].update();
                 }
@@ -201,6 +198,7 @@ public class Canvas {
 
     /**
      * Checks if the finish line is close, then renders it.
+     * @return true if the finish line has been crossed an the boat stopped moving, false otherwise.
      */
     public boolean checkForEnd(){
 
@@ -216,12 +214,11 @@ public class Canvas {
     }
 
     /**
-     * Updates camera position so that it follows the userboat.
+     * Updates camera position so that it follows the UserBoat.
      */
     private void updateCamera(){
         for (Boat b : boats) {
             if (b instanceof UserBoat) {
-                camera.setToOrtho(false, camera.viewportWidth, camera.viewportHeight);
                 camera.position.y = b.getBoatPosition().getPosY() + camera.viewportHeight/2;
                 camera.position.x = camera.viewportWidth/2 +100;
                 viewport.update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -231,6 +228,14 @@ public class Canvas {
     }
 
 
+    /**
+     * Function given to the ApplicationAdapter#resize() function in mainGame
+     *
+     * @param width window width
+     * @param height window height
+     * @see com.badlogic.gdx.ApplicationAdapter#resize(int width, int height)
+     * @see mainGame#resize(int width, int height)
+     */
     public void resize(int width, int height){
         viewport.update(width, height);
         camera.position.set(camera.viewportWidth/2 + 100 , camera.viewportHeight/2, 0f);

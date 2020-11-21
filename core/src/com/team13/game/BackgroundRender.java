@@ -15,12 +15,12 @@ public class BackgroundRender {
     /**
      * Water texture used for the background
      */
-    private Texture bgTexture;
+    private final Texture bgTexture;
 
     /**
      * Sprite batch used to draw everything
      */
-    private SpriteBatch batch;
+    private final SpriteBatch batch;
 
     // Constructors
     /**
@@ -38,6 +38,7 @@ public class BackgroundRender {
 
     /**
      * Updates the background texture scroll position.
+     * Also moves the background so that it covers the whole viewport at all times
      */
     public void update(final Camera camera){
         batch.setProjectionMatrix(camera.combined);
@@ -47,6 +48,9 @@ public class BackgroundRender {
     }
 
 
+    /**
+     * Calls dispose() on the texture and teh sprite batch.
+     */
     public void dispose(){
         bgTexture.dispose();
         batch.dispose();
