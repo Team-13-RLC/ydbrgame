@@ -92,8 +92,9 @@ public class boatAI extends Boat{
         Iterator obstacle_iterator = obstacles.iterator();
         boolean detected = false;
         while(obstacle_iterator.hasNext())
-            if(obstacle_detected(obstacle_iterator.next())){
-                String dir = Direction(obstacle);
+            Obstacle currentObst = obstacle_iterator.next();
+            if(obstacle_detected(currentObst)){
+                String dir = Direction(currentObst);
                 detected = true;
                 turn(dir);
             }
