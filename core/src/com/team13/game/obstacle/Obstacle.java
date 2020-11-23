@@ -55,6 +55,7 @@ public class Obstacle
     public Obstacle(Position position)
     {
         obstaclePosition = position;
+        batch = new SpriteBatch();
     }
 
     public void draw(Matrix4 projectionMatrix)

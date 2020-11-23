@@ -21,7 +21,7 @@ public class Duck extends complexDynamicObstacle
         spriteScale = 0.2F;
         obstacleTexture = new Texture(Gdx.files.internal("textures/Duck_Texture.png"));
         obstacleTexture.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
-        obstacleSprite = new Sprite(obstacleSprite);
+        obstacleSprite = new Sprite(obstacleTexture);
         obstacleSprite.setPosition(obstaclePosition.getPosX(), obstaclePosition.getPosY());
         obstacleSprite.setScale(spriteScale);
     }

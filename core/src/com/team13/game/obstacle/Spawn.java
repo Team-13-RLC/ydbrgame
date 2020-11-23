@@ -1,20 +1,9 @@
 package com.team13.game.obstacle;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.math.Matrix4;
-import com.team13.game.boat.Boat;
-import com.team13.game.boat.UserBoat;
-import com.team13.game.lane.Lane;
-import com.team13.game.lane.UserLane;
+import com.badlogic.gdx.graphics.Camera;
 import com.team13.game.mainGame;
 import com.team13.game.stats.Position;
-import com.team13.game.stats.Stats;
-import com.team13.game.obstacle.Obstacle;
 
-import java.time.Instant;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.Random;
 
 /**
@@ -28,7 +17,7 @@ public class Spawn {
     /**
      * Random object for generating random numbers.
      */
-    protected Random r = new Random();
+    protected Random random = new Random();
     /**
      * Holds the x co-ordinate of the last spawned obstacle.
      */
@@ -37,7 +26,7 @@ public class Spawn {
      * Holds the time that the last obstacle was spawned.
      * On startup this is counted as the time the program was run.
      */
-    protected Instant last_spawn_time = Instant.now();
+    protected long last_spawn_time;
 
     /**
      * An Array of strings that holds all current types of obstacles available.
@@ -49,27 +38,25 @@ public class Spawn {
      */
     public Spawn(){
         spawned_obstacles = new ArrayList<>();
+        last_spawn_time = System.currentTimeMillis();
     }
 
 
     /**
      * Void class that decides when to spawn and when to de-spawn objects.
      */
-    public void Update(){
-        Iterator<Obstacle> iter = spawned_obstacles.iterator();
-        while (iter.hasNext()){
-            //Checks to see if the obstacle is off-screen or not.
-            if(iter.next().getObstaclePosition().getPosY() < 0){
-                iter.remove();
-            }else if(iter.next().getObstaclePosition().getPosX() < -1 ||
-                     iter.next().getObstaclePosition().getPosX() > mainGame.Resolution.WIDTH + 1){
-                iter.remove();
-            }
+    public void update(final Camera camera){
+        spawned_obstacles.removeIf(obstacle -> obstacle.getObstaclePosition().getPosY() < 0 || obstacle.getObstaclePosition().getPosX() < -1 ||
+                obstacle.getObstaclePosition().getPosX() > mainGame.Resolution.WIDTH + 1);
+
+        for (Obstacle o : spawned_obstacles) {
+            o.draw(camera.combined);
         }
 
         //Currently using a half second increment between spawning of objects.
-        if(last_spawn_time.compareTo(Instant.now()) >= 0.5){
-            spawned_obstacles.add(spawn_new(getRandomObstacleType(getObstacle_types())));
+        if(System.currentTimeMillis() - last_spawn_time >= 500){
+            spawned_obstacles.add(spawn_new(getRandomObstacleType(getObstacle_types()), camera));
+            setLast_spawn_time(System.currentTimeMillis());
         }
 
     }
@@ -80,7 +67,7 @@ public class Spawn {
      * @param obstacle_type A string that tells the function which obstacle type to create.
      * @return Returns the new Obstacle object of the designated type.
      */
-    public Obstacle spawn_new(String obstacle_type){
+    public Obstacle spawn_new(String obstacle_type, final Camera camera){
         float canvas_height;
         Obstacle output;
         canvas_height = mainGame.Resolution.HEIGHT;
@@ -89,34 +76,39 @@ public class Spawn {
 
         while (temp_bool) {
             if(spawn_x == -1) {
-                spawn_x = r.nextInt(mainGame.Resolution.WIDTH + 1);
+                spawn_x = random.nextInt(mainGame.Resolution.WIDTH + 1);
             }else if(spawn_x < getLastSpawnedx() + 50 && spawn_x > getLastSpawnedx() - 50){
-                spawn_x = r.nextInt(mainGame.Resolution.WIDTH + 1);
+                spawn_x = random.nextInt(mainGame.Resolution.WIDTH + 1);
             }else{
                 temp_bool = false;
             }
 
 
         }
-        this.setLastSpawned(spawn_x);
+        setLastSpawned(spawn_x);
         Position output_position = new Position(0,0);
 
         output = new Obstacle(output_position);
 
         //If new obstacle types added, this must be changed.
         //It's currently case sensitive.
-        if(obstacle_type.equals("Duck")){
-            output = new Duck(output_position);
-        }else if(obstacle_type.equals("Goose")){
-            output = new Goose(output_position);
-        }else if(obstacle_type.equals("Rock")){
-            output = new Rock(output_position);
-        }else if(obstacle_type.equals("treeBranch")){
-            output = new treeBranch(output_position);
+        switch (obstacle_type) {
+            case "Duck":
+                output = new Duck(output_position);
+                break;
+            case "Goose":
+                output = new Goose(output_position);
+                break;
+            case "Rock":
+                output = new Rock(output_position);
+                break;
+            case "treeBranch":
+                output = new treeBranch(output_position);
+                break;
         }
 
 
-        output_position = new Position(spawn_x,canvas_height - output.getObstacleHeight());
+        output_position = new Position(spawn_x,(mainGame.Resolution.HEIGHT/2F + camera.position.y) - output.getObstacleHeight());
         output.setObstaclePosition(output_position);
 
         return output;
@@ -134,6 +126,9 @@ public class Spawn {
         this.last_spawned_x = x;
     }
 
+    public void setLast_spawn_time(Long time){
+        this.last_spawn_time = time;
+    }
 
 
     //Getters
@@ -168,6 +163,6 @@ public class Spawn {
      * @return returns a random value from inputted array.
      */
     public String getRandomObstacleType(String[] types){
-        return types[r.nextInt(types.length)];
+        return types[random.nextInt(types.length)];
     }
 }
