@@ -14,14 +14,13 @@ public class Goose extends complexDynamicObstacle
      * Assigns the correct texture for the goose/geese. Ensures for correct filtering.
      * Gives the texture to the goose sprite and sets initial position of the goose using the superclass' constructor.
      * Sets the scale for the sprite.
-     * @param position
-     * @See Obstacle
-     */
+     * @param position x and y position of the obstacle.
+     **/
     public Goose(Position position)
     {
         super(position);
         spriteScale = 0.2F;
-        obstacleTexture = new Texture(Gdx.files.internal("textures/rockTexture.png"));
+        obstacleTexture = new Texture(Gdx.files.internal("textures/Goose_Texture.png"));
         obstacleTexture.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
         obstacleSprite = new Sprite(obstacleSprite);
         obstacleSprite.setPosition(obstaclePosition.getPosX(), obstaclePosition.getPosY());
