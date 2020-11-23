@@ -58,19 +58,30 @@ public class Lane {
      * Draw each lane.
      * Uses the shape renderer to render rectangles, one for each border.
      * Each border goes from 0 to screen height on the y axis.
-     * No need to pass projection matrix, as the lanes are drawn in screen space coordinates.
+     *
+     * @param camera the camera used ro the game. Supplies the projection matrix, viewport size and camera position
      */
-    public void draw(){
-            // Between .begin and .eng shapes can be drawn.
-            shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-            // Color is set to black
-            shapeRenderer.setColor(0, 0, 0, 1);
-            // Left border drawn (god this is awful)
-            shapeRenderer.rect( lBorder, 0, BORDERWIDTH, mainGame.Resolution.HEIGHT);
-            // Right border drawn
-            shapeRenderer.rect( rBorder - BORDERWIDTH, 0, BORDERWIDTH, mainGame.Resolution.HEIGHT);
-            shapeRenderer.end();
+    public void draw(final Camera camera){
+        // Setting projection matrix
+        shapeRenderer.setProjectionMatrix(camera.combined);
+        // Between .begin and .eng shapes can be drawn.
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+        // Color is set to black
+        shapeRenderer.setColor(0, 0, 0, 1);
+        // Left border drawn
+        shapeRenderer.rect( lBorder + 100, camera.position.y - camera.viewportHeight/2, BORDERWIDTH, camera.viewportHeight);
+        // Right border drawn
+        shapeRenderer.rect( rBorder - BORDERWIDTH + 100, camera.position.y - camera.viewportHeight/2, BORDERWIDTH, camera.viewportHeight);
 
+        shapeRenderer.end();
+
+    }
+
+    /**
+     * Calls dispose on the shape renderer
+     */
+    public void dispose(){
+        shapeRenderer.dispose();
     }
 
 

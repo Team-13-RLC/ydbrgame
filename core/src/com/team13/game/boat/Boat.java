@@ -10,13 +10,13 @@ import com.team13.game.stats.Stats;
 
 /**
  * Parent class of all boats.
- * Note: This should've probably been an abstract class
+ * Responsible for rendering and managing boat speed and acceleration.
  */
 public class Boat {
 
     // Fields
     /**
-     * Holds 2 values for boat x and y positions
+     * Holds values for boat x and y positions.
      */
     protected Position boatPosition;
 
@@ -56,6 +56,13 @@ public class Boat {
      */
     protected float spriteHeight;
 
+    private long penalties =0;
+
+    private long timeOfLastPenalty = 0;
+
+    private final long penalty = 5;
+
+    private final long penaltiesPerSecond = 2;
 
     // Constructors
     /**
@@ -86,7 +93,7 @@ public class Boat {
      * It sets the projection matrix for the sprite batch. Translates the sprite then draws it within the sprite batch.
      *
      * @param projectionMatrix projection matrix for the camera.
-     * @see com.team13.game.Canvas#getProjection()
+     * @see com.team13.game.Canvas#getCamera()
      */
     public void draw(Matrix4 projectionMatrix){
         batch.setProjectionMatrix(projectionMatrix);
@@ -119,9 +126,21 @@ public class Boat {
 
     public void checkCollisions(Lane lane){
         if (lane.getlBorder() > boatPosition.getPosX() || lane.getrBorder() < boatPosition.getPosX() + spriteWidth){
-            // TODO: Make penalty
+            if ((System.currentTimeMillis() - timeOfLastPenalty)/1000 > (1/penaltiesPerSecond)){
+                penalties += penalty;
+                timeOfLastPenalty = System.currentTimeMillis();
+            }
         }
 
+    }
+
+
+    /**
+     * Calls dispose on the SpriteBatch and the texture
+     */
+    public void dispose(){
+        batch.dispose();
+        boatTexture.dispose();
     }
 
 
@@ -143,6 +162,9 @@ public class Boat {
 
     }
 
+    public long getPenalties() {
+        return penalties;
+    }
 
     // Setters
     public void setBoatPosition(Position boatPosition) {
