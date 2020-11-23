@@ -1,13 +1,11 @@
 package com.team13.game;
 
 public class Timer {
-    long startTime;
-    long elapsedTime;
-    long penalties;
+   private long startTime;
+    private long elapsedTime;
+    private long penalties;
     Timer(){
-        startTime = 0L;
-        elapsedTime = 0L;
-        penalties = 0L;
+        reset();
     }
 
     //Methods
@@ -15,10 +13,15 @@ public class Timer {
         startTime = System.currentTimeMillis();
     }
 
-
     public void stop(){
         elapsedTime = System.currentTimeMillis() - startTime;
         elapsedTime += penalties;
+    }
+
+    public void reset() {
+        startTime = 0L;
+        elapsedTime = 0L;
+        penalties = 0L;
     }
 
     public void addTime(long seconds){
@@ -32,6 +35,6 @@ public class Timer {
     }
 
     public String getTimeFormatted(){
-        return Integer.toString((int)elapsedTime/60) + ':' + Integer.toString((int)(elapsedTime /1000)%60);
+        return Integer.toString((int)(elapsedTime/1000)/60) + ':' + Integer.toString((int)(elapsedTime /1000)%60);
     }
 }
