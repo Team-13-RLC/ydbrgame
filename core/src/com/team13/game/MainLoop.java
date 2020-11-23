@@ -1,6 +1,8 @@
 package com.team13.game;
 
 
+import com.team13.game.stats.Position;
+
 /**
  * Singleton class which creates the game loop.
  */
@@ -37,6 +39,13 @@ public class MainLoop {
      */
     private boolean timerStared;
 
+    long showTextFor = 3;
+
+    boolean showingText = false;
+
+    long textShowStartTime;
+
+    Position textPosition;
 
     //Constructors
     /**
@@ -52,6 +61,8 @@ public class MainLoop {
         times = new String[numLoops];
         loopCounter = 0;
         timerStared = false;
+        textPosition = new Position(canvases[loopCounter].getCamera().viewportWidth/2,
+                4 * canvases[loopCounter].getCamera().viewportHeight/5);
     }
 
 
@@ -76,12 +87,7 @@ public class MainLoop {
                 canvases[loopCounter].update();
             } else {
                 // Dispose of canvas
-                canvases[loopCounter].dispose();
-                timer.stop();
-                timer.addTime(canvases[loopCounter].getUserBoatPenalties());
-                times[loopCounter] = timer.getTimeFormatted();
-                timerStared = false;
-                loopCounter ++;
+                legFinished();
             }
         }
     }
@@ -97,6 +103,24 @@ public class MainLoop {
     public void resize(int width, int height) {
         for (Canvas c : canvases) {
             c.resize(width, height);
+        }
+    }
+
+
+    private void legFinished(){
+        if (!showingText) {
+            timer.stop();
+            timer.addTime(canvases[loopCounter].getUserBoatPenalties());
+            textShowStartTime = System.currentTimeMillis();
+            times[loopCounter] = timer.getTimeFormatted();
+            showingText = true;
+        } else if ((System.currentTimeMillis() - textShowStartTime) / 1000 < showTextFor){
+            TextRenderer.print(timer.getTimeFormatted(), textPosition.getPosX(), textPosition.getPosY(), canvases[loopCounter].getCamera(), 10);
+        } else {
+            canvases[loopCounter].dispose();
+            showingText = false;
+            timerStared = false;
+            loopCounter ++;
         }
     }
 

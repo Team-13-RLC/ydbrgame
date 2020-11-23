@@ -1,9 +1,9 @@
 package com.team13.game;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.team13.game.boat.Boat;
 import com.team13.game.boat.UserBoat;
@@ -203,7 +203,7 @@ public class Canvas {
     public boolean checkForEnd(){
 
         if (camera.position.y > raceLength - camera.viewportHeight) {
-            finishLine.draw(getProjection());
+            finishLine.draw(camera.combined);
             for (Boat b : boats) {
                 if (b instanceof UserBoat && b.getBoatPosition().getPosY() > raceLength && b.getBoatStats().getSpeed() == 0) {
                     return true;
@@ -244,13 +244,6 @@ public class Canvas {
 
     // Getters
 
-    /**
-     * Gets the camera projection. Used to transform screen space coordinates to world space coordinates.
-     * @return Matrix with the projection for the camera
-     */
-    public Matrix4 getProjection() {
-        return camera.combined;
-    }
 
     public long getUserBoatPenalties(){
         for (Boat b : boats) {
@@ -259,5 +252,9 @@ public class Canvas {
             }
         }
         return 0;
+    }
+
+    public final Camera getCamera() {
+        return camera;
     }
 }
