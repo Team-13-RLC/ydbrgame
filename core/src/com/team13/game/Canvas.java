@@ -9,6 +9,7 @@ import com.team13.game.boat.Boat;
 import com.team13.game.boat.UserBoat;
 import com.team13.game.lane.Lane;
 import com.team13.game.lane.UserLane;
+import com.team13.game.obstacle.Spawn;
 import com.team13.game.stats.Position;
 import com.team13.game.stats.Stats;
 import com.team13.game.utils.BackgroundRender;
@@ -60,7 +61,9 @@ public class Canvas implements IScene{
     /**
      * How long the race is
      */
-    private final float raceLength = 150;
+    private final float raceLength = 1500;
+
+    private Spawn obstacleSpawner;
 
 
 
@@ -79,6 +82,8 @@ public class Canvas implements IScene{
         viewport.update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         background = new BackgroundRender();
         finishLine = new FinishLine(raceLength);
+
+        obstacleSpawner = new Spawn();
         makeLanes();
         makeBoats();
     }
@@ -99,6 +104,7 @@ public class Canvas implements IScene{
         // Some OpenGL thing, not really sure.
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         background.update(camera);
+        obstacleSpawner.Update();
         drawLanes();
         checkForEnd();
         updateBoats();

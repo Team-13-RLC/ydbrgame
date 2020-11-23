@@ -47,7 +47,10 @@ public class Spawn {
     /**
      * Public constructor so that it can be called whenever needed.
      */
-    public Spawn(){}
+    public Spawn(){
+        spawned_obstacles = new ArrayList<>();
+    }
+
 
     /**
      * Void class that decides when to spawn and when to de-spawn objects.
