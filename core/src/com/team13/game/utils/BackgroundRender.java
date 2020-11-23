@@ -1,4 +1,4 @@
-package com.team13.game;
+package com.team13.game.utils;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
@@ -27,7 +27,7 @@ public class BackgroundRender {
      * Initializes everything.
      * Enables texture wrapping on the background texture so that it can be scrolled.
      */
-    BackgroundRender() {
+    public BackgroundRender() {
         batch = new SpriteBatch();
         bgTexture = new Texture(Gdx.files.internal("textures/backGround.png"));
         bgTexture.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);

@@ -11,6 +11,7 @@ import com.team13.game.lane.Lane;
 import com.team13.game.lane.UserLane;
 import com.team13.game.stats.Position;
 import com.team13.game.stats.Stats;
+import com.team13.game.utils.BackgroundRender;
 
 import java.util.Random;
 

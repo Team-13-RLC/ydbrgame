@@ -1,10 +1,10 @@
-package com.team13.game;
+package com.team13.game.utils;
 
 public class Timer {
    private long startTime;
     private long elapsedTime;
     private long penalties;
-    Timer(){
+    public Timer(){
         reset();
     }
 
@@ -35,6 +35,6 @@ public class Timer {
     }
 
     public String getTimeFormatted(){
-        return Integer.toString((int)(elapsedTime/1000)/60) + ':' + Integer.toString((int)(elapsedTime /1000)%60);
+        return Integer.toString((int)(elapsedTime/1000)/60) + ':' + (int)(elapsedTime /1000)%60;
     }
 }

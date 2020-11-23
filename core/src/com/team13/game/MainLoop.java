@@ -2,6 +2,8 @@ package com.team13.game;
 
 
 import com.team13.game.stats.Position;
+import com.team13.game.utils.TextRenderer;
+import com.team13.game.utils.Timer;
 
 /**
  * Singleton class which creates the game loop.
@@ -20,9 +22,9 @@ public class MainLoop {
      */
     private final Canvas[] canvases;
 
-    private Timer timer;
+    private final Timer timer;
 
-    private String[] times;
+    private final String[] times;
 
     /**
      * Since the loop is happening outside of the class, this is needed to know the current leg of teh race.

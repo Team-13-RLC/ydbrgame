@@ -1,4 +1,4 @@
-package com.team13.game;
+package com.team13.game.utils;
 
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -10,7 +10,7 @@ public class TextRenderer {
     private static final SpriteBatch batch = new SpriteBatch();
     private static final GlyphLayout glyphLayout = new GlyphLayout();
 
-    static void print(String text, float posX, float posY, final Camera camera, float scale){
+    static public void print(String text, float posX, float posY, final Camera camera, float scale){
         batch.setProjectionMatrix(camera.combined);
         font.getData().setScale(scale);
         glyphLayout.setText(font, text);
@@ -25,7 +25,7 @@ public class TextRenderer {
         batch.end();
     }
 
-    static void print(String text, float posX, float posY, final Camera camera) {
+    static public void print(String text, float posX, float posY, final Camera camera) {
         print(text, posX, posY, camera, 1);
     }
 }
