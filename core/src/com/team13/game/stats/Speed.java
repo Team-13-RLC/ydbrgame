@@ -5,15 +5,18 @@ public class Speed {
      * Holds the speed as a float.
      */
 
-    private float speed;
+    private float velocityx;
+    private float velocityy;
 
     /**
-     * Initialises the speed variable from the parameter.
-     * @param speed
+     *
+     * @param velocityx float x velocity of the object.
+     * @param velocityy float y velocity of the object.
      */
+    public Speed(float velocityx, float velocityy){
 
-    public Speed(float speed){
-        this.speed = speed;
+        this.velocityx = velocityx;
+        this.velocityy = velocityy;
     }
 
     //getters
@@ -22,18 +25,30 @@ public class Speed {
      * Gets the speed variable.
      * @return returns speed as a float.
      */
-    public float getSpeed(){
-        return speed;
+    public float getVelocityx(){
+        return velocityx;
     }
+
+    public float getVelocityy(){return velocityy;}
 
     //setters
 
     /**
      * Sets the speed to new_speed.
-     * @param new_speed
+     * @param new_speed float the new velocity you want.
      */
-    public void setSpeed(float new_speed){
-        this.speed = new_speed;
+    public void setVelocityx(float new_speed){
+
+        this.velocityx = new_speed;
     }
+    /**
+     * Sets the speed to new_speed.
+     * @param new_speed float the new velocity you want.
+     */
+    public void setVelocityy(float new_speed){
+
+        this.velocityy = new_speed;
+    }
+
 
 }
