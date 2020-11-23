@@ -37,7 +37,7 @@ public class Spawn {
      * Holds the time that the last obstacle was spawned.
      * On startup this is counted as the time the program was run.
      */
-    protected Instant last_spawn_time = Instant.now();
+    protected long last_spawn_time;
 
     /**
      * An Array of strings that holds all current types of obstacles available.
@@ -49,6 +49,7 @@ public class Spawn {
      */
     public Spawn(){
         spawned_obstacles = new ArrayList<>();
+        last_spawn_time = System.currentTimeMillis();
     }
 
 
@@ -68,8 +69,9 @@ public class Spawn {
         }
 
         //Currently using a half second increment between spawning of objects.
-        if(last_spawn_time.compareTo(Instant.now()) >= 0.5){
+        if(last_spawn_time - System.currentTimeMillis() >= 500){
             spawned_obstacles.add(spawn_new(getRandomObstacleType(getObstacle_types())));
+            setLast_spawn_time(System.currentTimeMillis());
         }
 
     }
@@ -134,6 +136,9 @@ public class Spawn {
         this.last_spawned_x = x;
     }
 
+    public void setLast_spawn_time(Long time){
+        this.last_spawn_time = time;
+    }
 
 
     //Getters
