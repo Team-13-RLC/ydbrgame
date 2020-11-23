@@ -69,7 +69,7 @@ public class Spawn {
         }
 
         //Currently using a half second increment between spawning of objects.
-        if(last_spawn_time - System.currentTimeMillis() >= 500){
+        if(System.currentTimeMillis() - last_spawn_time >= 500){
             spawned_obstacles.add(spawn_new(getRandomObstacleType(getObstacle_types())));
             setLast_spawn_time(System.currentTimeMillis());
         }
