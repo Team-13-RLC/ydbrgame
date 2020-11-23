@@ -30,8 +30,8 @@ public class boatAI extends Boat{
      * Constructor for the boat_ai.
      * Allocates the lane the ai uses and sets the detection distance for obstacles.
      * @param skill the minimum bound for obstacle detection.
-     * @param lane_right right lane boundry.
-     * @param lane_left left lane boundry.
+     * @param lane_right right lane boundary.
+     * @param lane_left left lane boundary.
      */
     public boatAI(Integer skill, int lane_right, int lane_left){
         skill_level = skill;
