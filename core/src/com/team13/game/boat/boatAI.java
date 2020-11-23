@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Random;
 import com.team13.game.lane.Lane;
+import com.team13.game.stats.Position;
 
 //Fields
 public class boatAI extends Boat{
@@ -49,12 +50,14 @@ public class boatAI extends Boat{
 
         String output = "";
         if(obstacle instanceof staticObstacle){
-            if(obstacle.getobstaclepostion.getPosX() <= ailane.getMiddle()){
+            if(obstacle.getObstaclePosition.getPosX() <= ailane.getMiddle()){
                 output = "R";
             }else{
                 output = "L";
             }
         }else{
+
+
             if(obstacle.getVelocityX<0){
                 output = "R";
             }else{
