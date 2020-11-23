@@ -56,6 +56,13 @@ public class Boat {
      */
     protected float spriteHeight;
 
+    private long penalties =0;
+
+    private long timeOfLastPenalty = 0;
+
+    private final long penalty = 5;
+
+    private final long penaltiesPerSecond = 2;
 
     // Constructors
     /**
@@ -119,7 +126,10 @@ public class Boat {
 
     public void checkCollisions(Lane lane){
         if (lane.getlBorder() > boatPosition.getPosX() || lane.getrBorder() < boatPosition.getPosX() + spriteWidth){
-            System.out.println("We've collided");
+            if ((System.currentTimeMillis() - timeOfLastPenalty)/1000 > (1/penaltiesPerSecond)){
+                penalties += penalty;
+                timeOfLastPenalty = System.currentTimeMillis();
+            }
         }
 
     }
@@ -152,6 +162,9 @@ public class Boat {
 
     }
 
+    public long getPenalties() {
+        return penalties;
+    }
 
     // Setters
     public void setBoatPosition(Position boatPosition) {

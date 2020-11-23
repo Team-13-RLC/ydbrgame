@@ -252,7 +252,12 @@ public class Canvas {
         return camera.combined;
     }
 
-    public Lane[] getLanes() {
-        return lanes;
+    public long getUserBoatPenalties(){
+        for (Boat b : boats) {
+            if (b instanceof UserBoat) {
+                return b.getPenalties();
+            }
+        }
+        return 0;
     }
 }

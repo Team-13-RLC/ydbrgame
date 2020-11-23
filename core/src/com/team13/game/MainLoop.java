@@ -18,6 +18,10 @@ public class MainLoop {
      */
     private final Canvas[] canvases;
 
+    private Timer timer;
+
+    private String[] times;
+
     /**
      * Since the loop is happening outside of the class, this is needed to know the current leg of teh race.
      */
@@ -31,7 +35,7 @@ public class MainLoop {
     /**
      * Keeps track of whether the canvas has been created for the current leg.
      */
-    private boolean canvasCreated;
+    private boolean timerStared;
 
 
     //Constructors
@@ -44,8 +48,10 @@ public class MainLoop {
         for (int canvas = 0; canvas < numLoops; canvas++) {
             canvases[canvas] = new Canvas();
         }
+        timer = new Timer();
+        times = new String[numLoops];
         loopCounter = 0;
-        canvasCreated = false;
+        timerStared = false;
     }
 
 
@@ -59,8 +65,10 @@ public class MainLoop {
     public void run(){
         if (loopCounter < numLoops){
             // Crate the canvas
-            if (!canvasCreated) {
-                canvasCreated = true;
+            if (!timerStared) {
+                timer.reset();
+                timer.start();
+                timerStared = true;
             }
 
             // update the canvas
@@ -69,8 +77,11 @@ public class MainLoop {
             } else {
                 // Dispose of canvas
                 canvases[loopCounter].dispose();
+                timer.stop();
+                timer.addTime(canvases[loopCounter].getUserBoatPenalties());
+                times[loopCounter] = timer.getTimeFormatted();
+                timerStared = false;
                 loopCounter ++;
-                canvasCreated = false;
             }
         }
     }
