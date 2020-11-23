@@ -1,7 +1,9 @@
 package com.team13.game;
 
 
+import com.badlogic.gdx.Gdx;
 import com.team13.game.stats.Position;
+import com.team13.game.utils.Card;
 import com.team13.game.utils.TextRenderer;
 import com.team13.game.utils.Timer;
 
@@ -20,7 +22,7 @@ public class MainLoop {
      * Array holding all the canvases.
      * One per leg of teh race.
      */
-    private final Canvas[] canvases;
+    private final IScene[] scenes;
 
     private final Timer timer;
 
@@ -32,9 +34,9 @@ public class MainLoop {
     private byte loopCounter;
 
     /**
-     * Number of legs there will be.
+     * Number of legs there will be + number of cards there will be;
      */
-    private final byte numLoops = 3;
+    private final byte numLoops = 5;
 
     /**
      * Keeps track of whether the canvas has been created for the current leg.
@@ -55,16 +57,20 @@ public class MainLoop {
      * Creates all canvases in the canvases array.
      */
     private MainLoop() {
-        canvases = new Canvas[numLoops];
-        for (int canvas = 0; canvas < numLoops; canvas++) {
-            canvases[canvas] = new Canvas();
+        scenes = new IScene[numLoops];
+        scenes[0] = new Card(Gdx.files.internal("cards/title.png"));
+        for (int canvas = 1; canvas < numLoops -1 ; canvas++) {
+            scenes[canvas] = new Canvas();
         }
+        scenes[numLoops - 1] = new Card(Gdx.files.internal("cards/end.png"));
+
+
         timer = new Timer();
         times = new String[numLoops];
         loopCounter = 0;
         timerStared = false;
-        textPosition = new Position(canvases[loopCounter].getCamera().viewportWidth/2,
-                4 * canvases[loopCounter].getCamera().viewportHeight/5);
+        textPosition = new Position(scenes[loopCounter].getCamera().viewportWidth/2,
+                4 * scenes[loopCounter].getCamera().viewportHeight/5);
     }
 
 
@@ -85,14 +91,18 @@ public class MainLoop {
             }
 
             // update the canvas
-            if (!canvases[loopCounter].checkForEnd()) {
-                canvases[loopCounter].update();
+            if (!scenes[loopCounter].isEnd()) {
+                scenes[loopCounter].update();
             } else {
-                // Dispose of canvas
-                legFinished();
+                if (scenes[loopCounter] instanceof Canvas){
+                    legFinished();
+                } else {
+                    cardFinished();
+                }
             }
         }
     }
+
 
     /**
      * Function given to the ApplicationAdapter#resize() function in mainGame
@@ -103,23 +113,36 @@ public class MainLoop {
      * @see mainGame#resize(int width, int height)
      */
     public void resize(int width, int height) {
-        for (Canvas c : canvases) {
+        for (IScene c : scenes) {
             c.resize(width, height);
         }
     }
 
+    private void cardFinished() {
+        if (loopCounter >= numLoops -1){
+            TextRenderer.print("Your times", textPosition.getPosX(), textPosition.getPosY() , scenes[numLoops - 1].getCamera(), 5);
+            for (int i = 0; i < times.length; i++) {
+               if (times[i] != null) {
+                   TextRenderer.print(times[i], textPosition.getPosX(), textPosition.getPosY() - (mainGame.Resolution.HEIGHT/10)*i, scenes[numLoops - 1].getCamera(), 5);
+               }
+            }
+
+        }
+        scenes[loopCounter].dispose();
+        loopCounter ++;
+    }
 
     private void legFinished(){
         if (!showingText) {
             timer.stop();
-            timer.addTime(canvases[loopCounter].getUserBoatPenalties());
+            timer.addTime(scenes[loopCounter].getUserBoatPenalties());
             textShowStartTime = System.currentTimeMillis();
             times[loopCounter] = timer.getTimeFormatted();
             showingText = true;
         } else if ((System.currentTimeMillis() - textShowStartTime) / 1000 < showTextFor){
-            TextRenderer.print(timer.getTimeFormatted(), textPosition.getPosX(), textPosition.getPosY(), canvases[loopCounter].getCamera(), 10);
+            TextRenderer.print(timer.getTimeFormatted(), textPosition.getPosX(), textPosition.getPosY(), scenes[loopCounter].getCamera(), 10);
         } else {
-            canvases[loopCounter].dispose();
+            scenes[loopCounter].dispose();
             showingText = false;
             timerStared = false;
             loopCounter ++;
