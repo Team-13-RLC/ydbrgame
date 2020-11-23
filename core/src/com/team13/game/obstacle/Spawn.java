@@ -58,6 +58,9 @@ public class Spawn {
             //Checks to see if the obstacle is off-screen or not.
             if(iter.next().getObstaclePosition().getPosY() < 0){
                 iter.remove();
+            }else if(iter.next().getObstaclePosition().getPosX() < -1 ||
+                     iter.next().getObstaclePosition().getPosX() > mainGame.Resolution.WIDTH + 1){
+                iter.remove();
             }
         }
 
