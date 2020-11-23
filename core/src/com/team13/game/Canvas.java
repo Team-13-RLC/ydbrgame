@@ -18,7 +18,7 @@ import java.util.Random;
 /**
  * Class to manage the camera, background and sprite drawing.
  */
-public class Canvas {
+public class Canvas implements IScene{
 
     // Fields
     /**
@@ -60,7 +60,7 @@ public class Canvas {
     /**
      * How long the race is
      */
-    private final float raceLength = 1500;
+    private final float raceLength = 150;
 
 
 
@@ -201,10 +201,14 @@ public class Canvas {
      * Checks if the finish line is close, then renders it.
      * @return true if the finish line has been crossed an the boat stopped moving, false otherwise.
      */
-    public boolean checkForEnd(){
-
+    public void checkForEnd(){
         if (camera.position.y > raceLength - camera.viewportHeight) {
             finishLine.draw(camera.combined);
+            }
+    }
+
+    public boolean isEnd(){
+        if (camera.position.y > raceLength - camera.viewportHeight) {
             for (Boat b : boats) {
                 if (b instanceof UserBoat && b.getBoatPosition().getPosY() > raceLength && b.getBoatStats().getSpeed() == 0) {
                     return true;
@@ -229,6 +233,7 @@ public class Canvas {
     }
 
 
+
     /**
      * Function given to the ApplicationAdapter#resize() function in mainGame
      *
@@ -240,7 +245,6 @@ public class Canvas {
     public void resize(int width, int height){
         viewport.update(width, height);
         camera.position.set(camera.viewportWidth/2 + 100 , camera.viewportHeight/2, 0f);
-
     }
 
     // Getters
