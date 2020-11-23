@@ -104,7 +104,7 @@ public class Canvas implements IScene{
         // Some OpenGL thing, not really sure.
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         background.update(camera);
-        obstacleSpawner.Update();
+        obstacleSpawner.update(camera);
         drawLanes();
         checkForEnd();
         updateBoats();
@@ -205,7 +205,6 @@ public class Canvas implements IScene{
 
     /**
      * Checks if the finish line is close, then renders it.
-     * @return true if the finish line has been crossed an the boat stopped moving, false otherwise.
      */
     public void checkForEnd(){
         if (camera.position.y > raceLength - camera.viewportHeight) {

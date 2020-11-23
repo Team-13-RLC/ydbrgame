@@ -1,5 +1,6 @@
 package com.team13.game.obstacle;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Matrix4;
@@ -56,16 +57,12 @@ public class Spawn {
     /**
      * Void class that decides when to spawn and when to de-spawn objects.
      */
-    public void Update(){
-        Iterator<Obstacle> iter = spawned_obstacles.iterator();
-        while (iter.hasNext()){
-            //Checks to see if the obstacle is off-screen or not.
-            if(iter.next().getObstaclePosition().getPosY() < 0){
-                iter.remove();
-            }else if(iter.next().getObstaclePosition().getPosX() < -1 ||
-                     iter.next().getObstaclePosition().getPosX() > mainGame.Resolution.WIDTH + 1){
-                iter.remove();
-            }
+    public void update(final Camera camera){
+        spawned_obstacles.removeIf(o -> o.getObstaclePosition().getPosY() < 0 || o.getObstaclePosition().getPosX() < -1 ||
+                o.getObstaclePosition().getPosX() > mainGame.Resolution.WIDTH + 1);
+
+        for (Obstacle o : spawned_obstacles) {
+            o.draw(camera.combined);
         }
 
         //Currently using a half second increment between spawning of objects.
@@ -107,14 +104,19 @@ public class Spawn {
 
         //If new obstacle types added, this must be changed.
         //It's currently case sensitive.
-        if(obstacle_type.equals("Duck")){
-            output = new Duck(output_position);
-        }else if(obstacle_type.equals("Goose")){
-            output = new Goose(output_position);
-        }else if(obstacle_type.equals("Rock")){
-            output = new Rock(output_position);
-        }else if(obstacle_type.equals("treeBranch")){
-            output = new treeBranch(output_position);
+        switch (obstacle_type) {
+            case "Duck":
+                output = new Duck(output_position);
+                break;
+            case "Goose":
+                output = new Goose(output_position);
+                break;
+            case "Rock":
+                output = new Rock(output_position);
+                break;
+            case "treeBranch":
+                output = new treeBranch(output_position);
+                break;
         }
 
 
