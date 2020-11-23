@@ -2,6 +2,7 @@ package com.team13.game;
 
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.GL20;
 import com.team13.game.stats.Position;
 import com.team13.game.utils.Card;
 import com.team13.game.utils.TextRenderer;
@@ -36,7 +37,7 @@ public class MainLoop {
     /**
      * Number of legs there will be + number of cards there will be;
      */
-    private final byte numLoops = 5;
+    private final byte numLoops = 4;
 
     /**
      * Keeps track of whether the canvas has been created for the current leg.
@@ -59,10 +60,9 @@ public class MainLoop {
     private MainLoop() {
         scenes = new IScene[numLoops];
         scenes[0] = new Card(Gdx.files.internal("cards/title.png"));
-        for (int canvas = 1; canvas < numLoops -1 ; canvas++) {
+        for (int canvas = 1; canvas < numLoops; canvas++) {
             scenes[canvas] = new Canvas();
         }
-        scenes[numLoops - 1] = new Card(Gdx.files.internal("cards/end.png"));
 
 
         timer = new Timer();
@@ -100,6 +100,8 @@ public class MainLoop {
                     cardFinished();
                 }
             }
+        } else{
+            gameFinished();
         }
     }
 
@@ -119,15 +121,6 @@ public class MainLoop {
     }
 
     private void cardFinished() {
-        if (loopCounter >= numLoops -1){
-            TextRenderer.print("Your times", textPosition.getPosX(), textPosition.getPosY() , scenes[numLoops - 1].getCamera(), 5);
-            for (int i = 0; i < times.length; i++) {
-               if (times[i] != null) {
-                   TextRenderer.print(times[i], textPosition.getPosX(), textPosition.getPosY() - (mainGame.Resolution.HEIGHT/10)*i, scenes[numLoops - 1].getCamera(), 5);
-               }
-            }
-
-        }
         scenes[loopCounter].dispose();
         loopCounter ++;
     }
@@ -149,6 +142,16 @@ public class MainLoop {
         }
     }
 
+    private void gameFinished(){
+        Gdx.gl.glClearColor(0F, 0F, 0F, 1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        TextRenderer.print("Your times", textPosition.getPosX(), textPosition.getPosY() , scenes[numLoops - 1].getCamera(), 5);
+        for (int i = 0; i < times.length; i++) {
+            if (times[i] != null) {
+                TextRenderer.print(times[i], textPosition.getPosX(), textPosition.getPosY() - (mainGame.Resolution.HEIGHT/10)*i, scenes[numLoops - 1].getCamera(), 5);
+            }
+        }
+    }
 
     // Getters
     public static MainLoop getInstance() {
