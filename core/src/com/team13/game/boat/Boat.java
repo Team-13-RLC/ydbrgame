@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Matrix4;
-import com.badlogic.gdx.math.Rectangle;
 import com.team13.game.lane.Lane;
 import com.team13.game.obstacle.Obstacle;
 import com.team13.game.obstacle.Spawn;
@@ -68,7 +67,10 @@ public class Boat {
 
     private final long penaltiesPerSecond = 2;
 
-    private final int breakability = 5;
+
+    private final int breakability = 1;
+
+    private long timeSinceLastCollision = 0;
 
     // Constructors
     /**
@@ -140,8 +142,11 @@ public class Boat {
         }
         for (Obstacle o : spawn.getObstacleList()) {
             if(Intersector.overlaps(boatSprite.getBoundingRectangle(), o.getObstacleSprite().getBoundingRectangle())){
-                boatStats.setRobustness(boatStats.getRobustness() - breakability);
                 boatStats.setSpeed(boatStats.getSpeed()*0.5F);
+                if ((System.currentTimeMillis() - timeSinceLastCollision)/1000 > (1)) {
+                    boatStats.setRobustness(boatStats.getRobustness() - breakability);
+                    System.out.println(boatStats.getRobustness());
+                }
             }
         }
     }

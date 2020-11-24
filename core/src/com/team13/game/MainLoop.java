@@ -98,14 +98,14 @@ public class MainLoop {
                     if (scenes[loopCounter].getLegFinishedCorrectly()){
                         legFinished();
                     } else {
-                        gameFinished();
+                        gameFinishedProperly();
                     }
                 } else {
                     cardFinished();
                 }
             }
         } else{
-            gameFinished();
+            gameFinishedProperly();
         }
     }
 
@@ -146,15 +146,22 @@ public class MainLoop {
         }
     }
 
-    private void gameFinished(){
+    private void gameFinishedProperly(){
         Gdx.gl.glClearColor(0F, 0F, 0F, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         TextRenderer.print("Your times", textPosition.getPosX(), textPosition.getPosY() , scenes[numLoops - 1].getCamera(), 5);
         for (int i = 0; i < times.length; i++) {
             if (times[i] != null) {
-                TextRenderer.print(times[i], textPosition.getPosX(), textPosition.getPosY() - (mainGame.Resolution.HEIGHT/10)*i, scenes[numLoops - 1].getCamera(), 5);
+                TextRenderer.print(times[i], textPosition.getPosX(), textPosition.getPosY() - (mainGame.Resolution.HEIGHT/10F)*i, scenes[numLoops - 1].getCamera(), 5);
             }
         }
+    }
+
+    private void gameFinishedWithCrash(){
+        Gdx.gl.glClearColor(0F, 0F, 0F, 1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        TextRenderer.print("You lost", textPosition.getPosX(), textPosition.getPosY() , scenes[numLoops - 1].getCamera(), 5);
+            TextRenderer.print(":(", textPosition.getPosX(), textPosition.getPosY() - (mainGame.Resolution.HEIGHT/10F), scenes[numLoops - 1].getCamera(), 5);
     }
 
     // Getters

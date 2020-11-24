@@ -14,6 +14,7 @@ import com.team13.game.obstacle.Spawn;
 import com.team13.game.stats.Position;
 import com.team13.game.stats.Stats;
 import com.team13.game.utils.BackgroundRender;
+import com.team13.game.utils.TextRenderer;
 import com.team13.game.utils.TexturePicker;
 
 import java.util.Random;
@@ -67,7 +68,6 @@ public class Canvas implements IScene{
 
     private final Spawn obstacleSpawner;
 
-    private boolean leg_finished_correctly;
 
 
     // Constructors
@@ -84,7 +84,6 @@ public class Canvas implements IScene{
         viewport.update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         background = new BackgroundRender();
         finishLine = new FinishLine(raceLength);
-        this.leg_finished_correctly = true;
         obstacleSpawner = new Spawn();
         makeLanes();
         makeBoats();
@@ -168,12 +167,12 @@ public class Canvas implements IScene{
             if (lanes[boat] instanceof UserLane){
                 // TODO: add some sort of a StatsGenerator class to generate stats for everything
                 // This Stats variable is for testing, to be removed
-                Stats userStats = new Stats(0.04F, 5, 3, 10, 0 );
+                Stats userStats = new Stats(0.04F, 5, 3, 100, 0 );
                 boats[boat] = new UserBoat(new Position(lanes[boat].getMiddle(), 0), userStats);
                 boats[boat].setBoatPosition(new Position(lanes[boat].getMiddle() - boats[boat].getSprite().getBoundingRectangle().width/2f, 0));
                 continue;
             }
-            Stats AIStats = new Stats(0.04F, 5, 3, 10, 0 );
+            Stats AIStats = new Stats(0.04F, 5, 3, 100, 0 );
             boats[boat] = new AIBoat(new Position(lanes[boat].getMiddle(), 0), AIStats, 50, lanes[boat], picker.pick());
             boats[boat].setBoatPosition(new Position(lanes[boat].getMiddle() - boats[boat].getSprite().getBoundingRectangle().width/2f, 0));
         }
@@ -233,6 +232,8 @@ public class Canvas implements IScene{
                 camera.position.y = b.getBoatPosition().getPosY() + camera.viewportHeight/2;
                 camera.position.x = camera.viewportWidth/2 +100;
                 viewport.update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+                String printRobustness = "HP: " + b.getBoatStats().getRobustness();
+                TextRenderer.print(printRobustness, mainGame.Resolution.WIDTH/16F, mainGame.Resolution.HEIGHT /1.5F, camera, 2);
                 break;
             }
         }
@@ -273,7 +274,4 @@ public class Canvas implements IScene{
 
     // Setters
 
-    public void setLegfinishedcorrectly(boolean b){
-        this.leg_finished_correctly = b;
-    }
 }
