@@ -95,7 +95,11 @@ public class MainLoop {
                 scenes[loopCounter].update();
             } else {
                 if (scenes[loopCounter] instanceof Canvas){
-                    legFinished();
+                    if (scenes[loopCounter].getLegFinishedCorrectly()){
+                        legFinished();
+                    } else {
+                        gameFinished();
+                    }
                 } else {
                     cardFinished();
                 }
