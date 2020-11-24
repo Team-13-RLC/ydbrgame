@@ -186,7 +186,7 @@ public class Canvas implements IScene{
     private void updateBoats(){
         for (int i = 0; i < numLanes; i++){
             boats[i].draw(camera.combined);
-            boats[i].checkCollisions(lanes[i]);
+            boats[i].checkCollisions(lanes[i], obstacleSpawner);
             if (boats[i].getBoatPosition().getPosY() < (raceLength - boats[i].getSpriteHeight())){
                 boats[i].control(obstacleSpawner);
             } else{

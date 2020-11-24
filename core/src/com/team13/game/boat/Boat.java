@@ -3,8 +3,11 @@ package com.team13.game.boat;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Matrix4;
+import com.badlogic.gdx.math.Rectangle;
 import com.team13.game.lane.Lane;
+import com.team13.game.obstacle.Obstacle;
 import com.team13.game.obstacle.Spawn;
 import com.team13.game.stats.Position;
 import com.team13.game.stats.Stats;
@@ -125,11 +128,18 @@ public class Boat {
         }
     }
 
-    public void checkCollisions(Lane lane){
+    public void checkCollisions(Lane lane, Spawn spawn){
+        // Useless rectangle.
+        Rectangle r = new Rectangle();
         if (lane.getlBorder() > boatPosition.getPosX() || lane.getrBorder() < boatPosition.getPosX() + spriteWidth){
             if ((System.currentTimeMillis() - timeOfLastPenalty)/1000 > (1/penaltiesPerSecond)){
             penalties += penalty;
                 timeOfLastPenalty = System.currentTimeMillis();
+            }
+        }
+        for (Obstacle o : spawn.getObstacleList()) {
+            if(Intersector.intersectRectangles(boatSprite.getBoundingRectangle(), o.getObstacleSprite().getBoundingRectangle(), r )){
+
             }
         }
     }
