@@ -46,8 +46,8 @@ public class Spawn {
      * Void class that decides when to spawn and when to de-spawn objects.
      */
     public void update(final Camera camera){
-        spawned_obstacles.removeIf(obstacle -> obstacle.getObstaclePosition().getPosY() < 0 || obstacle.getObstaclePosition().getPosX() < -20 ||
-                obstacle.getObstaclePosition().getPosX() > mainGame.Resolution.WIDTH + 20);
+        spawned_obstacles.removeIf(obstacle -> obstacle.getObstaclePosition().getPosY() < 0 || obstacle.getObstaclePosition().getPosX() < -10 ||
+                obstacle.getObstaclePosition().getPosX() > mainGame.Resolution.WIDTH + 10);
 
         for(Obstacle o : spawned_obstacles){
             o.move();
