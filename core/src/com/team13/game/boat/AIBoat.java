@@ -15,11 +15,6 @@ import com.team13.game.stats.Stats;
 //Fields
 public class AIBoat extends Boat{
     /**
-     * Holds the "skill level" of the boat which is used to determine
-     * detection distance.
-     **/
-    private int skill_level = 0;
-    /**
      * Holds the detection distance for obstacles once that is calculated
      * using the skill level in the constructor statement.
      */
@@ -55,7 +50,6 @@ public class AIBoat extends Boat{
         spriteHeight = boatSprite.getBoundingRectangle().height;
 
         // Specific AI boat stuff
-        this.skill_level = skill_level;
         this.aiLane = aiLane;
         Random ran = new Random();
         //50 used as placeholder until testing can be done
@@ -103,19 +97,17 @@ public class AIBoat extends Boat{
                         obstacle.getObstaclePosition().getPosX() - obstacle.getObstacleWidth()/2 > getBoatPosition().getPosX() - spriteWidth/2)||
                         (obstacle.getObstaclePosition().getPosX() + obstacle.getObstacleWidth()/2  > getBoatPosition().getPosX() - spriteWidth/2 &&
                                 obstacle.getObstaclePosition().getPosX() + obstacle.getObstacleWidth() < getBoatPosition().getPosX() + spriteWidth/2));
-
     }
 
     @Override
     public void control(final Spawn spawn) {
-        ArrayList<Obstacle> obstacles = spawn.getObstacleList();
         accelerate(Direction.FORWARDS);
+        boatPosition.setPosY(boatPosition.getPosY() + boatStats.getSpeed());
         boolean detected = false;
-        for (Obstacle o : obstacles) {
+        for (Obstacle o : spawn.getObstacleList()) {
             if(obstacle_detected(o)){
                 detected = true;
                 turn(direction(o));
-
             }
         }
         if (!detected){
@@ -125,9 +117,6 @@ public class AIBoat extends Boat{
                 turn("R");
             }
         }
-
-
-
     }
 
     private void turn(String dir){
@@ -141,5 +130,4 @@ public class AIBoat extends Boat{
 
         }
     }
-
 }

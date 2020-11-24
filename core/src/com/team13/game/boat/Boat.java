@@ -83,7 +83,7 @@ public class Boat {
      * @see Direction
      * @param direction Direction of acceleration. 1 for forwards, -1 for backwards.
      */
-    public void accelerate(int direction){
+    protected void accelerate(int direction){
         if (boatStats.getSpeed() < boatStats.getMaxSpeed()) {
             boatStats.setSpeed(boatStats.getSpeed() + boatStats.getAcceleration() * direction);
         }
