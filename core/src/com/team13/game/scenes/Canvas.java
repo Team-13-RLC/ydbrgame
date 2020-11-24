@@ -21,7 +21,7 @@ import java.util.Random;
 /**
  * Class to manage the camera, background and sprite drawing.
  */
-public class Canvas implements IScene{
+public class Canvas implements IScene {
 
     // Fields
     /**
@@ -75,10 +75,10 @@ public class Canvas implements IScene{
      * Initializes the camera, the viewport, the background and the finish line.
      * Also creates all boats and all lanes.
      */
-    public Canvas(){
+    public Canvas() {
         camera = new OrthographicCamera();
-        viewport = new FillViewport(mainGame.Resolution.WIDTH, mainGame.Resolution.HEIGHT, camera );
-        camera.position.set(camera.viewportWidth/2 +100, camera.viewportHeight/2, 0f);
+        viewport = new FillViewport(mainGame.Resolution.WIDTH, mainGame.Resolution.HEIGHT, camera);
+        camera.position.set(camera.viewportWidth / 2 + 100, camera.viewportHeight / 2, 0f);
         viewport.apply();
         viewport.update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         background = new BackgroundRender();
@@ -99,7 +99,7 @@ public class Canvas implements IScene{
      *
      * @see mainGame#render().
      */
-    public void update(){
+    public void update() {
         Gdx.gl.glClearColor(0.2F, 0.3F, 0.9F, 1);
 
         // Some OpenGL thing, not really sure.
@@ -116,7 +116,7 @@ public class Canvas implements IScene{
     /**
      * Cals dispose on the background, all boats and all lanes.
      */
-    public void dispose(){
+    public void dispose() {
         background.dispose();
         for (Lane l : lanes) {
             l.dispose();
@@ -133,23 +133,23 @@ public class Canvas implements IScene{
      * Initialises the lanes.
      * Allocates memory in the lanes array. Initializes all the Lane instances into the array with correct dimensions.
      */
-    private void makeLanes(){
+    private void makeLanes() {
         lanes = new Lane[numLanes];
         boolean userLaneSet = false;
         Random userLaneChooser = new Random();
-        for (int lane = 0; lane < numLanes; lane++){
+        for (int lane = 0; lane < numLanes; lane++) {
             // check if a UserLane was already created
-            if (!userLaneSet){
+            if (!userLaneSet) {
                 // choose a number between 0 and 1
-                if (userLaneChooser.nextInt(2) == 1){
+                if (userLaneChooser.nextInt(2) == 1) {
                     // Create user lane
-                    lanes[lane] = new UserLane(lane* ((int)camera.viewportWidth/numLanes), (lane+1)* ((int)camera.viewportWidth/numLanes));
+                    lanes[lane] = new UserLane(lane * ((int) camera.viewportWidth / numLanes), (lane + 1) * ((int) camera.viewportWidth / numLanes));
                     userLaneSet = true;
                     continue;
                 }
             }
             // Otherwise just make a normal lane
-            lanes[lane] = new Lane(lane* ((int)camera.viewportWidth/numLanes), (lane+1)* ((int)camera.viewportWidth/numLanes));
+            lanes[lane] = new Lane(lane * ((int) camera.viewportWidth / numLanes), (lane + 1) * ((int) camera.viewportWidth / numLanes));
         }
 
     }
@@ -158,20 +158,20 @@ public class Canvas implements IScene{
      * Initialises the boats.
      * Allocates memory in the boats array. Initializes all the Bane instances into the array.
      */
-    private void makeBoats(){
+    private void makeBoats() {
         // Number of boats should roughly equal the number of lanes
         boats = new Boat[numLanes];
 
-        TexturePicker picker = new TexturePicker("textures/aitextures/","aiboattexturelist.txt");
-        for (int boat = 0; boat < numLanes; boat++){
-            if (lanes[boat] instanceof UserLane){
-                Stats userStats = new Stats(0.04F, 5, 3, 100, 0 );
+        TexturePicker picker = new TexturePicker("textures/aitextures/", "aiboattexturelist.txt");
+        for (int boat = 0; boat < numLanes; boat++) {
+            if (lanes[boat] instanceof UserLane) {
+                Stats userStats = new Stats(0.04F, 5, 3, 100, 0);
                 boats[boat] = new UserBoat(new Position(lanes[boat].getMiddle(), 0), userStats);
-                boats[boat].setBoatPosition(new Position(lanes[boat].getMiddle() - boats[boat].getSprite().getBoundingRectangle().width/2f, 0));
+                boats[boat].setBoatPosition(new Position(lanes[boat].getMiddle() - boats[boat].getSprite().getBoundingRectangle().width / 2f, 0));
                 continue;
             }
             boats[boat] = new AIBoat(new Position(lanes[boat].getMiddle(), 0), StatsFactory.make_stats(), 50, lanes[boat], picker.pick());
-            boats[boat].setBoatPosition(new Position(lanes[boat].getMiddle() - boats[boat].getSprite().getBoundingRectangle().width/2f, 0));
+            boats[boat].setBoatPosition(new Position(lanes[boat].getMiddle() - boats[boat].getSprite().getBoundingRectangle().width / 2f, 0));
         }
 
     }
@@ -179,13 +179,13 @@ public class Canvas implements IScene{
     /**
      * Gets boats to be drawn, also allows them to be controlled/control themselves.
      */
-    private void updateBoats(){
-        for (int i = 0; i < numLanes; i++){
+    private void updateBoats() {
+        for (int i = 0; i < numLanes; i++) {
             boats[i].draw(camera.combined);
             boats[i].checkCollisions(lanes[i], obstacleSpawner);
-            if (boats[i].getBoatPosition().getPosY() < (raceLength - boats[i].getSpriteHeight())){
+            if (boats[i].getBoatPosition().getPosY() < (raceLength - boats[i].getSpriteHeight())) {
                 boats[i].control(obstacleSpawner);
-            } else{
+            } else {
                 boats[i].update();
             }
         }
@@ -194,8 +194,8 @@ public class Canvas implements IScene{
     /**
      * Draws every Lane in the lanes array.
      */
-    private void drawLanes(){
-        for (int i = 0; i < numLanes; i++){
+    private void drawLanes() {
+        for (int i = 0; i < numLanes; i++) {
             lanes[i].draw(camera);
         }
     }
@@ -203,23 +203,23 @@ public class Canvas implements IScene{
     /**
      * Checks if the finish line is close, then renders it.
      */
-    public void checkForEnd(){
+    public void checkForEnd() {
         if (camera.position.y > raceLength - camera.viewportHeight) {
             finishLine.draw(camera.combined);
-            }
+        }
     }
 
-    public boolean isEnd(){
-        if (camera.position.y > raceLength - camera.viewportHeight) {
-            for (Boat b : boats) {
-                if (b instanceof UserBoat ){
-                    if(b.getBoatPosition().getPosY() > raceLength && b.getBoatStats().getSpeed() == 0){
-                        return true;
-                    } else if(b.getBoatStats().getRobustness() < 0){
-                        legFinishedCorrectly = false;
+    public boolean isEnd() {
+        for (Boat b : boats) {
+            if (camera.position.y > raceLength - camera.viewportHeight) {
+                if (b instanceof UserBoat) {
+                    if (b.getBoatPosition().getPosY() > raceLength && b.getBoatStats().getSpeed() == 0) {
                         return true;
                     }
                 }
+            }else if (b.getBoatStats().getRobustness() < 0) {
+                legFinishedCorrectly = false;
+                return true;
             }
         }
         return false;
@@ -228,38 +228,37 @@ public class Canvas implements IScene{
     /**
      * Updates camera position so that it follows the UserBoat.
      */
-    private void updateCamera(){
+    private void updateCamera() {
         for (Boat b : boats) {
             if (b instanceof UserBoat) {
-                camera.position.y = b.getBoatPosition().getPosY() + camera.viewportHeight/2;
-                camera.position.x = camera.viewportWidth/2 +100;
+                camera.position.y = b.getBoatPosition().getPosY() + camera.viewportHeight / 2;
+                camera.position.x = camera.viewportWidth / 2 + 100;
                 viewport.update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
                 String printRobustness = "HP: " + b.getBoatStats().getRobustness();
-                TextRenderer.print(printRobustness, mainGame.Resolution.WIDTH/16F, mainGame.Resolution.HEIGHT /1.5F, camera, 2);
+                TextRenderer.print(printRobustness, mainGame.Resolution.WIDTH / 16F, mainGame.Resolution.HEIGHT / 1.5F, camera, 2);
                 break;
             }
         }
     }
 
 
-
     /**
      * Function given to the ApplicationAdapter#resize() function in mainGame
      *
-     * @param width window width
+     * @param width  window width
      * @param height window height
      * @see com.badlogic.gdx.ApplicationAdapter#resize(int width, int height)
      * @see mainGame#resize(int width, int height)
      */
-    public void resize(int width, int height){
+    public void resize(int width, int height) {
         viewport.update(width, height);
-        camera.position.set(camera.viewportWidth/2 + 100 , camera.viewportHeight/2, 0f);
+        camera.position.set(camera.viewportWidth / 2 + 100, camera.viewportHeight / 2, 0f);
     }
 
     // Getters
 
 
-    public long getUserBoatPenalties(){
+    public long getUserBoatPenalties() {
         for (Boat b : boats) {
             if (b instanceof UserBoat) {
                 return b.getPenalties();
@@ -272,8 +271,9 @@ public class Canvas implements IScene{
         return camera;
     }
 
-    public boolean getLegFinishedCorrectly(){
-        return legFinishedCorrectly;}
+    public boolean getLegFinishedCorrectly() {
+        return legFinishedCorrectly;
+    }
 
     // Setters
 
