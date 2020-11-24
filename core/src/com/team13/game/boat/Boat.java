@@ -128,7 +128,7 @@ public class Boat {
     public void checkCollisions(Lane lane){
         if (lane.getlBorder() > boatPosition.getPosX() || lane.getrBorder() < boatPosition.getPosX() + spriteWidth){
             if ((System.currentTimeMillis() - timeOfLastPenalty)/1000 > (1/penaltiesPerSecond)){
-penalties += penalty;
+            penalties += penalty;
                 timeOfLastPenalty = System.currentTimeMillis();
             }
         }

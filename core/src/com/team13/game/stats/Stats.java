@@ -45,6 +45,11 @@ public class Stats {
      */
     private float fatigue;
 
+    /**
+     * The current durability of the boat
+     */
+    private float current_robustness;
+
 
     // Constructors
     /**
@@ -67,6 +72,7 @@ public class Stats {
        this.maneuverability = maneuverability;
        this.robustness = robustness;
        this.fatigue = fatigue;
+       this.current_robustness = robustness;
     }
 
 
@@ -99,6 +105,7 @@ public class Stats {
         return fatigue;
     }
 
+    public float getCurrent_robustness(){return fatigue;}
 
     // Setters
     public void setSpeed(float speed) {
@@ -124,4 +131,6 @@ public class Stats {
     public void  setFatigue(float f) {
         this.fatigue = f;
     }
+
+    public void setCurrent_robustness(float r){this.current_robustness = r;}
 }
