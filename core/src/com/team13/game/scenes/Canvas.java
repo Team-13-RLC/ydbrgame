@@ -165,8 +165,8 @@ public class Canvas implements IScene{
         TexturePicker picker = new TexturePicker("textures/aitextures/","aiboattexturelist.txt");
         for (int boat = 0; boat < numLanes; boat++){
             if (lanes[boat] instanceof UserLane){
-                // This Stats variable is for testing, to be removed
-                boats[boat] = new UserBoat(new Position(lanes[boat].getMiddle(), 0), StatsFactory.make_stats());
+                Stats userStats = new Stats(0.04F, 5, 3, 100, 0 );
+                boats[boat] = new UserBoat(new Position(lanes[boat].getMiddle(), 0), userStats);
                 boats[boat].setBoatPosition(new Position(lanes[boat].getMiddle() - boats[boat].getSprite().getBoundingRectangle().width/2f, 0));
                 continue;
             }
