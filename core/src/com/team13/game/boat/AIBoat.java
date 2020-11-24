@@ -18,7 +18,7 @@ public class AIBoat extends Boat{
      * Holds the detection distance for obstacles once that is calculated
      * using the skill level in the constructor statement.
      */
-    private int detection_distance;
+    private final int detection_distance;
     /**
      * Holds the left and right borders of the lane that the ai is in
      * also contains methods that allow the getting of the co-ords of said
@@ -51,10 +51,11 @@ public class AIBoat extends Boat{
 
         // Specific AI boat stuff
         this.aiLane = aiLane;
-        Random ran = new Random();
+//        Random ran = new Random();
         //50 used as placeholder until testing can be done
-        int max = skill_level + 50;
-        detection_distance = ran.nextInt((max+1)- skill_level) + skill_level;
+//        int max = skill_level + 50;
+        detection_distance = skill_level;
+//        detection_distance = ran.nextInt((max+1)- skill_level) + skill_level;
     }
 
 //Methods
@@ -87,16 +88,36 @@ public class AIBoat extends Boat{
 
 
     private boolean obstacle_detected(Obstacle obstacle){
+        // Added for clarity
+        float obstaclePosY = obstacle.getObstaclePosition().getPosY();
+        float obstaclePosX = obstacle.getObstaclePosition().getPosX();
+        float obstacleWidth = obstacle.getObstacleWidth();
 
         if(obstacle.getObstaclePosition().getPosY() < getBoatPosition().getPosY()){
             return false;
         }
         //come back if x is a range of values
-        return obstacle.getObstaclePosition().getPosY() <= detection_distance &&
-                ((obstacle.getObstaclePosition().getPosX() - obstacle.getObstacleWidth()/2  < getBoatPosition().getPosX() + spriteWidth/2 &&
-                        obstacle.getObstaclePosition().getPosX() - obstacle.getObstacleWidth()/2 > getBoatPosition().getPosX() - spriteWidth/2)||
-                        (obstacle.getObstaclePosition().getPosX() + obstacle.getObstacleWidth()/2  > getBoatPosition().getPosX() - spriteWidth/2 &&
-                                obstacle.getObstaclePosition().getPosX() + obstacle.getObstacleWidth() < getBoatPosition().getPosX() + spriteWidth/2));
+        if (obstaclePosY < detection_distance + getBoatPosition().getPosY()) {
+            if (obstaclePosX - obstacleWidth / 2 < getBoatPosition().getPosX() + spriteWidth / 2 &&
+                    obstaclePosX - obstacleWidth / 2 > getBoatPosition().getPosX() - spriteWidth / 2) {
+                return true;
+                // Yes, i know it can be simplified
+            } else if (obstaclePosX + obstacleWidth / 2 > getBoatPosition().getPosX() - spriteWidth / 2 &&
+                    obstaclePosX + obstacleWidth < getBoatPosition().getPosX() + spriteWidth / 2) {
+                return true;
+            } else{
+                return false;
+            }
+        } else{
+            return false;
+        }
+
+        // removed for readability
+//        return posY <= detection_distance &&
+//                ((posX - width/2  < getBoatPosition().getPosX() + spriteWidth/2 &&
+//                        posX - width/2 > getBoatPosition().getPosX() - spriteWidth/2)||
+//                        (posX + width/2  > getBoatPosition().getPosX() - spriteWidth/2 &&
+//                                posX + width < getBoatPosition().getPosX() + spriteWidth/2));
     }
 
     @Override
@@ -118,6 +139,8 @@ public class AIBoat extends Boat{
             }
         }
     }
+
+
 
     private void turn(String dir){
         if (dir.equals("L")) {

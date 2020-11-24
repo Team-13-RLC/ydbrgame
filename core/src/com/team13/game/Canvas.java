@@ -172,7 +172,7 @@ public class Canvas implements IScene{
                 continue;
             }
             Stats AIStats = new Stats(0.04F, 5, 3, 10, 0 );
-            boats[boat] = new AIBoat(new Position(lanes[boat].getMiddle(), 0), AIStats, 50, lanes[boat]);
+            boats[boat] = new AIBoat(new Position(lanes[boat].getMiddle(), 0), AIStats, 150, lanes[boat]);
             boats[boat].setBoatPosition(new Position(lanes[boat].getMiddle() - boats[boat].getSprite().getBoundingRectangle().width/2f, 0));
         }
 
