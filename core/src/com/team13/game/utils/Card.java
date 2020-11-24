@@ -62,4 +62,6 @@ public class Card implements IScene {
         camera.position.set(camera.viewportWidth/2 , camera.viewportHeight/2, 0f);
     }
 
+
+    public boolean getLegFinishedCorrectly(){ return true;}
 }
