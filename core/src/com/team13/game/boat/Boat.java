@@ -68,6 +68,8 @@ public class Boat {
 
     private final long penaltiesPerSecond = 2;
 
+    private final int breakability = 5;
+
     // Constructors
     /**
      * Constructor for the boat.
@@ -130,7 +132,6 @@ public class Boat {
 
     public void checkCollisions(Lane lane, Spawn spawn){
         // Useless rectangle.
-        Rectangle r = new Rectangle();
         if (lane.getlBorder() > boatPosition.getPosX() || lane.getrBorder() < boatPosition.getPosX() + spriteWidth){
             if ((System.currentTimeMillis() - timeOfLastPenalty)/1000 > (1/penaltiesPerSecond)){
             penalties += penalty;
@@ -138,8 +139,9 @@ public class Boat {
             }
         }
         for (Obstacle o : spawn.getObstacleList()) {
-            if(Intersector.intersectRectangles(boatSprite.getBoundingRectangle(), o.getObstacleSprite().getBoundingRectangle(), r )){
-
+            if(Intersector.overlaps(boatSprite.getBoundingRectangle(), o.getObstacleSprite().getBoundingRectangle())){
+                boatStats.setRobustness(boatStats.getRobustness() - breakability);
+                boatStats.setSpeed(boatStats.getSpeed()*0.5F);
             }
         }
     }
