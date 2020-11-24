@@ -8,7 +8,7 @@ public class StatsFactory {
     public static Stats make_stats(){
         Random random = new Random();
         // Generate random between 3 and 7 (inclusive)
-        float maxSpeed = random.nextInt((7-3)+ 1) + 3;
+        float maxSpeed = random.nextInt((7-4)+ 1) + 4;
         // Generate random between 50 and 150 (inclusive)
         float robustness = random.nextInt((150 - 50) + 1) + 50;
         float acceleration = maxSpeed / 5;
