@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.utils.viewport.FillViewport;
+import com.team13.game.boat.AIBoat;
 import com.team13.game.boat.Boat;
 import com.team13.game.boat.UserBoat;
 import com.team13.game.lane.Lane;
@@ -51,19 +52,19 @@ public class Canvas implements IScene{
     /**
      * Class that will render the background.
      */
-    private BackgroundRender background;
+    private final BackgroundRender background;
 
     /**
      * The line which the boats need to cross to win
      */
-    private FinishLine finishLine;
+    private final FinishLine finishLine;
 
     /**
      * How long the race is
      */
     private final float raceLength = 1500;
 
-    private Spawn obstacleSpawner;
+    private final Spawn obstacleSpawner;
 
 
 
@@ -168,11 +169,11 @@ public class Canvas implements IScene{
                 Stats userStats = new Stats(0.04F, 5, 3, 10, 0 );
                 boats[boat] = new UserBoat(new Position(lanes[boat].getMiddle(), 0), userStats);
                 boats[boat].setBoatPosition(new Position(lanes[boat].getMiddle() - boats[boat].getSprite().getBoundingRectangle().width/2f, 0));
-
                 continue;
             }
-
-            // TODO: generate AIBoat when that gets made
+            Stats AIStats = new Stats(0.04F, 5, 3, 10, 0 );
+            boats[boat] = new AIBoat(new Position(lanes[boat].getMiddle(), 0), AIStats, 50, lanes[boat]);
+            boats[boat].setBoatPosition(new Position(lanes[boat].getMiddle() - boats[boat].getSprite().getBoundingRectangle().width/2f, 0));
         }
 
     }
@@ -182,14 +183,12 @@ public class Canvas implements IScene{
      */
     private void updateBoats(){
         for (int i = 0; i < numLanes; i++){
-            if (boats[i] instanceof UserBoat) {
-                boats[i].draw(camera.combined);
-                boats[i].checkCollisions(lanes[i]);
-                if (boats[i].getBoatPosition().getPosY() < (raceLength - boats[i].getSpriteHeight())){
-                    boats[i].control();
-                } else{
-                    boats[i].update();
-                }
+            boats[i].draw(camera.combined);
+            boats[i].checkCollisions(lanes[i]);
+            if (boats[i].getBoatPosition().getPosY() < (raceLength - boats[i].getSpriteHeight())){
+                boats[i].control(obstacleSpawner);
+            } else{
+                boats[i].update();
             }
         }
     }
