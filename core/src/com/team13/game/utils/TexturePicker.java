@@ -14,7 +14,7 @@ public class TexturePicker {
     String[] files;
     public TexturePicker(String texturelistDirectory, String texturelistFile) {
         textureArray = new ArrayList<>();
-        files = Gdx.files.internal(texturelistDirectory + "/" + texturelistFile).readString().split("\\r\\n");
+        files = Gdx.files.internal(texturelistDirectory + "/" + texturelistFile).readString().split("\\r?\\n");
         for (String file : files) {
             textureArray.add(Gdx.files.internal(texturelistDirectory + "/" + file));
         }
