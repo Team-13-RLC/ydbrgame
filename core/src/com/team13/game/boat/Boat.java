@@ -3,8 +3,10 @@ package com.team13.game.boat;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Matrix4;
 import com.team13.game.lane.Lane;
+import com.team13.game.obstacle.Obstacle;
 import com.team13.game.obstacle.Spawn;
 import com.team13.game.stats.Position;
 import com.team13.game.stats.Stats;
@@ -64,6 +66,11 @@ public class Boat {
     private final long penalty = 5;
 
     private final long penaltiesPerSecond = 2;
+
+
+    private final int breakability = 1;
+
+    private long timeSinceLastCollision = 0;
 
     // Constructors
     /**
@@ -125,11 +132,21 @@ public class Boat {
         }
     }
 
-    public void checkCollisions(Lane lane){
+    public void checkCollisions(Lane lane, Spawn spawn){
+        // Useless rectangle.
         if (lane.getlBorder() > boatPosition.getPosX() || lane.getrBorder() < boatPosition.getPosX() + spriteWidth){
             if ((System.currentTimeMillis() - timeOfLastPenalty)/1000 > (1/penaltiesPerSecond)){
-penalties += penalty;
+            penalties += penalty;
                 timeOfLastPenalty = System.currentTimeMillis();
+            }
+        }
+        for (Obstacle o : spawn.getObstacleList()) {
+            if(Intersector.overlaps(boatSprite.getBoundingRectangle(), o.getObstacleSprite().getBoundingRectangle())){
+                boatStats.setSpeed(boatStats.getSpeed()*0.5F);
+                if ((System.currentTimeMillis() - timeSinceLastCollision)/1000 > (1)) {
+                    boatStats.setRobustness(boatStats.getRobustness() - breakability);
+                    System.out.println(boatStats.getRobustness());
+                }
             }
         }
     }

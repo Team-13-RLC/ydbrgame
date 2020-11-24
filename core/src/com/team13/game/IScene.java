@@ -10,4 +10,6 @@ public interface IScene {
     long getUserBoatPenalties();
 
     void resize(int width, int height);
+
+    boolean getLegFinishedCorrectly();
 }
