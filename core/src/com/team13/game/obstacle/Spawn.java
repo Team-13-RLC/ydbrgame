@@ -58,7 +58,8 @@ public class Spawn {
         }
 
         //Currently using a half second increment between spawning of objects.
-        if(System.currentTimeMillis() - last_spawn_time >= 500){
+        long spawnDelay = 300;
+        if(System.currentTimeMillis() - last_spawn_time >= spawnDelay){
             spawned_obstacles.add(spawn_new(getRandomObstacleType(getObstacle_types()), camera));
             setLast_spawn_time(System.currentTimeMillis());
         }
@@ -72,9 +73,7 @@ public class Spawn {
      * @return Returns the new Obstacle object of the designated type.
      */
     public Obstacle spawn_new(String obstacle_type, final Camera camera){
-        float canvas_height;
         Obstacle output;
-        canvas_height = mainGame.Resolution.HEIGHT;
         float spawn_x = -1;
         boolean temp_bool = true;
 
