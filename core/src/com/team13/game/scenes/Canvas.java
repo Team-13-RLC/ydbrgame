@@ -217,7 +217,7 @@ public class Canvas implements IScene {
                         return true;
                     }
                 }
-            }else if (b.getBoatStats().getRobustness() < 0) {
+            }else if ( b instanceof UserBoat && b.getBoatStats().getRobustness() < 0) {
                 legFinishedCorrectly = false;
                 return true;
             }
