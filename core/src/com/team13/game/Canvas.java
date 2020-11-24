@@ -67,7 +67,7 @@ public class Canvas implements IScene{
 
     private final Spawn obstacleSpawner;
 
-
+    private boolean leg_finished_correctly;
 
 
     // Constructors
@@ -84,7 +84,7 @@ public class Canvas implements IScene{
         viewport.update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         background = new BackgroundRender();
         finishLine = new FinishLine(raceLength);
-
+        this.leg_finished_correctly = true;
         obstacleSpawner = new Spawn();
         makeLanes();
         makeBoats();
@@ -268,4 +268,6 @@ public class Canvas implements IScene{
     public final Camera getCamera() {
         return camera;
     }
+
+    public boolean isLeg_finished_correctly(){return leg_finished_correctly;}
 }
