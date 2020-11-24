@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.team13.game.obstacle.Spawn;
 import com.team13.game.stats.Position;
 import com.team13.game.stats.Stats;
 
@@ -47,7 +48,7 @@ public class UserBoat extends Boat {
      * @see Boat#update()
      */
     @Override
-    public void control(){
+    public void control(final Spawn spawn){
         //when D is pressed, moving position to right
         if (Gdx.input.isKeyPressed(Keymap.RIGHT)){
             boatPosition.setPosX(boatPosition.getPosX() + boatStats.getManeuverability());
