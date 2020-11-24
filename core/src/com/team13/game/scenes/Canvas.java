@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.utils.viewport.FillViewport;
-import com.team13.game.utils.FinishLine;
+import com.team13.game.utils.*;
 import com.team13.game.boat.AIBoat;
 import com.team13.game.boat.Boat;
 import com.team13.game.boat.UserBoat;
@@ -15,9 +15,6 @@ import com.team13.game.mainGame;
 import com.team13.game.obstacle.Spawn;
 import com.team13.game.stats.Position;
 import com.team13.game.stats.Stats;
-import com.team13.game.utils.BackgroundRender;
-import com.team13.game.utils.TextRenderer;
-import com.team13.game.utils.TexturePicker;
 
 import java.util.Random;
 
@@ -168,15 +165,12 @@ public class Canvas implements IScene{
         TexturePicker picker = new TexturePicker("textures/aitextures/","aiboattexturelist.txt");
         for (int boat = 0; boat < numLanes; boat++){
             if (lanes[boat] instanceof UserLane){
-                // TODO: add some sort of a StatsGenerator class to generate stats for everything
                 // This Stats variable is for testing, to be removed
-                Stats userStats = new Stats(0.04F, 5, 3, 100, 0 );
-                boats[boat] = new UserBoat(new Position(lanes[boat].getMiddle(), 0), userStats);
+                boats[boat] = new UserBoat(new Position(lanes[boat].getMiddle(), 0), StatsFactory.make_stats());
                 boats[boat].setBoatPosition(new Position(lanes[boat].getMiddle() - boats[boat].getSprite().getBoundingRectangle().width/2f, 0));
                 continue;
             }
-            Stats AIStats = new Stats(0.04F, 5, 3, 100, 0 );
-            boats[boat] = new AIBoat(new Position(lanes[boat].getMiddle(), 0), AIStats, 50, lanes[boat], picker.pick());
+            boats[boat] = new AIBoat(new Position(lanes[boat].getMiddle(), 0), StatsFactory.make_stats(), 50, lanes[boat], picker.pick());
             boats[boat].setBoatPosition(new Position(lanes[boat].getMiddle() - boats[boat].getSprite().getBoundingRectangle().width/2f, 0));
         }
 
