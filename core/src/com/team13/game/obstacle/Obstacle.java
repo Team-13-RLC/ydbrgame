@@ -49,7 +49,7 @@ public class Obstacle
 
     /**
      * Sets the first position for the obstacle.
-     * @param position
+     * @param position a Position variable, holds the position of the obstacle.
      * @see Position
      */
     public Obstacle(Position position)
@@ -66,6 +66,12 @@ public class Obstacle
         obstacleSprite.draw(batch);
         batch.end();
     }
+
+    /**
+     * Empty method to act as a placeholder for move methods down the line.
+     * Important as move is called on all obstacle types even the static ones.
+     */
+    public void move(){}
 
     // Getters
 

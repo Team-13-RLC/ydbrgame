@@ -9,7 +9,7 @@ public class dynamicObstacle extends Obstacle
     /**
      * Directional speeds of an obstacle, in the X and Y directions.
      */
-    protected Speed velocity = new Speed(10,0);
+    protected Speed velocity = new Speed(5,0);
 
 
 
@@ -30,6 +30,11 @@ public class dynamicObstacle extends Obstacle
         Position updated = this.getObstaclePosition();
         updated.setPosX(updated.getPosX() + velocity.getVelocityx());
         this.setObstaclePosition(updated);
+    }
+
+    @Override
+    public void move(){
+        ObstacleMove();
     }
 
 }

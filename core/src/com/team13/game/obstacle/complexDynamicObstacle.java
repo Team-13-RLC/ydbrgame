@@ -47,4 +47,9 @@ public class complexDynamicObstacle extends dynamicObstacle
         updated.setPosX(updated.getPosX() + velocity.getVelocityx());
         this.setObstaclePosition(updated);
     }
+
+    @Override
+    public void move(){
+        ObstacleMove();
+    }
 }
