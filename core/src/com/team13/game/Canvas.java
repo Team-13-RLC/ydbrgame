@@ -269,5 +269,5 @@ public class Canvas implements IScene{
         return camera;
     }
 
-    public boolean getLeg_finished_correctly(){return leg_finished_correctly;}
+    public boolean getLegFinishedCorrectly(){return leg_finished_correctly;}
 }
