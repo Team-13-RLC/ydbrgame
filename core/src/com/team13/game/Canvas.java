@@ -163,7 +163,7 @@ public class Canvas implements IScene{
         // Number of boats should roughly equal the number of lanes
         boats = new Boat[numLanes];
 
-        TexturePicker picker = new TexturePicker(numLanes - 1, Gdx.files.internal("textures/"));
+        TexturePicker picker = new TexturePicker("textures/aitextures/","aiboattexturelist.txt");
         for (int boat = 0; boat < numLanes; boat++){
             if (lanes[boat] instanceof UserLane){
                 // TODO: add some sort of a StatsGenerator class to generate stats for everything
