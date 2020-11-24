@@ -1,6 +1,7 @@
 package com.team13.game.boat;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
@@ -33,13 +34,13 @@ public class AIBoat extends Boat{
      * @param skill_level the minimum bound for obstacle detection.
      * @param aiLane lane which this boat belongs to
      */
-    public AIBoat(Position position, Stats stats, int skill_level, final Lane aiLane){
+    public AIBoat(Position position, Stats stats, int skill_level, final Lane aiLane, FileHandle textureLocation){
         // Drawing things.
         spriteScale = 0.2F;
         boatPosition = position;
         boatStats = stats;
         // TODO: make a random texture picker;
-        boatTexture = new Texture(Gdx.files.internal("textures/AIboatTexture1.png"));
+        boatTexture = new Texture(textureLocation);
         boatTexture.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
         boatSprite = new Sprite(boatTexture);
         boatSprite.setPosition(boatPosition.getPosX(), boatPosition.getPosY());

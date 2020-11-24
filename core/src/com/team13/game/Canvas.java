@@ -14,6 +14,7 @@ import com.team13.game.obstacle.Spawn;
 import com.team13.game.stats.Position;
 import com.team13.game.stats.Stats;
 import com.team13.game.utils.BackgroundRender;
+import com.team13.game.utils.TexturePicker;
 
 import java.util.Random;
 
@@ -162,6 +163,7 @@ public class Canvas implements IScene{
         // Number of boats should roughly equal the number of lanes
         boats = new Boat[numLanes];
 
+        TexturePicker picker = new TexturePicker("textures/aitextures/","aiboattexturelist.txt");
         for (int boat = 0; boat < numLanes; boat++){
             if (lanes[boat] instanceof UserLane){
                 // TODO: add some sort of a StatsGenerator class to generate stats for everything
@@ -172,7 +174,7 @@ public class Canvas implements IScene{
                 continue;
             }
             Stats AIStats = new Stats(0.04F, 5, 3, 10, 0 );
-            boats[boat] = new AIBoat(new Position(lanes[boat].getMiddle(), 0), AIStats, 50, lanes[boat]);
+            boats[boat] = new AIBoat(new Position(lanes[boat].getMiddle(), 0), AIStats, 50, lanes[boat], picker.pick());
             boats[boat].setBoatPosition(new Position(lanes[boat].getMiddle() - boats[boat].getSprite().getBoundingRectangle().width/2f, 0));
         }
 
