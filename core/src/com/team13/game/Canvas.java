@@ -270,4 +270,10 @@ public class Canvas implements IScene{
     }
 
     public boolean getLegFinishedCorrectly(){return leg_finished_correctly;}
+
+    // Setters
+
+    public void setLegfinishedcorrectly(boolean b){
+        this.leg_finished_correctly = b;
+    }
 }
