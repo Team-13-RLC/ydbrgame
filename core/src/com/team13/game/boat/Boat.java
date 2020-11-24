@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Matrix4;
 import com.team13.game.lane.Lane;
+import com.team13.game.obstacle.Spawn;
 import com.team13.game.stats.Position;
 import com.team13.game.stats.Stats;
 
@@ -108,7 +109,7 @@ public class Boat {
      * Function to control the boats.
      * To be overridden when inheriting
      */
-    public void control() {}
+    public void control(Spawn spawn) {}
 
     /**
      * Updates boat position when no keys are pressed.
@@ -127,11 +128,10 @@ public class Boat {
     public void checkCollisions(Lane lane){
         if (lane.getlBorder() > boatPosition.getPosX() || lane.getrBorder() < boatPosition.getPosX() + spriteWidth){
             if ((System.currentTimeMillis() - timeOfLastPenalty)/1000 > (1/penaltiesPerSecond)){
-                penalties += penalty;
+penalties += penalty;
                 timeOfLastPenalty = System.currentTimeMillis();
             }
         }
-
     }
 
 
