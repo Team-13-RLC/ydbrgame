@@ -1,15 +1,17 @@
-package com.team13.game;
+package com.team13.game.scenes;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.utils.viewport.FillViewport;
+import com.team13.game.FinishLine;
 import com.team13.game.boat.AIBoat;
 import com.team13.game.boat.Boat;
 import com.team13.game.boat.UserBoat;
 import com.team13.game.lane.Lane;
 import com.team13.game.lane.UserLane;
+import com.team13.game.mainGame;
 import com.team13.game.obstacle.Spawn;
 import com.team13.game.stats.Position;
 import com.team13.game.stats.Stats;

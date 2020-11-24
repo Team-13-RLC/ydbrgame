@@ -1,4 +1,4 @@
-package com.team13.game;
+package com.team13.game.scenes;
 
 import com.badlogic.gdx.graphics.Camera;
 

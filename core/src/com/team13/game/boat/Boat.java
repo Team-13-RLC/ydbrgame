@@ -8,6 +8,7 @@ import com.badlogic.gdx.math.Matrix4;
 import com.team13.game.lane.Lane;
 import com.team13.game.obstacle.Obstacle;
 import com.team13.game.obstacle.Spawn;
+import com.team13.game.scenes.Canvas;
 import com.team13.game.stats.Position;
 import com.team13.game.stats.Stats;
 
@@ -101,7 +102,7 @@ public class Boat {
      * It sets the projection matrix for the sprite batch. Translates the sprite then draws it within the sprite batch.
      *
      * @param projectionMatrix projection matrix for the camera.
-     * @see com.team13.game.Canvas#getCamera()
+     * @see Canvas#getCamera()
      */
     public void draw(Matrix4 projectionMatrix){
         batch.setProjectionMatrix(projectionMatrix);

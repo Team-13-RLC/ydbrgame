@@ -3,8 +3,10 @@ package com.team13.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
+import com.team13.game.scenes.Canvas;
+import com.team13.game.scenes.IScene;
 import com.team13.game.stats.Position;
-import com.team13.game.utils.Card;
+import com.team13.game.scenes.Card;
 import com.team13.game.utils.TextRenderer;
 import com.team13.game.utils.Timer;
 

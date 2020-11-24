@@ -1,4 +1,4 @@
-package com.team13.game.utils;
+package com.team13.game.scenes;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -8,11 +8,8 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.viewport.FillViewport;
-import com.team13.game.Canvas;
-import com.team13.game.IScene;
+import com.team13.game.scenes.IScene;
 import com.team13.game.mainGame;
-
-import java.util.logging.FileHandler;
 
 public class Card implements IScene {
     private final OrthographicCamera camera;
