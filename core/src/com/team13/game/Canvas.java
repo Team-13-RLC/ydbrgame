@@ -67,7 +67,7 @@ public class Canvas implements IScene{
     private final float raceLength = 1500;
 
     private final Spawn obstacleSpawner;
-
+    private boolean legFinishedCorrectly;
 
 
     // Constructors
@@ -85,6 +85,7 @@ public class Canvas implements IScene{
         background = new BackgroundRender();
         finishLine = new FinishLine(raceLength);
         obstacleSpawner = new Spawn();
+        legFinishedCorrectly = true;
         makeLanes();
         makeBoats();
     }
@@ -215,8 +216,13 @@ public class Canvas implements IScene{
     public boolean isEnd(){
         if (camera.position.y > raceLength - camera.viewportHeight) {
             for (Boat b : boats) {
-                if (b instanceof UserBoat && b.getBoatPosition().getPosY() > raceLength && b.getBoatStats().getSpeed() == 0) {
-                    return true;
+                if (b instanceof UserBoat ){
+                    if(b.getBoatPosition().getPosY() > raceLength && b.getBoatStats().getSpeed() == 0){
+                        return true;
+                    } else if(b.getBoatStats().getRobustness() < 0){
+                        legFinishedCorrectly = false;
+                        return true;
+                    }
                 }
             }
         }
@@ -270,7 +276,8 @@ public class Canvas implements IScene{
         return camera;
     }
 
-    public boolean getLegFinishedCorrectly(){return leg_finished_correctly;}
+    public boolean getLegFinishedCorrectly(){
+        return legFinishedCorrectly;}
 
     // Setters
 

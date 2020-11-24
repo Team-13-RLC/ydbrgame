@@ -98,7 +98,7 @@ public class MainLoop {
                     if (scenes[loopCounter].getLegFinishedCorrectly()){
                         legFinished();
                     } else {
-                        gameFinishedProperly();
+                        gameFinishedWithCrash();
                     }
                 } else {
                     cardFinished();
