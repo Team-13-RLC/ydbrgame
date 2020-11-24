@@ -1,11 +1,9 @@
 package com.team13.game.boat;
 
-import java.util.ArrayList;
-import java.util.Random;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.Rectangle;
 import com.team13.game.lane.Lane;
 import com.team13.game.obstacle.Obstacle;
 import com.team13.game.obstacle.Spawn;
@@ -62,12 +60,18 @@ public class AIBoat extends Boat{
 
     public String direction(Obstacle obstacle) {
 
-        String output = "";
+        // Provies a way to react to different kinds of obstacles later.
         if(obstacle instanceof Obstacle){
+            if (boatPosition.getPosX() + spriteWidth < aiLane.getlBorder()){
+                return "R";
+            }
+            if (boatPosition.getPosX() + spriteWidth + spriteWidth > aiLane.getrBorder()){
+                return "L";
+            }
             if(obstacle.getObstaclePosition().getPosX() <= aiLane.getMiddle()){
-                output = "R";
+                return "R";
             }else{
-                output = "L";
+                return "L";
             }
         }else{
 //            if(obstacle.getVelocityX() < 0){
@@ -76,9 +80,9 @@ public class AIBoat extends Boat{
 //                output = "L";
 //            }
         }
-        return output;
-
+        return "";
     }
+
 
 //    public boolean slowDown() {
 //
@@ -89,35 +93,22 @@ public class AIBoat extends Boat{
 
     private boolean obstacle_detected(Obstacle obstacle){
         // Added for clarity
-        float obstaclePosY = obstacle.getObstaclePosition().getPosY();
-        float obstaclePosX = obstacle.getObstaclePosition().getPosX();
-        float obstacleWidth = obstacle.getObstacleWidth();
+        Rectangle obstacleBounds = obstacle.getObstacleSprite().getBoundingRectangle();
+        float obstacleBottomBound = obstacleBounds.y;
+        float obstacleTopBound = obstacleBottomBound + obstacleBounds.height;
+        float obstacleLeftBound = obstacleBounds.x;
+        float obstacleRightBound = obstacleLeftBound + obstacleBounds.width;
 
-        if(obstacle.getObstaclePosition().getPosY() < getBoatPosition().getPosY()){
+        if(boatPosition.getPosY() > obstacleTopBound){
             return false;
         }
         //come back if x is a range of values
-        if (obstaclePosY < detection_distance + getBoatPosition().getPosY()) {
-            if (obstaclePosX - obstacleWidth / 2 < getBoatPosition().getPosX() + spriteWidth / 2 &&
-                    obstaclePosX - obstacleWidth / 2 > getBoatPosition().getPosX() - spriteWidth / 2) {
-                return true;
-                // Yes, i know it can be simplified
-            } else if (obstaclePosX + obstacleWidth / 2 > getBoatPosition().getPosX() - spriteWidth / 2 &&
-                    obstaclePosX + obstacleWidth < getBoatPosition().getPosX() + spriteWidth / 2) {
-                return true;
-            } else{
-                return false;
-            }
+        if (obstacleBottomBound < detection_distance + boatPosition.getPosY()) {
+            return obstacleLeftBound < boatPosition.getPosX() + spriteWidth ||
+                    obstacleRightBound > boatPosition.getPosX();
         } else{
             return false;
         }
-
-        // removed for readability
-//        return posY <= detection_distance &&
-//                ((posX - width/2  < getBoatPosition().getPosX() + spriteWidth/2 &&
-//                        posX - width/2 > getBoatPosition().getPosX() - spriteWidth/2)||
-//                        (posX + width/2  > getBoatPosition().getPosX() - spriteWidth/2 &&
-//                                posX + width < getBoatPosition().getPosX() + spriteWidth/2));
     }
 
     @Override

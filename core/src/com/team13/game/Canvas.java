@@ -52,19 +52,19 @@ public class Canvas implements IScene{
     /**
      * Class that will render the background.
      */
-    private BackgroundRender background;
+    private final BackgroundRender background;
 
     /**
      * The line which the boats need to cross to win
      */
-    private FinishLine finishLine;
+    private final FinishLine finishLine;
 
     /**
      * How long the race is
      */
     private final float raceLength = 1500;
 
-    private Spawn obstacleSpawner;
+    private final Spawn obstacleSpawner;
 
 
 
@@ -172,7 +172,7 @@ public class Canvas implements IScene{
                 continue;
             }
             Stats AIStats = new Stats(0.04F, 5, 3, 10, 0 );
-            boats[boat] = new AIBoat(new Position(lanes[boat].getMiddle(), 0), AIStats, 150, lanes[boat]);
+            boats[boat] = new AIBoat(new Position(lanes[boat].getMiddle(), 0), AIStats, 50, lanes[boat]);
             boats[boat].setBoatPosition(new Position(lanes[boat].getMiddle() - boats[boat].getSprite().getBoundingRectangle().width/2f, 0));
         }
 
