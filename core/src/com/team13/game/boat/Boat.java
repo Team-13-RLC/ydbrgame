@@ -110,7 +110,6 @@ public class Boat {
         boatSprite.setPosition(boatPosition.getPosX(), boatPosition.getPosY());
         boatSprite.draw(batch);
         batch.end();
-//        System.out.println("Boat position: " + getBoatPosition().getPosX() + ", " + getBoatPosition().getPosY());
     }
 
     /**
@@ -146,7 +145,6 @@ public class Boat {
                 boatStats.setSpeed(boatStats.getSpeed()*0.5F);
                 if ((System.currentTimeMillis() - timeSinceLastCollision)/1000 > (1)) {
                     boatStats.setRobustness(boatStats.getRobustness() - breakability);
-                    System.out.println(boatStats.getRobustness());
                 }
             }
         }

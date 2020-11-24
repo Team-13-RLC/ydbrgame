@@ -1,10 +1,11 @@
-package com.team13.game;
+package com.team13.game.utils;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Matrix4;
+import com.team13.game.mainGame;
 
 /**
  * The finish line, the line a boat crosses to win the race.
