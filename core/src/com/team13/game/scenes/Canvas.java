@@ -63,7 +63,7 @@ public class Canvas implements IScene{
     /**
      * How long the race is
      */
-    private final float raceLength = 1500;
+    private final float raceLength = 15000;
 
     private final Spawn obstacleSpawner;
     private boolean legFinishedCorrectly;
