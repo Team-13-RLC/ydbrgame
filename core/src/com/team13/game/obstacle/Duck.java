@@ -5,10 +5,12 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.team13.game.stats.Position;
 
+/**
+ * Class of Duck Obstacle
+ */
 public class Duck extends complexDynamicObstacle
 {
     /**
-     * Inherits dynamicObstacle class.
      * Creates a duck and initialises all that needs to be initialised.
      * Assigns the correct texture for the duck(s). Ensures for correct filtering.
      * Gives the texture to the duck sprite and sets initial position of the duck using the superclass' constructor.

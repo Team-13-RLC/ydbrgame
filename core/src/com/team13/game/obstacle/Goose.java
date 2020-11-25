@@ -5,11 +5,14 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.team13.game.stats.Position;
 
+
+/**
+ * Class of Goose Obstacle
+ */
 public class Goose extends complexDynamicObstacle
 {
 
     /**
-     * Inherits dynamicObstacle class.
      * Creates a goose and initialises all that needs to be initialised.
      * Assigns the correct texture for the goose/geese. Ensures for correct filtering.
      * Gives the texture to the goose sprite and sets initial position of the goose using the superclass' constructor.

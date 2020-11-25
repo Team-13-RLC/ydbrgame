@@ -4,10 +4,10 @@ import com.team13.game.stats.Position;
 
 public class staticObstacle extends Obstacle
 {
-
     /**
-     * Inherits Obstacle class.
-     * @See Obstacle
+     * Calls the Obstacle constructor with position argument
+     * @param position x and y position of the Obstacle
+     * @see Obstacle
      */
     public staticObstacle(Position position)
     {

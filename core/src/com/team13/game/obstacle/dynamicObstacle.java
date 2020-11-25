@@ -3,6 +3,9 @@ package com.team13.game.obstacle;
 import com.team13.game.stats.Position;
 import com.team13.game.stats.Speed;
 
+/**
+ * Class of obstacles that can move.
+ */
 public class dynamicObstacle extends Obstacle
 {
 
@@ -12,10 +15,9 @@ public class dynamicObstacle extends Obstacle
     protected Speed velocity = new Speed(5,0);
 
 
-
     /**
-     * Inherits Obstacle class.
-     *
+     * Calls Obstacle constructor with the position parameter.
+     * @param position x and y position off the obstacle.
      */
     public dynamicObstacle(Position position)
     {
