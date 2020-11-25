@@ -60,18 +60,36 @@ public class Boat {
      */
     protected float spriteHeight;
 
+    /**
+     * Number of penalties the boat had received for crossing Lane boundaries.
+     */
     private long penalties =0;
 
+    /**
+     * When the boat received its last penalty.
+     */
     private long timeOfLastPenalty = 0;
 
+    /**
+     * How many seconds each penalty adds.
+     */
     private final long penalty = 5;
 
+    /**
+     * How many times a second a penalty can be issued.
+     */
     private final long penaltiesPerSecond = 2;
 
-
+    /**
+     * How much boat's robustness decreases each time it hits and Obstacle.
+     */
     private final int breakability = 1;
 
+    /**
+     * When was the last time the boat took damage from collision.
+     */
     private long timeSinceLastCollision = 0;
+
 
     // Constructors
     /**
@@ -102,7 +120,6 @@ public class Boat {
      * It sets the projection matrix for the sprite batch. Translates the sprite then draws it within the sprite batch.
      *
      * @param projectionMatrix projection matrix for the camera.
-     * @see Canvas#getCamera()
      */
     public void draw(Matrix4 projectionMatrix){
         batch.setProjectionMatrix(projectionMatrix);
@@ -114,12 +131,12 @@ public class Boat {
 
     /**
      * Function to control the boats.
-     * To be overridden when inheriting
+     * To be overridden when inheriting.
      */
     public void control(Spawn spawn) {}
 
     /**
-     * Updates boat position when no keys are pressed.
+     * Updates boat position when no keys are pressed or when control() is no longer being called (e.g. after the race is over).
      * Boat speed is decreasing (due to drag), position keeps increasing until the speed is below 0.
      * Speed is clamped at 0 when it goes below 0 (or reaches 0)
      */
@@ -132,6 +149,17 @@ public class Boat {
         }
     }
 
+    /**
+     * Checks for both collisions with Lane borders and any Obstacles.
+     * If boat's left boundary crosses Lane's right boundary (and vice versa)
+     * and starts adding penalties in accordance with the penalty and penaltiesPerSecond variables.
+     * Also loops over all currently spawned Obstacles and checks if the boats bounding box intersects the Obstacle's bounding box.
+     * @param lane The lane this boat is in.
+     * @param spawn Spawn object holding all currently spawned obstacles.
+     * @see Spawn
+     * @see Lane
+     * @see Obstacle
+     */
     public void checkCollisions(Lane lane, Spawn spawn){
         // Useless rectangle.
         if (lane.getlBorder() > boatPosition.getPosX() || lane.getrBorder() < boatPosition.getPosX() + spriteWidth){
