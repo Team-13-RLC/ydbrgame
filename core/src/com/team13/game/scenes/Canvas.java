@@ -63,7 +63,7 @@ public class Canvas implements IScene {
     /**
      * How long the race is
      */
-    private final float raceLength = 15000;
+    private final float raceLength = 8000;
 
     /**
      * Used to spawn and keep track of all obstacles.
