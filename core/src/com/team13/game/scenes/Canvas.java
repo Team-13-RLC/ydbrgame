@@ -65,15 +65,25 @@ public class Canvas implements IScene {
      */
     private final float raceLength = 15000;
 
+    /**
+     * Used to spawn and keep track of all obstacles.
+     */
     private final Spawn obstacleSpawner;
+
+    /**
+     * Flag to make sure the UserBoat finished the race and did not crash.
+     */
     private boolean legFinishedCorrectly;
 
 
     // Constructors
-
     /**
-     * Initializes the camera, the viewport, the background and the finish line.
+     * Initializes the camera, the viewport, the background, the finish line and the obstacle spawner.
+     *
      * Also creates all boats and all lanes.
+     * @see BackgroundRender
+     * @see FinishLine
+     * @see Spawn
      */
     public Canvas() {
         camera = new OrthographicCamera();
@@ -94,7 +104,8 @@ public class Canvas implements IScene {
 
     /**
      * Called every frame to update everything to do with the canvas.
-     * Clears the screen with a color (for some reason). Updates (scrolls) the background. Draws boats and lanes.
+     * Clears the screen with a color. Updates (scrolls) the background. Draws boats and lanes.
+     * Checks if the leg is getting close to the end so the FinishLine can be displayed.
      * Updates camera position.
      *
      * @see mainGame#render().
@@ -132,6 +143,8 @@ public class Canvas implements IScene {
     /**
      * Initialises the lanes.
      * Allocates memory in the lanes array. Initializes all the Lane instances into the array with correct dimensions.
+     * Randomly chooses one lane to be the UserLane.
+     * @see Lane
      */
     private void makeLanes() {
         lanes = new Lane[numLanes];
@@ -156,7 +169,14 @@ public class Canvas implements IScene {
 
     /**
      * Initialises the boats.
-     * Allocates memory in the boats array. Initializes all the Bane instances into the array.
+     *
+     * Allocates memory in the boats array. Initializes all the Lane instances into the array.
+     * If the Lane is a UserLane, a UserBoat is placed into that Lane.
+     * For AI boats, the Stats are generated with teh StatsFactory. The texture is chosen by the TexturePicker.
+     * @see UserBoat
+     * @see AIBoat
+     * @see StatsFactory
+     * @see TexturePicker
      */
     private void makeBoats() {
         // Number of boats should roughly equal the number of lanes
@@ -177,7 +197,7 @@ public class Canvas implements IScene {
     }
 
     /**
-     * Gets boats to be drawn, also allows them to be controlled/control themselves.
+     * Gets boats to be drawn, allows them to be controlled/control themselves and checks for collisions.
      */
     private void updateBoats() {
         for (int i = 0; i < numLanes; i++) {
@@ -201,7 +221,8 @@ public class Canvas implements IScene {
     }
 
     /**
-     * Checks if the finish line is close, then renders it.
+     * Checks if the FinishLine is close, then renders it.
+     * @see FinishLine
      */
     public void checkForEnd() {
         if (camera.position.y > raceLength - camera.viewportHeight) {
@@ -209,6 +230,12 @@ public class Canvas implements IScene {
         }
     }
 
+    /**
+     * Checks if a leg is finished, or the boat has crashed.
+     *
+     * If the UserBoat crashed the legFinishedCorrectly flag is set to false.
+     * @return true if this is the end of the leg or the UserBoat has crashed, false otherwise.
+     */
     public boolean isEnd() {
         for (Boat b : boats) {
             if (camera.position.y > raceLength - camera.viewportHeight) {
@@ -227,6 +254,7 @@ public class Canvas implements IScene {
 
     /**
      * Updates camera position so that it follows the UserBoat.
+     * Prints boat's current health.
      */
     private void updateCamera() {
         for (Boat b : boats) {
@@ -247,7 +275,6 @@ public class Canvas implements IScene {
      *
      * @param width  window width
      * @param height window height
-     * @see com.badlogic.gdx.ApplicationAdapter#resize(int width, int height)
      * @see mainGame#resize(int width, int height)
      */
     public void resize(int width, int height) {
@@ -258,6 +285,10 @@ public class Canvas implements IScene {
     // Getters
 
 
+    /**
+     * Returns all penalties received by the UserBoat.
+     * @return  all UserBoat penalties
+     */
     public long getUserBoatPenalties() {
         for (Boat b : boats) {
             if (b instanceof UserBoat) {
@@ -274,7 +305,4 @@ public class Canvas implements IScene {
     public boolean getLegFinishedCorrectly() {
         return legFinishedCorrectly;
     }
-
-    // Setters
-
 }
