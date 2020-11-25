@@ -11,6 +11,10 @@ import com.team13.game.stats.Position;
 import com.team13.game.stats.Stats;
 
 //Fields
+
+/**
+ * Class to control boats not controlled by te user.
+ */
 public class AIBoat extends Boat{
     /**
      * Holds the detection distance for obstacles.

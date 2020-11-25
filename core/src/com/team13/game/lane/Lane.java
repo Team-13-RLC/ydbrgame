@@ -78,7 +78,7 @@ public class Lane {
     }
 
     /**
-     * Calls dispose on the shape renderer
+     * Calls dispose on the shape renderer.
      */
     public void dispose(){
         shapeRenderer.dispose();
