@@ -20,7 +20,7 @@ public class Stats {
     /**
      * How much the speed changes when the user does not press anything.
      * Could have been called drag for clarity. Is constant.
-     * Note: yes, this could be simplified by just returning the value from getDeceleration(),
+     * Note: This could be simplified by just returning the value from getDeceleration(),
      * but this way makes it more obvious where this value is coming from.
      */
     private final float deceleration = 0.02F;

@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Matrix4;
 
 /**
- * Class to render the backgorund.
+ * Class to render the background.
  */
 public class BackgroundRender {
 
