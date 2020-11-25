@@ -5,11 +5,13 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.team13.game.stats.Position;
 
+/**
+ * Class of tree branch Obstacles
+ */
 public class treeBranch extends simpleDynamicObstacle
 {
 
     /**
-     * Inherits complexDynamicObstacle class.
      * Creates a tree branch and initialises all that needs to be initialised.
      * Assigns the correct texture for the tree branch(es). Ensures for correct filtering.
      * Gives the texture to the tree branch sprite and sets initial position of the tree branch using the superclass' constructor.

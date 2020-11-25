@@ -15,17 +15,4 @@ public class UserLane extends Lane {
         super(lBorder, rBorder);
     }
 
-    // For testing. This will turn the user lane red
-//    public void draw(){
-//        // Between .begin and .eng shapes can be drawn.
-//        shapeRenderer.begin(com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType.Filled);
-//        // Color is set to black
-//        shapeRenderer.setColor(1, 0, 0, 1);
-//        // Left border drawn (god this is awful)
-//        shapeRenderer.rect( lBorder, 0, BORDERWIDTH, com.team13.game.mainGame.Resolution.HEIGHT);
-//        // Right border drawn
-//        shapeRenderer.rect( rBorder - BORDERWIDTH, 0, BORDERWIDTH, com.team13.game.mainGame.Resolution.HEIGHT);
-//        shapeRenderer.end();
-//    }
-
 }

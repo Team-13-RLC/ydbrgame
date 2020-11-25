@@ -1,20 +1,20 @@
 package com.team13.game.obstacle;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Matrix4;
 import com.team13.game.stats.Position;
-import com.team13.game.stats.Stats;
 
 /**
  * Parent class of all obstacles.
  */
-
 public class Obstacle
 {
     // Attributes
 
+    /**
+     * x and y position of teh Obstacle
+     */
     protected Position obstaclePosition;
 
     /**
@@ -58,6 +58,11 @@ public class Obstacle
         batch = new SpriteBatch();
     }
 
+    /**
+     * Function to draw all Obstacles
+     * It sets the projection matrix for the sprite batch. Translates the sprite then draws it within the sprite batch.
+     * @param projectionMatrix projection matrix for the camera.
+     */
     public void draw(Matrix4 projectionMatrix)
     {
         batch.setProjectionMatrix(projectionMatrix);

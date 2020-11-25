@@ -10,18 +10,22 @@ import java.util.Random;
  * Class designed to manage the spawning of obstacles.
  */
 public class Spawn {
+
     /**
      * Holds all obstacles currently on the canvas.
      */
     protected ArrayList<Obstacle> spawned_obstacles;
+
     /**
      * Random object for generating random numbers.
      */
     protected Random random = new Random();
+
     /**
      * Holds the x co-ordinate of the last spawned obstacle.
      */
     protected float last_spawned_x;
+
     /**
      * Holds the time that the last obstacle was spawned.
      * On startup this is counted as the time the program was run.
@@ -34,7 +38,7 @@ public class Spawn {
     protected String[] obstacle_types = {"Duck", "Goose", "Rock", "treeBranch"};
 
     /**
-     * Public constructor so that it can be called whenever needed.
+     * Spawn constructor initializes the array and last spawn time.
      */
     public Spawn(){
         spawned_obstacles = new ArrayList<>();
@@ -43,7 +47,7 @@ public class Spawn {
 
 
     /**
-     * Void class that decides when to spawn and when to de-spawn objects.
+     * Function that decides when to spawn and when to de-spawn objects.
      */
     public void update(final Camera camera){
         spawned_obstacles.removeIf(obstacle -> obstacle.getObstaclePosition().getPosY() < 0 || obstacle.getObstaclePosition().getPosX() < -10 ||
@@ -67,7 +71,7 @@ public class Spawn {
     }
 
     /**
-     * The spawn_new() class is used to spawn a new Obstacle object of the designated
+     * Function used to spawn a new Obstacle object of the designated
      * subtype.
      * @param obstacle_type A string that tells the function which obstacle type to create.
      * @return Returns the new Obstacle object of the designated type.
@@ -85,8 +89,6 @@ public class Spawn {
             }else{
                 temp_bool = false;
             }
-
-
         }
         setLastSpawned(spawn_x);
         Position output_position = new Position(0,0);

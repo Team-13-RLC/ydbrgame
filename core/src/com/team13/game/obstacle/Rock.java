@@ -5,10 +5,12 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.team13.game.stats.Position;
 
+/**
+ * Class of Rock Obstacle
+ */
 public class Rock extends staticObstacle
 {
     /**
-     * Inherits staticObstacle class.
      * Creates a rock and initialises all that needs to be initialised.
      * Assigns the correct texture for the rock(s). Ensures for correct filtering.
      * Gives the texture to the rock sprite and sets initial position of the rock using the superclass' constructor.

@@ -27,8 +27,14 @@ public class MainLoop {
      */
     private final IScene[] scenes;
 
+    /**
+     * Timer used to time each leg
+     */
     private final Timer timer;
 
+    /**
+     * Formatted strings wth times for each leg
+     */
     private final String[] times;
 
     /**
@@ -42,22 +48,35 @@ public class MainLoop {
     private final byte numLoops = 4;
 
     /**
-     * Keeps track of whether the canvas has been created for the current leg.
+     * Keeps track of whether the timer has been started
      */
     private boolean timerStared;
 
+    /**
+     * How long the time should be on screen after each leg (in seconds)
+     */
     long showTextFor = 3;
 
+    /**
+     * Is text being shown at the moment
+     */
     boolean showingText = false;
 
+    /**
+     * Time when text started being rendered.
+     */
     long textShowStartTime;
 
+    /**
+     * Position of text on the screen
+     */
     Position textPosition;
 
     //Constructors
     /**
-     * Private constructor, only accessible from inside of teh class.
-     * Creates all canvases in the canvases array.
+     * Private constructor, only accessible from inside of the class.
+     * Creates all canvases and Cards in the scenes array.
+     * Initializes the Timer, sets the loopCounter to 0, calculates text position.
      */
     private MainLoop() {
         scenes = new IScene[numLoops];
@@ -79,9 +98,11 @@ public class MainLoop {
     //Methods
     /**
      * Main function to activate the loop.
-     * If a canvas is not created, it will get created.
-     * If the end of a leg has not been reached, the canvas will get updated.
-     * If the end of the game has been reached, dispose() will be called.
+     * If a timer is not started, it will be started.
+     * If the end has not been reached, the scene will get updated.
+     * If the end of a leg has been reached, dispose() will be called.
+     * If the canvas has legFinishedCorrectly flag set to false, the game over screen will be shown.
+     * If The flag had ot been set, and teh last leg was finished, the times for each leg are shown.
      */
     public void run(){
         if (loopCounter < numLoops){
@@ -126,11 +147,20 @@ public class MainLoop {
         }
     }
 
+    /**
+     * Called when a card no longer needs to be displayed.
+     * Disposes of teh card and increases teh loop counter.
+     */
     private void cardFinished() {
         scenes[loopCounter].dispose();
         loopCounter ++;
     }
 
+    /**
+     * Called when one leg is over.
+     * Stops the timer, adds any extra penalties, shows the time for teh current leg on the screen.
+     * Disposes of the Canvas and increments loop counter.
+     */
     private void legFinished(){
         if (!showingText) {
             timer.stop();
@@ -148,6 +178,10 @@ public class MainLoop {
         }
     }
 
+    /**
+     * Called after all legs have been completed.
+     * Clears the screen with a black fill and displays times of all legs.
+     */
     private void gameFinishedProperly(){
         Gdx.gl.glClearColor(0F, 0F, 0F, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -159,6 +193,10 @@ public class MainLoop {
         }
     }
 
+    /**
+     * Called after the boat has crashed.
+     * Clears the screen with a black fill and displays the "You lost" message.
+     */
     private void gameFinishedWithCrash(){
         Gdx.gl.glClearColor(0F, 0F, 0F, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);

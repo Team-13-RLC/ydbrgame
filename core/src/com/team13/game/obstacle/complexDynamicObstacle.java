@@ -18,14 +18,15 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Random;
 
+/**
+ * Obstacle with more intricate movement.
+ */
 public class complexDynamicObstacle extends dynamicObstacle
 {
 
     /**
-     * Inherits dynamicObstacle class.
-     *
-     * @param position Position the position of the obstacle.
-     *
+     * Calls the constructor of dynamicObstacle with the position argument.
+     * @param position position of the Obstacle.
      */
     public complexDynamicObstacle(Position position)
     {
@@ -33,11 +34,11 @@ public class complexDynamicObstacle extends dynamicObstacle
     }
 
 
-    @Override
 
     /*
       Allows the obstacle to move and bounce on edges.
      */
+    @Override
     public void ObstacleMove(){
         if(this.getObstaclePosition().getPosX() == 0 ||
                 this.getObstaclePosition().getPosX() == mainGame.Resolution.WIDTH){
