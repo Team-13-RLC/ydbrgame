@@ -25,7 +25,7 @@ public class Canvas implements IScene {
 
     // Fields
     /**
-     * The single camera used for the game
+     * The camera used for the canvas.
      */
     private final OrthographicCamera camera;
 
@@ -272,7 +272,6 @@ public class Canvas implements IScene {
 
     /**
      * Function given to the ApplicationAdapter#resize() function in mainGame
-     *
      * @param width  window width
      * @param height window height
      * @see mainGame#resize(int width, int height)
