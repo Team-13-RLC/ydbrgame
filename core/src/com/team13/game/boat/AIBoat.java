@@ -66,7 +66,7 @@ public class AIBoat extends Boat{
             if (boatPosition.getPosX() + spriteWidth < aiLane.getlBorder()){
                 return "R";
             }
-            if (boatPosition.getPosX() + spriteWidth + spriteWidth > aiLane.getrBorder()){
+            if (boatPosition.getPosX() + spriteWidth > aiLane.getrBorder()){
                 return "L";
             }
             if(obstacle.getObstaclePosition().getPosX() <= aiLane.getMiddle()){
